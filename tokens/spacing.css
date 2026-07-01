@@ -1,0 +1,45 @@
+/* ============================================================
+   Futuristic Science — Spacing & Layout Tokens
+   Base unit: 4px
+   ============================================================ */
+
+:root {
+  /* Spacing scale */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Section rhythm */
+  --section-y: 96px;       /* vertical padding between page sections */
+  --section-y-sm: 64px;
+
+  /* Container widths */
+  --container:     1200px;  /* main content max */
+  --container-wide:1320px;
+  --container-text:680px;   /* prose / legal pages */
+  --gutter: 24px;
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+
+  /* Borders */
+  --border-width: 1px;
+  --border-width-thick: 2px;
+}

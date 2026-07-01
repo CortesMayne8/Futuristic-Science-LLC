@@ -1,0 +1,98 @@
+/* ============================================================
+   Futuristic Science — Color Tokens
+   Brand: metallic gold · deep navy/ink · crisp white · teal accent
+   ============================================================ */
+
+:root {
+  /* ---- Brand · Gold (primary accent, metallic) ---- */
+  --gold-50:  #FBF6E9;
+  --gold-100: #F5EAC9;
+  --gold-200: #EBD7A0;
+  --gold-300: #E0C277;   /* highlight */
+  --gold-400: #D2AE58;
+  --gold-500: #C8A24C;   /* PRIMARY gold */
+  --gold-600: #AE8838;
+  --gold-700: #8F6E2B;   /* deep / pressed */
+  --gold-800: #6E5421;
+
+  /* ---- Brand · Ink / Navy (logo dark, dark surfaces) ---- */
+  --ink-950: #060D18;
+  --ink-900: #08111F;    /* near-black hero */
+  --ink-800: #0B1B33;    /* PRIMARY navy */
+  --ink-700: #14253F;
+  --ink-600: #21344F;
+  --ink-500: #38496279;
+
+  /* ---- Accent · Teal (science / trust signal) ---- */
+  --teal-50:  #E6F4F2;
+  --teal-100: #C5E7E3;
+  --teal-300: #5FBCB3;
+  --teal-500: #12877F;   /* PRIMARY teal */
+  --teal-600: #0E6E68;
+  --teal-700: #0A5450;
+
+  /* ---- Neutrals ---- */
+  --white:    #FFFFFF;
+  --gray-50:  #F7F8FA;
+  --gray-100: #EEF1F4;
+  --gray-200: #E2E6EC;
+  --gray-300: #CDD4DD;
+  --gray-400: #9AA4B2;
+  --gray-500: #6B7686;
+  --gray-600: #4C5666;
+  --gray-700: #36404E;
+  --gray-900: #161C25;
+
+  /* ---- Semantic (status) ---- */
+  --success: #1F9D6B;
+  --success-bg: #E4F4EC;
+  --warning: #C9881F;
+  --warning-bg: #FBF1DA;
+  --danger:  #C8403A;
+  --danger-bg: #FBE7E5;
+  --info:    #2C6FB0;
+  --info-bg: #E5EFF8;
+
+  /* ============================================================
+     SEMANTIC ALIASES — prefer these in components
+     ============================================================ */
+
+  /* Surfaces */
+  --surface-page:    var(--white);
+  --surface-subtle:  var(--gray-50);
+  --surface-muted:   var(--gray-100);
+  --surface-card:    var(--white);
+  --surface-ink:     var(--ink-800);   /* dark sections, footer */
+  --surface-ink-deep:var(--ink-900);
+
+  /* Text */
+  --text-strong: var(--ink-900);
+  --text-body:   var(--gray-700);
+  --text-muted:  var(--gray-500);
+  --text-faint:  var(--gray-400);
+  --text-on-ink: rgba(255, 255, 255, 0.92);
+  --text-on-ink-muted: rgba(255, 255, 255, 0.58);
+  --text-gold:   var(--gold-700);
+
+  /* Borders */
+  --border-subtle: var(--gray-200);
+  --border-strong: var(--gray-300);
+  --border-ink:    rgba(255, 255, 255, 0.12);
+  --border-gold:   var(--gold-500);
+
+  /* Accents */
+  --accent:        var(--gold-500);
+  --accent-hover:  var(--gold-600);
+  --accent-press:  var(--gold-700);
+  --accent-teal:   var(--teal-500);
+  --accent-teal-hover: var(--teal-600);
+
+  /* Focus ring */
+  --ring: rgba(200, 162, 76, 0.45);
+  --ring-teal: rgba(18, 135, 127, 0.40);
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #E0C277 0%, #C8A24C 45%, #8F6E2B 100%); /* @kind color */
+  --gradient-gold-sheen: linear-gradient(100deg, #8F6E2B 0%, #E0C277 24%, #F5EAC9 38%, #C8A24C 60%, #8F6E2B 100%); /* @kind color */
+  --gradient-ink: linear-gradient(160deg, #14253F 0%, #0B1B33 50%, #08111F 100%); /* @kind color */
+}

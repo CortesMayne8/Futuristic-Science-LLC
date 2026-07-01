@@ -1,0 +1,77 @@
+/* ============================================================
+   Futuristic Science — Base / reset & primitive helpers
+   Lightweight resets + a few brand utility classes.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  margin: 0;
+}
+
+p { margin: 0; }
+
+a { color: var(--accent-teal); text-decoration: none; }
+a:hover { color: var(--accent-teal-hover); }
+
+/* ---- Brand utility helpers ---- */
+
+/* Uppercase eyebrow / trust label */
+.fs-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-gold);
+}
+
+/* Gold metallic text (use sparingly — wordmarks, accents) */
+.text-gold-metallic {
+  background: var(--gradient-gold-sheen);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-600);
+}
+
+/* Hairline gold rule, used under section eyebrows */
+.rule-gold {
+  height: 2px;
+  width: 48px;
+  background: var(--gradient-gold);
+  border: 0;
+  border-radius: 2px;
+}
+
+/* Molecular node background (subtle, light) for light sections */
+.bg-molecular {
+  background-color: var(--surface-page);
+  background-image:
+    radial-gradient(circle at 18% 28%, rgba(11,27,51,0.05) 0 2px, transparent 2px),
+    radial-gradient(circle at 82% 16%, rgba(11,27,51,0.04) 0 3px, transparent 3px),
+    radial-gradient(circle at 64% 72%, rgba(11,27,51,0.04) 0 2px, transparent 2px),
+    radial-gradient(circle at 32% 84%, rgba(11,27,51,0.05) 0 3px, transparent 3px);
+}
+
+/* Focus-visible — gold ring */
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
