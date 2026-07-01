@@ -1,0 +1,164 @@
+<!-- @dsCard group="Website" viewport="1280x760" name="Storefront — Home" -->
+<!-- @startingPoint section="Website" subtitle="Full WooCommerce-style peptide storefront — Home, Shop, Product, COA, cart, age gate" viewport="1280x800" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Futuristic Science — Research Peptides</title>
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="vial-fx.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
+  html, body { margin: 0; height: 100%; }
+  #app { position: relative; height: 100vh; overflow: hidden; background: var(--surface-page); }
+  #root { height: 100%; }
+  #kit-scroll { height: 100%; overflow-y: auto; scroll-behavior: smooth; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 999px; border: 3px solid var(--surface-page); }
+  /* upscale editorial display face for major headings */
+  .display-serif { font-family: 'Newsreader', Georgia, 'Times New Roman', serif !important; font-weight: 500 !important; letter-spacing: -0.015em !important; }
+  .display-serif em, .display-serif .em { font-style: italic; font-weight: 500; }
+  /* refined uppercase kicker */
+  .kicker { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-700); }
+  .hairline { height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle) 18%, var(--border-subtle) 82%, transparent); }
+</style>
+
+<!-- ===== Standalone-export resource manifest (inert in live mode) ===== -->
+<meta name="ext-resource-dependency" content="../../assets-min/logo-horizontal.png" data-resource-id="logo-horizontal" />
+<meta name="ext-resource-dependency" content="../../assets-min/logo-horizontal-light.png" data-resource-id="logo-horizontal-light" />
+<meta name="ext-resource-dependency" content="../../assets-min/emblem-mark.png" data-resource-id="emblem-mark" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-trio-hero-v3.png" data-resource-id="vial-trio-hero-v3" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-ghk-cu.png" data-resource-id="vial-ghk-cu" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-glow-70mg.png" data-resource-id="vial-glow-70mg" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-reta-3.png" data-resource-id="vial-reta-3" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-tirz-2.png" data-resource-id="vial-tirz-2" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-bpc-157.png" data-resource-id="vial-bpc-157" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-tb-500.png" data-resource-id="vial-tb-500" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-mots-c.png" data-resource-id="vial-mots-c" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-selank.png" data-resource-id="vial-selank" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-semax.png" data-resource-id="vial-semax" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-nad-plus.png" data-resource-id="vial-nad-plus" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-tesamorelin.png" data-resource-id="vial-tesamorelin" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-klow.png" data-resource-id="vial-klow" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-survodutide.png" data-resource-id="vial-survodutide" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-aod-9604.png" data-resource-id="vial-aod-9604" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-lipo-c.png" data-resource-id="vial-lipo-c" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-l-carnitine.png" data-resource-id="vial-l-carnitine" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-ipamorelin.png" data-resource-id="vial-ipamorelin" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-sermorelin.png" data-resource-id="vial-sermorelin" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-cjc-1295.png" data-resource-id="vial-cjc-1295" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-igf-1lr3.png" data-resource-id="vial-igf-1lr3" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-kisspeptin-10.png" data-resource-id="vial-kisspeptin-10" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-epithalon.png" data-resource-id="vial-epithalon" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-cartalax.png" data-resource-id="vial-cartalax" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-glutathione.png" data-resource-id="vial-glutathione" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-ss-31.png" data-resource-id="vial-ss-31" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-kpv.png" data-resource-id="vial-kpv" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-ara-290.png" data-resource-id="vial-ara-290" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-wolverine.png" data-resource-id="vial-wolverine" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-ahk-cu.png" data-resource-id="vial-ahk-cu" />
+<meta name="ext-resource-dependency" content="../../assets-min/vial-mt-2.png" data-resource-id="vial-mt-2" />
+<script>
+  // Resolve an asset path to its inlined blob URL when bundled; otherwise return the path unchanged (live mode).
+  window.R = function (p) {
+    if (!p) return p;
+    var id = String(p).split('/').pop().replace(/\.[^.]+$/, '');
+    return (window.__resources && window.__resources[id]) || p;
+  };
+</script>
+
+<template id="__bundler_thumbnail" data-bg-color="#0B1B33">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0B1B33"/>
+    <g transform="translate(600 380)">
+      <rect x="-70" y="-150" width="140" height="300" rx="22" fill="none" stroke="#C8A24C" stroke-width="10"/>
+      <rect x="-44" y="-188" width="88" height="46" rx="12" fill="#C8A24C"/>
+      <rect x="-70" y="20" width="140" height="130" rx="22" fill="#C8A24C" opacity="0.85"/>
+    </g>
+    <text x="600" y="640" font-family="Georgia, serif" font-size="58" fill="#F5EFE2" text-anchor="middle" font-style="italic">Futuristic Science</text>
+    <text x="600" y="700" font-family="Arial, sans-serif" font-size="24" fill="#C8A24C" text-anchor="middle" letter-spacing="6">RESEARCH PEPTIDES</text>
+  </svg>
+</template>
+</head>
+<body>
+<div id="app"><div id="root"></div></div>
+
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script type="text/babel" src="LangSwitcher.jsx"></script>
+<script type="text/babel" src="Header.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel" src="AgeGate.jsx"></script>
+<script type="text/babel" src="AuthGate.jsx"></script>
+<script type="text/babel" src="CartDrawer.jsx"></script>
+<script type="text/babel" src="HomeScreen.jsx"></script>
+<script type="text/babel" src="ShopScreen.jsx"></script>
+<script type="text/babel" src="ProductScreen.jsx"></script>
+<script type="text/babel" src="COAScreen.jsx"></script>
+<script type="text/babel" src="TrackOrderScreen.jsx"></script>
+<script type="text/babel" src="CheckoutScreen.jsx"></script>
+<script type="text/babel" src="SimplePage.jsx"></script>
+
+<script type="text/babel" data-presets="env,react">
+  const { useState } = React;
+
+  function App() {
+    const [entered, setEntered] = useState(false);
+    const [authed, setAuthed] = useState(false);
+    const [page, setPage] = useState('home');
+    const [productId, setProductId] = useState('ghk-cu');
+    const [cart, setCart] = useState([]);
+    const [cartOpen, setCartOpen] = useState(false);
+
+    const scrollTop = () => { const el = document.getElementById('kit-scroll'); if (el) el.scrollTop = 0; };
+    const nav = (p) => { setPage(p); setCartOpen(false); scrollTop(); };
+    const openProduct = (id) => { setProductId(id); setPage('product'); scrollTop(); };
+
+    const addToCart = (p, qty = 1) => {
+      setCart((c) => {
+        const found = c.find((x) => x.id === p.id);
+        if (found) return c.map((x) => x.id === p.id ? { ...x, qty: x.qty + qty } : x);
+        return [...c, { id: p.id, name: p.name, subtitle: p.subtitle, size: p.size, price: p.price, image: p.image, qty }];
+      });
+      setCartOpen(true);
+    };
+    const setQty = (id, n) => setCart((c) => c.map((x) => x.id === id ? { ...x, qty: n } : x));
+    const removeItem = (id) => setCart((c) => c.filter((x) => x.id !== id));
+    const cartCount = cart.reduce((s, x) => s + x.qty, 0);
+
+    let screen;
+    if (page === 'home') screen = <HomeScreen onNav={nav} onAdd={addToCart} onOpenProduct={openProduct} />;
+    else if (page === 'shop') screen = <ShopScreen onOpenProduct={openProduct} />;
+    else if (page === 'product') screen = <ProductScreen productId={productId} onAdd={addToCart} onNav={nav} />;
+    else if (page === 'coa') screen = <COAScreen />;
+    else if (page === 'track') screen = <TrackOrderScreen />;
+    else if (page === 'checkout') screen = <CheckoutScreen cart={cart} onNav={nav} />;
+    else screen = <SimplePage page={page} onNav={nav} />;
+
+    return (
+      <React.Fragment>
+        <div id="kit-scroll">
+          <Header current={['product'].includes(page) ? 'shop' : page} onNav={nav} cartCount={cartCount} onCart={() => setCartOpen(true)} />
+          {screen}
+          <Footer onNav={nav} />
+        </div>
+        <CartDrawer open={cartOpen} items={cart} onClose={() => setCartOpen(false)}
+          onQty={setQty} onRemove={removeItem} onCheckout={() => { setCartOpen(false); nav('checkout'); }} />
+        {!entered && <AgeGate onEnter={() => setEntered(true)} />}
+        {entered && !authed && <AuthGate onAuth={() => setAuthed(true)} />}
+      </React.Fragment>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<!-- Global vial hover FX: 3D tilt + orbiting gold particles + glare + bloom -->
+<script src="vial-fx.js"></script>
+</body>
+</html>

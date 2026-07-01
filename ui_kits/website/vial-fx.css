@@ -1,0 +1,127 @@
+/* ============================================================
+   Vial FX — orbiting gold particles + cursor glare
+   + gold bloom shadow. Applied globally to every vial image
+   via the vial-fx.js enhancer (no libraries).
+   ============================================================ */
+
+.vial-card {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+/* ---- Hero vial: straight vertical bob, no tilt ---- */
+@keyframes heroVialFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+.hero-vial-float {
+  animation: heroVialFloat 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-vial-float { animation: none; }
+}
+/* Cards & galleries size their <img> with a percentage height, which
+   needs an ancestor with a resolved height — stretch the wrapper there. */
+.vial-card--stretch {
+  align-self: stretch;
+  height: 100%;
+  width: 100%;
+}
+/* Re-establish the resolved height for the moved <img>'s % height. */
+.vial-card--stretch .vial-card__inner {
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.vial-card__inner {
+  position: relative;
+  display: inline-flex;
+}
+.vial-card__inner > img {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Cursor-tracking glare ---- */
+.vial-card__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  background: radial-gradient(20% 20% at var(--gx, 50%) var(--gy, 50%),
+              rgba(255,248,228,.36) 0%,
+              rgba(224,194,119,.16) 32%,
+              rgba(224,194,119,0) 58%);
+  mix-blend-mode: screen;
+}
+.vial-card:hover .vial-card__glare,
+.vial-card.is-tilting .vial-card__glare { opacity: .7; }
+
+/* ---- Gold bloom drop shadow ---- */
+.vial-card__bloom {
+  position: absolute;
+  left: 50%;
+  bottom: 3%;
+  width: 64%;
+  height: 22%;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(.72);
+  background: radial-gradient(ellipse at center,
+              rgba(200,162,76,.6) 0%, rgba(200,162,76,0) 70%);
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 360ms ease, transform 360ms var(--ease-out, cubic-bezier(.22,1,.36,1));
+}
+.vial-card:hover .vial-card__bloom,
+.vial-card.is-tilting .vial-card__bloom {
+  opacity: 1;
+  transform: translateX(-50%) scale(1.12);
+}
+
+/* ---- Orbiting gold particles (render BEHIND the bottle) ---- */
+.vial-card__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.vial-card__p {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--sz, 6px);
+  height: var(--sz, 6px);
+  margin: calc(var(--sz, 6px) / -2) 0 0 calc(var(--sz, 6px) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fff7df 0%, #e6c97f 42%, #c8a24c 82%);
+  box-shadow: 0 0 7px rgba(224,194,119,.85), 0 0 2px rgba(255,248,228,.9);
+  opacity: 0;
+  animation: vc-orbit var(--dur, 6s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  animation-play-state: paused;
+}
+.vial-card:hover .vial-card__p,
+.vial-card.is-tilting .vial-card__p {
+  opacity: var(--op, .9);
+  animation-play-state: running;
+  transition: opacity 450ms ease var(--delay, 0s);
+}
+@keyframes vc-orbit {
+  from { transform: rotate(0deg)   translateX(var(--r, 110px)) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(var(--r, 110px)) rotate(-360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vial-card__p { animation: none; }
+}
