@@ -1,0 +1,29 @@
+<!-- @dsCard group="Brand" viewport="700x230" name="Logo" subtitle="Primary lockup on light + emblem on ink" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface-page); display: flex; }
+  .panel { flex: 1; display: flex; align-items: center; justify-content: center; height: 230px; }
+  .light { background: var(--white); box-shadow: var(--ring-card); }
+  .ink { background: var(--gradient-ink); }
+  .light img { height: 150px; }
+  .lockup { display: flex; align-items: center; gap: 16px; }
+  .lockup img { height: 64px; }
+  .word { font-family: var(--font-display); font-weight: 800; letter-spacing: .04em; line-height: 1.05; }
+  .word .top { font-size: 22px; color: #fff; }
+  .word .bot { font-size: 22px; }
+</style>
+</head>
+<body>
+  <div class="panel light"><img src="../assets/logo-transparent.png" alt="Futuristic Science logo"></div>
+  <div class="panel ink">
+    <div class="lockup">
+      <img src="../assets/emblem-mark.png" alt="emblem">
+      <div class="word"><div class="top">FUTURISTIC</div><div class="bot text-gold-metallic">SCIENCE</div></div>
+    </div>
+  </div>
+</body>
+</html>

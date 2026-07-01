@@ -1,0 +1,34 @@
+<!-- @dsCard group="Brand" viewport="700x250" name="Product Photography" subtitle="White-seamless vials, soft reflection, gold-banded labels" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface-page); }
+  .wrap { display: flex; gap: 16px; padding: 20px; align-items: stretch; }
+  .photo { flex: none; width: 200px; background: var(--gray-50); border-radius: var(--radius-lg); box-shadow: var(--ring-card); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .photo img { height: 210px; }
+  .notes { flex: 1; padding: 8px 8px 8px 12px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-700); }
+  .h { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--ink-900); margin: 8px 0 12px; }
+  li { font-size: 13.5px; color: var(--text-body); line-height: 1.5; margin-bottom: 7px; list-style: none; padding-left: 18px; position: relative; }
+  li::before { content: ""; position: absolute; left: 0; top: 8px; width: 8px; height: 2px; border-radius: 2px; background: var(--gold-500); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="photo"><img src="../assets/vial-ghk-cu.png" alt="GHK-CU vial"></div>
+    <div class="notes">
+      <div class="eyebrow">Imagery direction</div>
+      <div class="h">Clinical, bright, premium</div>
+      <ul>
+        <li>White seamless backdrop · soft floor reflection</li>
+        <li>Cool-neutral grade — gold cap is the only warm note</li>
+        <li>No grain, no duotone, no heavy shadows</li>
+        <li>Label: gold banding, black title block, "For Research Use Only"</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

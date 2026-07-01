@@ -1,0 +1,27 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Brand · Ink & Teal" subtitle="Deep navy darks + teal science/verified accent" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface-page); }
+  .wrap { display: flex; gap: 0; padding: 20px; }
+  .sw { flex: 1; height: 130px; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; box-sizing: border-box; }
+  .sw:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+  .sw:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .name { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.95); }
+  .hex { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,.78); margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="sw" style="background: var(--ink-900)"><span class="name">ink-900</span><span class="hex">#08111F</span></div>
+    <div class="sw" style="background: var(--ink-800)"><span class="name">ink-800 ★</span><span class="hex">#0B1B33</span></div>
+    <div class="sw" style="background: var(--ink-700)"><span class="name">ink-700</span><span class="hex">#14253F</span></div>
+    <div class="sw" style="background: var(--teal-700)"><span class="name">teal-700</span><span class="hex">#0A5450</span></div>
+    <div class="sw" style="background: var(--teal-500)"><span class="name">teal-500 ★</span><span class="hex">#12877F</span></div>
+    <div class="sw" style="background: var(--teal-300)"><span class="name">teal-300</span><span class="hex">#5FBCB3</span></div>
+  </div>
+</body>
+</html>

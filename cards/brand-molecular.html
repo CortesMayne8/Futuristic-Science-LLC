@@ -1,0 +1,37 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Molecular Texture" subtitle="Signature node/connection background for light sections" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); }
+  .stage { position: relative; height: 200px; overflow: hidden; background: var(--surface-page); }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .label { position: absolute; left: 24px; bottom: 20px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-700); }
+  .t { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--ink-900); margin-top: 6px; letter-spacing: -.01em; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="0 0 700 200" preserveAspectRatio="xMidYMid slice">
+      <g stroke="#0B1B33" stroke-opacity="0.10" stroke-width="1">
+        <line x1="80" y1="40" x2="200" y2="90"/><line x1="200" y1="90" x2="330" y2="50"/>
+        <line x1="330" y1="50" x2="470" y2="110"/><line x1="470" y1="110" x2="600" y2="60"/>
+        <line x1="200" y1="90" x2="260" y2="170"/><line x1="470" y1="110" x2="540" y2="175"/>
+        <line x1="600" y1="60" x2="660" y2="130"/><line x1="80" y1="40" x2="120" y2="150"/>
+      </g>
+      <g fill="#0B1B33" fill-opacity="0.12">
+        <circle cx="80" cy="40" r="5"/><circle cx="200" cy="90" r="7"/><circle cx="330" cy="50" r="4"/>
+        <circle cx="470" cy="110" r="6"/><circle cx="600" cy="60" r="5"/><circle cx="260" cy="170" r="4"/>
+        <circle cx="540" cy="175" r="5"/><circle cx="660" cy="130" r="4"/><circle cx="120" cy="150" r="5"/>
+      </g>
+      <g fill="#C8A24C" fill-opacity="0.5">
+        <circle cx="330" cy="50" r="3"/><circle cx="540" cy="175" r="3"/>
+      </g>
+    </svg>
+    <div class="label"><div class="eyebrow">Backgrounds</div><div class="t">Molecular node pattern</div></div>
+  </div>
+</body>
+</html>

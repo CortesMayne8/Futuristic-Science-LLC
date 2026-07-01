@@ -1,0 +1,31 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Neutrals" subtitle="White & cool-gray surface / text ramp" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface-page); }
+  .wrap { display: flex; gap: 0; padding: 20px; }
+  .sw { flex: 1; height: 130px; display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; box-sizing: border-box; }
+  .sw:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+  .sw:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .name { font-size: 11px; font-weight: 700; }
+  .hex { font-family: var(--font-mono); font-size: 10px; margin-top: 2px; }
+  .l .name { color: var(--ink-800); } .l .hex { color: var(--gray-500); }
+  .d .name { color: #fff; } .d .hex { color: rgba(255,255,255,.75); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="sw l" style="background: var(--white); box-shadow: var(--ring-card)"><span class="name">white</span><span class="hex">#FFFFFF</span></div>
+    <div class="sw l" style="background: var(--gray-50)"><span class="name">gray-50</span><span class="hex">#F7F8FA</span></div>
+    <div class="sw l" style="background: var(--gray-100)"><span class="name">gray-100</span><span class="hex">#EEF1F4</span></div>
+    <div class="sw l" style="background: var(--gray-200)"><span class="name">gray-200</span><span class="hex">#E2E6EC</span></div>
+    <div class="sw l" style="background: var(--gray-400)"><span class="name">gray-400</span><span class="hex">#9AA4B2</span></div>
+    <div class="sw d" style="background: var(--gray-500)"><span class="name">gray-500</span><span class="hex">#6B7686</span></div>
+    <div class="sw d" style="background: var(--gray-700)"><span class="name">gray-700</span><span class="hex">#36404E</span></div>
+    <div class="sw d" style="background: var(--gray-900)"><span class="name">gray-900</span><span class="hex">#161C25</span></div>
+  </div>
+</body>
+</html>

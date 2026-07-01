@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Semantic Status" subtitle="Success · Warning · Danger · Info — muted, never neon" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface-page); }
+  .wrap { display: flex; gap: 14px; padding: 22px; }
+  .item { flex: 1; }
+  .chip { height: 56px; border-radius: var(--radius-md); display: flex; align-items: center; padding: 0 14px; font-weight: 700; font-size: 13px; }
+  .meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; }
+  .meta .n { font-weight: 700; color: var(--ink-800); }
+  .meta .h { font-family: var(--font-mono); color: var(--gray-500); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="item"><div class="chip" style="background: var(--success-bg); color: var(--success)">Verified</div><div class="meta"><span class="n">success</span><span class="h">#1F9D6B</span></div></div>
+    <div class="item"><div class="chip" style="background: var(--warning-bg); color: var(--warning)">Pending</div><div class="meta"><span class="n">warning</span><span class="h">#C9881F</span></div></div>
+    <div class="item"><div class="chip" style="background: var(--danger-bg); color: var(--danger)">Out of stock</div><div class="meta"><span class="n">danger</span><span class="h">#C8403A</span></div></div>
+    <div class="item"><div class="chip" style="background: var(--info-bg); color: var(--info)">Info</div><div class="meta"><span class="n">info</span><span class="h">#2C6FB0</span></div></div>
+  </div>
+</body>
+</html>

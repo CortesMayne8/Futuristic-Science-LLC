@@ -1,0 +1,24 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Elevation & Glow" subtitle="Soft cool shadows + reserved gold glow" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface-page); padding: 30px 28px; }
+  .row { display: flex; gap: 26px; align-items: center; }
+  .item { text-align: center; }
+  .card { width: 96px; height: 72px; background: var(--white); border-radius: var(--radius-lg); }
+  .n { font-size: 12px; font-weight: 700; color: var(--ink-800); margin-top: 12px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="card" style="box-shadow: var(--shadow-sm)"></div><div class="n">sm</div></div>
+    <div class="item"><div class="card" style="box-shadow: var(--shadow-md)"></div><div class="n">md</div></div>
+    <div class="item"><div class="card" style="box-shadow: var(--shadow-lg)"></div><div class="n">lg</div></div>
+    <div class="item"><div class="card" style="box-shadow: var(--shadow-xl)"></div><div class="n">xl</div></div>
+    <div class="item"><div class="card" style="box-shadow: var(--glow-gold); border: 1px solid var(--gold-300)"></div><div class="n">glow-gold</div></div>
+  </div>
+</body>
+</html>
