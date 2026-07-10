@@ -21,8 +21,10 @@ function AuthGate({ onAuth }) {
     </label>
   );
 
+  // Social sign-in (Google/Apple) authenticates directly — no extra registration gate.
+  // Researcher/compliance acknowledgments are enforced at checkout instead.
   const social = (label, icon) => (
-    <button onClick={go} style={{
+    <button onClick={onAuth} style={{
       display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 11, width: '100%', height: 48,
       cursor: 'pointer', background: 'var(--white)', border: '1.5px solid var(--border-strong)',
       borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 14.5, fontWeight: 600,
