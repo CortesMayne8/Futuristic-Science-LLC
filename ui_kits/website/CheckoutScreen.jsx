@@ -11,6 +11,7 @@ function CheckoutScreen({ cart, onNav }) {
   const [checks, setChecks] = React.useState({});
   const [tried, setTried] = React.useState(false);
   const [payMethod, setPayMethod] = React.useState('zelle');
+  const [placed, setPlaced] = React.useState(null);
   const allChecked = ACKS.every((k) => checks[k]);
   const toggle = (k) => setChecks((c) => ({ ...c, [k]: !c[k] }));
   const setAll = (v) => setChecks(v ? Object.fromEntries(ACKS.map((k) => [k, true])) : {});
@@ -19,10 +20,11 @@ function CheckoutScreen({ cart, onNav }) {
   const LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyOMpiSu5x4IWz_MSjj0IOMURRiy8pk8jls80TnGqXZ0JmFdQYhY6zk9uGXruZXdvMQ/exec';
   const POLICY_VERSION = '2026-07-10';
   const logAcceptance = () => {
+    const orderRef = 'FS-' + Date.now().toString(36).toUpperCase();
     try {
       const q = (sel) => (document.querySelector(sel) || {}).value || '';
       const payload = {
-        orderRef: 'FS-' + Date.now().toString(36).toUpperCase(),
+        orderRef,
         name: q('input[placeholder="Dr. Jane Researcher"]'),
         email: q('input[type="email"]'),
         paymentMethod: payMethod,
@@ -35,6 +37,7 @@ function CheckoutScreen({ cart, onNav }) {
         .then((r) => r.json()).catch(() => ({}))
         .then(({ ip }) => fetch(LOG_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ ...payload, ip: ip || '' }) }));
     } catch (err) { /* logging must never block checkout */ }
+    return orderRef;
   };
 
   if (cart.length === 0) {
@@ -83,7 +86,6 @@ function CheckoutScreen({ cart, onNav }) {
                   { id: 'zelle', label: t('co.pay.zelle'), color: '#6D1ED4' },
                   { id: 'cashapp', label: t('co.pay.cashapp'), color: '#00C244' },
                   { id: 'venmo', label: t('co.pay.venmo'), color: '#008CFF' },
-                  { id: 'applecash', label: t('co.pay.applecash'), color: 'var(--ink-900)' },
                 ].map((m) => {
                   const on = payMethod === m.id;
                   return (
@@ -172,7 +174,7 @@ function CheckoutScreen({ cart, onNav }) {
               {tried && !allChecked && (
                 <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--danger-600, #c0392b)', marginBottom: 12 }}>{t('co.compRequired')}</div>
               )}
-              <div onClick={() => { if (!allChecked) { setTried(true); return; } logAcceptance(); }}>
+              <div onClick={() => { if (!allChecked) { setTried(true); return; } setPlaced(logAcceptance()); }}>
                 <Button variant="primary" size="lg" fullWidth disabled={!allChecked}>{t('co.placeOrder')}</Button>
               </div>
             </div>
@@ -187,6 +189,20 @@ function CheckoutScreen({ cart, onNav }) {
           </div>
         </div>
       </div>
+
+      {placed && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(8, 14, 30, 0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--radius-xl)', padding: '38px 34px 30px', maxWidth: 460, width: '100%', textAlign: 'center', boxShadow: '0 40px 100px rgba(0,0,0,.45)' }}>
+            <div style={{ width: 58, height: 58, margin: '0 auto 16px', borderRadius: '50%', background: 'var(--gold-50)', border: '2px solid var(--gold-600)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-700)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 800, color: 'var(--ink-900)', margin: '0 0 6px' }}>{t('co.placedTitle')}</h2>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 14, fontWeight: 600, color: 'var(--gold-700)', marginBottom: 14 }}>{t('co.placedRef')}: {placed}</div>
+            <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--text-body)', margin: '0 0 22px' }}>{t('co.placedBody')}</p>
+            <Button variant="primary" size="lg" fullWidth onClick={() => onNav('home')}>{t('co.placedBtn')}</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
