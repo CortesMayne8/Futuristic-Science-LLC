@@ -15,6 +15,28 @@ function CheckoutScreen({ cart, onNav }) {
   const toggle = (k) => setChecks((c) => ({ ...c, [k]: !c[k] }));
   const setAll = (v) => setChecks(v ? Object.fromEntries(ACKS.map((k) => [k, true])) : {});
 
+  // Acceptance logging — records checkbox acceptance to the compliance sheet on Place Order.
+  const LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyOMpiSu5x4IWz_MSjj0IOMURRiy8pk8jls80TnGqXZ0JmFdQYhY6zk9uGXruZXdvMQ/exec';
+  const POLICY_VERSION = '2026-07-10';
+  const logAcceptance = () => {
+    try {
+      const q = (sel) => (document.querySelector(sel) || {}).value || '';
+      const payload = {
+        orderRef: 'FS-' + Date.now().toString(36).toUpperCase(),
+        name: q('input[placeholder="Dr. Jane Researcher"]'),
+        email: q('input[type="email"]'),
+        paymentMethod: payMethod,
+        total: '$' + total.toFixed(2),
+        policyVersion: POLICY_VERSION,
+        acks: ACKS.filter((k) => checks[k]),
+        notes: cart.map((x) => x.name + ' (' + x.size + ') x' + x.qty).join('; '),
+      };
+      fetch('https://api.ipify.org?format=json')
+        .then((r) => r.json()).catch(() => ({}))
+        .then(({ ip }) => fetch(LOG_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ ...payload, ip: ip || '' }) }));
+    } catch (err) { /* logging must never block checkout */ }
+  };
+
   if (cart.length === 0) {
     return (
       <div style={{ background: 'var(--surface-subtle)', minHeight: '100%' }}>
@@ -150,7 +172,7 @@ function CheckoutScreen({ cart, onNav }) {
               {tried && !allChecked && (
                 <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--danger-600, #c0392b)', marginBottom: 12 }}>{t('co.compRequired')}</div>
               )}
-              <div onClick={() => { if (!allChecked) setTried(true); }}>
+              <div onClick={() => { if (!allChecked) { setTried(true); return; } logAcceptance(); }}>
                 <Button variant="primary" size="lg" fullWidth disabled={!allChecked}>{t('co.placeOrder')}</Button>
               </div>
             </div>
