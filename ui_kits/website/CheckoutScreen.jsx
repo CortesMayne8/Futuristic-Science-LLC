@@ -1,4 +1,17 @@
 /* CheckoutScreen — fast, mobile-friendly checkout with order summary. */
+/* Extra i18n keys for required-field validation (registered at load). */
+Object.assign(window.FS_DICT.en, {
+  'co.optional': '(optional)',
+  'co.fieldRequired': 'Required',
+  'co.emailInvalid': 'Enter a valid email address',
+  'co.fieldsRequired': 'Please complete all required fields marked with *.',
+});
+Object.assign(window.FS_DICT.es, {
+  'co.optional': '(opcional)',
+  'co.fieldRequired': 'Obligatorio',
+  'co.emailInvalid': 'Ingresa un correo electrónico válido',
+  'co.fieldsRequired': 'Completa todos los campos obligatorios marcados con *.',
+});
 function CheckoutScreen({ cart, onNav }) {
   const { Input, Button, DisclaimerBanner, Badge } = window.FuturisticScienceDesignSystem_2ca7b0;
   const D = window.FS_DATA;
@@ -12,6 +25,17 @@ function CheckoutScreen({ cart, onNav }) {
   const [tried, setTried] = React.useState(false);
   const [payMethod, setPayMethod] = React.useState('zelle');
   const [placed, setPlaced] = React.useState(null);
+  const [fields, setFields] = React.useState({ email: '', phone: '', fullName: '', institution: '', street: '', city: '', state: '', zip: '' });
+  const REQUIRED = ['email', 'phone', 'fullName', 'street', 'city', 'state', 'zip'];
+  const setF = (k) => (e) => setFields((f) => ({ ...f, [k]: e.target.value }));
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim());
+  const fieldsOk = REQUIRED.every((k) => fields[k].trim()) && emailOk;
+  const fieldErr = (k) => {
+    if (!tried) return '';
+    if (!fields[k].trim()) return t('co.fieldRequired');
+    if (k === 'email' && !emailOk) return t('co.emailInvalid');
+    return '';
+  };
   const allChecked = ACKS.every((k) => checks[k]);
   const toggle = (k) => setChecks((c) => ({ ...c, [k]: !c[k] }));
   const setAll = (v) => setChecks(v ? Object.fromEntries(ACKS.map((k) => [k, true])) : {});
@@ -22,16 +46,16 @@ function CheckoutScreen({ cart, onNav }) {
   const logAcceptance = () => {
     const orderRef = 'FS-' + Date.now().toString(36).toUpperCase();
     try {
-      const q = (sel) => (document.querySelector(sel) || {}).value || '';
       const payload = {
         orderRef,
-        name: q('input[placeholder="Dr. Jane Researcher"]'),
-        email: q('input[type="email"]'),
+        name: fields.fullName.trim(),
+        email: fields.email.trim(),
+        phone: fields.phone.trim(),
         paymentMethod: payMethod,
         total: '$' + total.toFixed(2),
         policyVersion: POLICY_VERSION,
         acks: ACKS.filter((k) => checks[k]),
-        notes: cart.map((x) => x.name + ' (' + x.size + ') x' + x.qty).join('; '),
+        notes: cart.map((x) => x.name + ' (' + x.size + ') x' + x.qty).join('; ') + ' | Ship to: ' + [fields.institution.trim(), fields.street.trim(), fields.city.trim(), fields.state.trim(), fields.zip.trim()].filter(Boolean).join(', '),
       };
       fetch('https://api.ipify.org?format=json')
         .then((r) => r.json()).catch(() => ({}))
@@ -59,24 +83,26 @@ function CheckoutScreen({ cart, onNav }) {
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 0.9fr', gap: 32, alignItems: 'start' }}>
           {/* form */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-            {[
-              [t('co.contact'), [[t('co.email'), 'you@lab.org', 'email'], [t('co.phone'), D.contact.phone, 'tel']]],
-              [t('co.shipAddr'), [[t('co.fullName'), 'Dr. Jane Researcher', 'text'], [t('co.institution'), 'University Research Lab', 'text'], [t('co.street'), '123 Science Park Dr', 'text']]],
-            ].map(([title, fields], si) => (
-              <div key={title} style={{ background: 'var(--white)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 22 }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--ink-900)', marginBottom: 16 }}>{title}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                  {fields.map(([l, ph, ty]) => <Input key={l} label={l} type={ty} placeholder={ph} />)}
-                  {si === 1 && (
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-                      <Input label={t('co.city')} placeholder="City" />
-                      <Input label={t('co.state')} placeholder="WI" />
-                      <Input label={t('co.zip')} placeholder="53703" />
-                    </div>
-                  )}
+            <div style={{ background: 'var(--white)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 22 }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--ink-900)', marginBottom: 16 }}>{t('co.contact')}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <Input label={t('co.email') + ' *'} type="email" placeholder="you@lab.org" value={fields.email} onChange={setF('email')} error={fieldErr('email')} />
+                <Input label={t('co.phone') + ' *'} type="tel" placeholder={D.contact.phone} value={fields.phone} onChange={setF('phone')} error={fieldErr('phone')} />
+              </div>
+            </div>
+            <div style={{ background: 'var(--white)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 22 }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--ink-900)', marginBottom: 16 }}>{t('co.shipAddr')}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <Input label={t('co.fullName') + ' *'} type="text" placeholder="Dr. Jane Researcher" value={fields.fullName} onChange={setF('fullName')} error={fieldErr('fullName')} />
+                <Input label={t('co.institution') + ' ' + t('co.optional')} type="text" placeholder="University Research Lab" value={fields.institution} onChange={setF('institution')} />
+                <Input label={t('co.street') + ' *'} type="text" placeholder="123 Science Park Dr" value={fields.street} onChange={setF('street')} error={fieldErr('street')} />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                  <Input label={t('co.city') + ' *'} placeholder="City" value={fields.city} onChange={setF('city')} error={fieldErr('city')} />
+                  <Input label={t('co.state') + ' *'} placeholder="WI" value={fields.state} onChange={setF('state')} error={fieldErr('state')} />
+                  <Input label={t('co.zip') + ' *'} placeholder="53703" value={fields.zip} onChange={setF('zip')} error={fieldErr('zip')} />
                 </div>
               </div>
-            ))}
+            </div>
             <div style={{ background: 'var(--white)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 22 }}>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--ink-900)', marginBottom: 6 }}>{t('co.payMethodsTitle')}</div>
               <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text-muted)', margin: '0 0 16px' }}>{t('co.payIntro')}</p>
@@ -171,10 +197,13 @@ function CheckoutScreen({ cart, onNav }) {
               </div>
             </div>
             <div style={{ marginTop: 18 }}>
+              {tried && !fieldsOk && (
+                <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--danger-600, #c0392b)', marginBottom: 12 }}>{t('co.fieldsRequired')}</div>
+              )}
               {tried && !allChecked && (
                 <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--danger-600, #c0392b)', marginBottom: 12 }}>{t('co.compRequired')}</div>
               )}
-              <div onClick={() => { if (!allChecked) { setTried(true); return; } setPlaced(logAcceptance()); }}>
+              <div onClick={() => { if (!allChecked || !fieldsOk) { setTried(true); return; } setPlaced(logAcceptance()); }}>
                 <Button variant="primary" size="lg" fullWidth disabled={!allChecked}>{t('co.placeOrder')}</Button>
               </div>
             </div>
