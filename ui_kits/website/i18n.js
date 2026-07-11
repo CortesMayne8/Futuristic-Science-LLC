@@ -227,6 +227,11 @@ Handle in accordance with institutional safety guidelines and standard laborator
       'co.placedRef': 'Order reference',
       'co.placedBody': 'Thank you — your order has been recorded. Payment instructions for your selected method will be emailed to you shortly. Please complete payment within 1 hour to hold your inventory.',
       'co.placedBtn': 'Back to Home',
+      'co.zelleTitle': 'Complete your Zelle payment',
+      'co.zelleAmount': 'Amount',
+      'co.zelleTo': 'Zelle to',
+      'co.zelleMemo': 'Memo / note',
+      'co.zelleNote': 'Send the exact amount and include the memo above so we can match your payment. Complete within 1 hour to hold your inventory. A confirmation will follow by email.',
       'co.ackLawful': 'I certify that I am purchasing these products solely for lawful research purposes. I have read and agree to the Terms & Conditions, Privacy Policy, and Returns & Refunds Policy, and understand that all products are sold for Research Use Only, and are not sold, marketed, or intended for human consumption.',
       'co.emptyDesc': 'Add research peptides to your cart before checking out.', 'co.browse': 'Browse Catalog',
 
@@ -625,6 +630,11 @@ Manipular conforme a las pautas de seguridad institucionales y la práctica est�
       'co.placedRef': 'Referencia del pedido',
       'co.placedBody': 'Gracias — tu pedido ha sido registrado. Las instrucciones de pago para tu método seleccionado se enviarán a tu correo en breve. Completa el pago dentro de 1 hora para reservar tu inventario.',
       'co.placedBtn': 'Volver al Inicio',
+      'co.zelleTitle': 'Completa tu pago por Zelle',
+      'co.zelleAmount': 'Monto',
+      'co.zelleTo': 'Zelle a',
+      'co.zelleMemo': 'Memo / nota',
+      'co.zelleNote': 'Envía el monto exacto e incluye el memo de arriba para poder identificar tu pago. Completa dentro de 1 hora para reservar tu inventario. Recibirás una confirmación por correo.',
       'co.ackLawful': 'Certifico que compro estos productos únicamente con fines de investigación lícita. He leído y acepto los Términos y Condiciones, la Política de Privacidad y la Política de Devoluciones y Reembolsos, y entiendo que todos los productos se venden solo para Uso en Investigación, y no se venden, comercializan ni están destinados al consumo humano.',
       'co.emptyDesc': 'Añade péptidos de investigación a tu carrito antes de pagar.', 'co.browse': 'Explorar catálogo',
 
