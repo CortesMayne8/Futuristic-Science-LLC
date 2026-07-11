@@ -197,8 +197,21 @@ function CheckoutScreen({ cart, onNav }) {
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-700)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
             </div>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 800, color: 'var(--ink-900)', margin: '0 0 6px' }}>{t('co.placedTitle')}</h2>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 14, fontWeight: 600, color: 'var(--gold-700)', marginBottom: 14 }}>{t('co.placedRef')}: {placed}</div>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--text-body)', margin: '0 0 22px' }}>{t('co.placedBody')}</p>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 14, fontWeight: 600, color: 'var(--gold-700)', marginBottom: 16 }}>{t('co.placedRef')}: {placed}</div>
+            {payMethod === 'zelle' ? (
+              <div style={{ textAlign: 'left', background: 'var(--surface-subtle)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '16px 18px', marginBottom: 18 }}>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--gold-700)', marginBottom: 12 }}>{t('co.zelleTitle')}</div>
+                {[[t('co.zelleAmount'), '$' + total.toFixed(2)], [t('co.zelleTo'), 'FuturisticScienceUSA@gmail.com'], [t('co.zelleMemo'), placed]].map(([k, v]) => (
+                  <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, padding: '5px 0', borderTop: k === t('co.zelleAmount') ? 'none' : '1px solid var(--border-subtle)' }}>
+                    <span style={{ fontSize: 12.5, color: 'var(--text-muted)', flex: 'none' }}>{k}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700, color: 'var(--ink-900)', textAlign: 'right', wordBreak: 'break-all' }}>{v}</span>
+                  </div>
+                ))}
+                <p style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)', margin: '12px 0 0' }}>{t('co.zelleNote')}</p>
+              </div>
+            ) : (
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--text-body)', margin: '0 0 22px' }}>{t('co.placedBody')}</p>
+            )}
             <Button variant="primary" size="lg" fullWidth onClick={() => onNav('home')}>{t('co.placedBtn')}</Button>
           </div>
         </div>
