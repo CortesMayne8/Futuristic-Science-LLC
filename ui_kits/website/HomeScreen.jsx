@@ -54,7 +54,7 @@ function HomeScreen({ onNav, onAdd, onOpenProduct }) {
           </div>
 
           {/* floating vials */}
-          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 0' }}>
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '36px 0 24px' }}>
             <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(200,162,76,.16) 0%, rgba(200,162,76,0) 68%)' }} />
             <img src={window.R("../../assets/vial-trio-hero-v3.png")} alt="Futuristic Science research peptide vials" className="hero-vial-float" style={{ position: 'relative', height: 360, filter: 'drop-shadow(0 30px 50px rgba(11,27,51,.20))' }} />
           </div>
