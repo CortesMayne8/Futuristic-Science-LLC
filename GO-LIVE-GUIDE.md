@@ -80,6 +80,9 @@ Tip: buy the domain where you like, point DNS at the host. Most hosts offer 1-cl
 - [ ] Mobile QA against `screenshots/mobile/`
 - [ ] SSL active, backups on, SEO titles set, analytics installed
 - [ ] Shipping rates, tax, and order-confirmation emails configured
+- [ ] Email logo shows on the **dark** email header — the child theme forces the light
+      (white-text) logo (`assets/logo-email.png`) via `option_woocommerce_email_header_image`,
+      so the black-lettered logo no longer disappears. Send a test email to confirm.
 
 ## Step 7 — Launch
 
