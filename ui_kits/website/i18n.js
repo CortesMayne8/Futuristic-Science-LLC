@@ -48,9 +48,9 @@
       'trust.shipping': 'Fast Shipping',
 
       /* age gate */
-      'age.eyebrow': 'Age Verification',
+      'age.eyebrow': 'Age & Researcher Verification',
       'age.title': 'You must be at least 21 to visit this site.',
-      'age.terms.pre': 'By entering this site, you are acknowledging that you have read and agree to our ',
+      'age.terms.pre': 'By entering, you confirm you are at least 21 years old and a qualified researcher or institution purchasing for lawful laboratory research, and that you have read and agree to our ',
       'age.terms.link': 'Terms of Service',
       'age.terms.post': '.',
       'age.remember': 'Remember me',
@@ -61,7 +61,7 @@
       /* auth gate */
       'auth.eyebrow': 'Member Access',
       'auth.signinTitle': 'Sign in to continue', 'auth.signupTitle': 'Create your account',
-      'auth.signinSub': 'Access to this site is restricted to registered researchers.',
+      'auth.signinSub': 'Please sign in to view your cart and check out.',
       'auth.signupSub': 'Register to access the Futuristic Science catalog.',
       'auth.google': 'Continue with Google', 'auth.apple': 'Continue with Apple',
       'auth.or': 'or',
@@ -459,9 +459,9 @@ Handle in accordance with institutional safety guidelines and standard laborator
       'trust.coas': 'COA por lote', 'trust.accuracy': 'Precisión medida',
       'trust.shipping': 'Envío rápido',
 
-      'age.eyebrow': 'Verificación de edad',
+      'age.eyebrow': 'Verificación de edad e investigador',
       'age.title': 'Debes tener al menos 21 años para visitar este sitio.',
-      'age.terms.pre': 'Al entrar a este sitio, reconoces que has leído y aceptas nuestros ',
+      'age.terms.pre': 'Al entrar, confirmas que tienes al menos 21 años y que eres un investigador o institución calificada que compra para investigación de laboratorio lícita, y que has leído y aceptas nuestros ',
       'age.terms.link': 'Términos de servicio',
       'age.terms.post': '.',
       'age.remember': 'Recordarme',
@@ -472,7 +472,7 @@ Handle in accordance with institutional safety guidelines and standard laborator
       /* auth gate */
       'auth.eyebrow': 'Acceso de Miembros',
       'auth.signinTitle': 'Inicia sesión para continuar', 'auth.signupTitle': 'Crea tu cuenta',
-      'auth.signinSub': 'El acceso a este sitio está restringido a investigadores registrados.',
+      'auth.signinSub': 'Inicia sesión para ver tu carrito y finalizar la compra.',
       'auth.signupSub': 'Regístrate para acceder al catálogo de Futuristic Science.',
       'auth.google': 'Continuar con Google', 'auth.apple': 'Continuar con Apple',
       'auth.or': 'o',
