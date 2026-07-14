@@ -1,8 +1,8 @@
-/* AuthGate — hard login/registration wall shown after the age gate.
+/* AuthGate — sign-in wall shown when a visitor opens their cart / proceeds to checkout.
    Multiple sign-in methods: Google, Apple, email/password, magic link.
    Demo only: any submit (with the qualified-researcher box checked) enters the site.
    Wire to your store login (WooCommerce / Auth0 / Firebase) to make it real. */
-function AuthGate({ onAuth }) {
+function AuthGate({ onAuth, onDismiss }) {
   const { Button } = window.FuturisticScienceDesignSystem_2ca7b0;
   window.useLang();
   const t = window.t;
@@ -57,6 +57,11 @@ function AuthGate({ onAuth }) {
       </svg>
 
       <div style={{ position: 'relative', width: '100%', maxWidth: 460, background: 'var(--white)', borderRadius: 'var(--radius-xl)', padding: '36px 36px 28px', textAlign: 'center', boxShadow: '0 40px 100px rgba(0,0,0,.5)', margin: 'auto' }}>
+        {onDismiss && (
+          <button onClick={onDismiss} aria-label="Close" style={{ position: 'absolute', top: 14, right: 14, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--gray-500)', borderRadius: 'var(--radius-pill)' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        )}
         <img src={window.R("../../assets/emblem-mark.png")} alt="" style={{ height: 60, marginBottom: 14 }} />
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 700, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--gold-700)', marginBottom: 10 }}>{t('auth.eyebrow')}</div>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 800, color: 'var(--ink-900)', letterSpacing: '-.02em', margin: '0 0 8px' }}>{isSignup ? t('auth.signupTitle') : t('auth.signinTitle')}</h1>

@@ -147,10 +147,10 @@
           {screen}
           <Footer onNav={nav} />
         </div>
-        <CartDrawer open={cartOpen} items={cart} onClose={() => setCartOpen(false)}
+        <CartDrawer open={cartOpen && authed} items={cart} onClose={() => setCartOpen(false)}
           onQty={setQty} onRemove={removeItem} onCheckout={() => { setCartOpen(false); nav('checkout'); }} />
         {!entered && <AgeGate onEnter={() => setEntered(true)} />}
-        {entered && !authed && <AuthGate onAuth={() => setAuthed(true)} />}
+        {entered && cartOpen && !authed && <AuthGate onAuth={() => setAuthed(true)} onDismiss={() => setCartOpen(false)} />}
       </React.Fragment>
     );
   }
