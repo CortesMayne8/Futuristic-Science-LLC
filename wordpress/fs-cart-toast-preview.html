@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Futuristic Science — Cart Toast Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+	body{ margin:0; font-family:'Manrope',sans-serif; background:#F7F8FA; color:#0B1B33; }
+	.bar{ background:#0B1B33; color:#fff; padding:18px 24px; }
+	.bar h1{ font-family:'Newsreader',serif; font-size:20px; margin:0; font-weight:600; }
+	.bar p{ margin:4px 0 0; font-size:13px; color:#C8A24C; }
+	.controls{ padding:24px; display:flex; gap:12px; flex-wrap:wrap; }
+	.controls button{
+		padding:12px 20px; border-radius:10px; border:0; cursor:pointer;
+		background:#C8A24C; color:#0B1B33; font-weight:700; font-size:14px; font-family:inherit;
+	}
+	.controls button:hover{ background:#B8933F; }
+	.controls .ghost{ background:#fff; border:1.5px solid #0B1B33; }
+	.controls .ghost:hover{ background:#0B1B33; color:#fff; }
+	.hint{ padding:0 24px 24px; font-size:13px; color:#5A6577; max-width:640px; line-height:1.5; }
+
+	/* ============ Toast (identical to snippet) ============ */
+	#fs-toast{
+		--fs-gold:#C8A24C; --fs-gold-hover:#B8933F; --fs-ink:#0B1B33;
+		--fs-teal:#12877F; --fs-border:#E3E7ED; --fs-gray:#F7F8FA;
+		position:fixed; right:24px; bottom:24px; z-index:999999;
+		width:384px; max-width:calc(100vw - 32px);
+		background:#fff; border:1px solid var(--fs-border); border-radius:14px;
+		box-shadow:0 12px 40px rgba(11,27,51,.22), 0 2px 8px rgba(11,27,51,.10);
+		font-family:'Manrope',system-ui,sans-serif; color:var(--fs-ink);
+		opacity:0; transform:translateY(16px) scale(.98); pointer-events:none;
+		transition:opacity .28s ease, transform .28s ease; overflow:hidden;
+	}
+	#fs-toast.fs-show{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+	.fs-toast-head{ display:flex; align-items:center; gap:10px; padding:14px 16px 0; }
+	.fs-toast-check{ width:26px; height:26px; flex:0 0 26px; border-radius:50%; background:var(--fs-teal); color:#fff; display:flex; align-items:center; justify-content:center; }
+	.fs-toast-check svg{ width:14px; height:14px; }
+	.fs-toast-title{ font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+	.fs-toast-close{ margin-left:auto; background:none; border:0; cursor:pointer; padding:6px; color:#8A94A6; line-height:0; border-radius:8px; }
+	.fs-toast-close:hover{ background:var(--fs-gray); color:var(--fs-ink); }
+	.fs-toast-product{ display:flex; align-items:center; gap:14px; padding:14px 16px; }
+	.fs-toast-img{ width:64px; height:64px; flex:0 0 64px; border-radius:10px; object-fit:cover; border:1px solid var(--fs-border); background:linear-gradient(160deg,#FDFBF6,#F1E8D2); }
+	.fs-toast-name{ font-family:'Newsreader',Georgia,serif; font-size:18px; font-weight:600; line-height:1.25; margin:0 0 4px; }
+	.fs-toast-price{ font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--fs-gold-hover); font-weight:500; }
+	.fs-toast-subtotal{ display:flex; justify-content:space-between; align-items:center; margin:0 16px; padding:10px 0; border-top:1px solid var(--fs-border); font-size:13px; font-weight:600; color:#5A6577; }
+	.fs-toast-subtotal b{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--fs-ink); }
+	.fs-toast-actions{ display:flex; gap:10px; padding:4px 16px 16px; }
+	.fs-toast-btn{ flex:1; text-align:center; padding:12px 10px; border-radius:10px; font-size:14px; font-weight:700; text-decoration:none; transition:background .15s, color .15s; line-height:1.2; }
+	.fs-toast-btn-outline{ border:1.5px solid var(--fs-ink); color:var(--fs-ink); background:#fff; }
+	.fs-toast-btn-outline:hover{ background:var(--fs-ink); color:#fff; }
+	.fs-toast-btn-gold{ background:var(--fs-gold); color:var(--fs-ink); border:1.5px solid var(--fs-gold); }
+	.fs-toast-btn-gold:hover{ background:var(--fs-gold-hover); border-color:var(--fs-gold-hover); }
+	.fs-toast-count{ display:inline-flex; align-items:center; justify-content:center; margin-left:6px; min-width:20px; height:20px; padding:0 6px; border-radius:10px; background:var(--fs-ink); color:#fff; font-size:11px; font-weight:800; vertical-align:middle; }
+	.fs-toast-progress{ height:3px; background:var(--fs-border); }
+	.fs-toast-progress span{ display:block; height:100%; width:100%; background:var(--fs-gold); transform-origin:left; }
+	#fs-toast.fs-show .fs-toast-progress span{ animation:fsToastBar 6s linear forwards; }
+	#fs-toast:hover .fs-toast-progress span{ animation-play-state:paused; }
+	@keyframes fsToastBar{ from{ transform:scaleX(1);} to{ transform:scaleX(0);} }
+
+	/* Mobile emulation via .fs-mobile class (mirrors the @media rules) */
+	#fs-toast.fs-mobile{ right:12px; left:12px; bottom:12px; width:auto; border-radius:12px; }
+	#fs-toast.fs-mobile .fs-toast-head{ display:none; }
+	#fs-toast.fs-mobile .fs-toast-product{ padding:12px 44px 12px 12px; gap:12px; }
+	#fs-toast.fs-mobile .fs-toast-img{ width:44px; height:44px; flex-basis:44px; border-radius:8px; }
+	#fs-toast.fs-mobile .fs-toast-name{ font-size:15px; margin-bottom:2px; }
+	#fs-toast.fs-mobile .fs-toast-price{ font-size:12px; }
+	#fs-toast.fs-mobile .fs-toast-price::before{ content:"Added to cart · "; font-family:'Manrope',sans-serif; color:var(--fs-teal); font-weight:700; }
+	#fs-toast.fs-mobile .fs-toast-subtotal{ display:none; }
+	#fs-toast.fs-mobile .fs-toast-actions{ padding:0 12px 12px; }
+	#fs-toast.fs-mobile .fs-toast-btn-outline{ display:none; }
+	#fs-toast.fs-mobile .fs-toast-close{ position:absolute; top:8px; right:8px; }
+</style>
+</head>
+<body>
+	<div class="bar">
+		<h1>Futuristic Science — Add-to-Cart Toast Preview</h1>
+		<p>New notification design · desktop &amp; mobile</p>
+	</div>
+	<div class="controls">
+		<button onclick="showToast(false)">Simulate — Desktop</button>
+		<button class="ghost" onclick="showToast(true)">Simulate — Mobile</button>
+	</div>
+	<p class="hint">Click a button to preview. The toast auto-dismisses after 6 seconds (gold progress bar); hovering pauses it. On the live site it fills in the real product name, image, price, cart subtotal, and item count automatically.</p>
+
+	<div id="fs-toast" role="status">
+		<div class="fs-toast-head">
+			<span class="fs-toast-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+			<span class="fs-toast-title">Added to your cart</span>
+			<button type="button" class="fs-toast-close" aria-label="Close" onclick="hideToast()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+		</div>
+		<div class="fs-toast-product">
+			<img class="fs-toast-img" alt="MOTS-c vial" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23FDFBF6'/%3E%3Crect x='22' y='10' width='20' height='8' rx='2' fill='%23C8A24C'/%3E%3Crect x='24' y='18' width='16' height='36' rx='4' fill='%23fff' stroke='%23E3E7ED'/%3E%3Crect x='24' y='30' width='16' height='10' fill='%230B1B33'/%3E%3Ctext x='32' y='38' font-size='5' fill='%23C8A24C' text-anchor='middle' font-family='sans-serif' font-weight='bold'%3EMOTS-C%3C/text%3E%3C/svg%3E">
+			<div>
+				<p class="fs-toast-name">MOTS-c · 10mg Single Vial</p>
+				<span class="fs-toast-price">$45.00</span>
+			</div>
+		</div>
+		<div class="fs-toast-subtotal"><span>Cart subtotal</span><b>$90.00</b></div>
+		<div class="fs-toast-actions">
+			<a class="fs-toast-btn fs-toast-btn-outline" href="#">View Cart<span class="fs-toast-count">2</span></a>
+			<a class="fs-toast-btn fs-toast-btn-gold" href="#">Checkout</a>
+		</div>
+		<div class="fs-toast-progress"><span></span></div>
+	</div>
+
+<script>
+	var toast = document.getElementById('fs-toast'), timer = null;
+	function showToast(mobile){
+		toast.classList.remove('fs-show');
+		toast.classList.toggle('fs-mobile', mobile);
+		var bar = toast.querySelector('.fs-toast-progress span');
+		bar.style.animation='none'; void bar.offsetWidth; bar.style.animation='';
+		requestAnimationFrame(function(){ requestAnimationFrame(function(){ toast.classList.add('fs-show'); }); });
+		clearTimeout(timer); timer = setTimeout(hideToast, 6000);
+	}
+	function hideToast(){ toast.classList.remove('fs-show'); clearTimeout(timer); }
+	toast.addEventListener('mouseenter', function(){ clearTimeout(timer); });
+	toast.addEventListener('mouseleave', function(){ timer = setTimeout(hideToast, 2500); });
+</script>
+</body>
+</html>
