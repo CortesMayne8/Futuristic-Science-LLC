@@ -4,13 +4,14 @@ Theme URI: https://github.com/CortesMayne8/Futuristic-Science-LLC
 Description: Child theme of Hello Elementor for Futuristic Science, LLC. Pre-loads brand colors, fonts, and base styling. Research-use-only peptide brand.
 Author: Futuristic Science, LLC
 Template: hello-elementor
-Version: 1.1.0
+Version: 1.2.0
 */
 
 /* ============ Brand tokens ============ */
 :root{
   --fs-gold:#C8A24C; --fs-gold-600:#B8933F; --fs-gold-700:#A07F35; --fs-gold-50:#F7F1E2;
   --fs-ink:#0B1B33; --fs-teal:#12877F;
+  --fs-trust-green:#1F8A5B; --fs-trust-green-700:#166A45;
   --fs-white:#FFFFFF; --fs-gray-50:#F7F8FA; --fs-gray-100:#EEF1F5; --fs-border:#E3E7ED;
   --fs-radius-md:10px; --fs-radius-lg:14px;
   --fs-font-display:'Newsreader',Georgia,serif;
@@ -66,4 +67,69 @@ a:hover{ color:#0e6d66; }
   font-family:var(--fs-font-body); font-size:13px; color:var(--fs-ink);
   background:var(--fs-gold-50); border-left:3px solid var(--fs-gold);
   padding:10px 14px; border-radius:8px;
+}
+
+/* ============ Cart — mobile "PRODUCT:" label alignment ============
+   On the stacked mobile cart, the Product row carries the thumbnail, which
+   pushed its "PRODUCT:" data-title label inward and off the baseline of the
+   product name. Normalize every cart cell to the same left-aligned label /
+   right-aligned value layout so PRODUCT lines up with PRICE / QUANTITY /
+   SUBTOTAL below it. */
+@media (max-width:768px){
+  .woocommerce table.cart tr td,
+  .woocommerce-cart table.cart tr td,
+  .woocommerce table.shop_table_responsive tr td{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px; text-align:right; width:100%;
+  }
+  .woocommerce table.cart tr td::before,
+  .woocommerce-cart table.cart tr td::before,
+  .woocommerce table.shop_table_responsive tr td::before{
+    content:attr(data-title);
+    float:none; margin:0; width:auto; flex:0 0 auto;
+    text-align:left; font-weight:700;
+  }
+  /* Product cell also holds the thumbnail + name — keep them aligned in-row. */
+  .woocommerce table.cart td.product-name,
+  .woocommerce-cart table.cart td.product-name{
+    flex-wrap:wrap;
+  }
+  .woocommerce table.cart td.product-name a{ text-align:right; }
+  .woocommerce table.cart td.product-thumbnail{ display:none; } /* thumbnail is decorative here; hide the tall image that offset the row */
+}
+
+/* ============ Trust badges (Elementor Icon Box) — size + color ============
+   The "Secure checkout / COA verified / ..." icons are Icon Box widgets whose
+   icon size was never capped for mobile, so they filled the screen. Cap the
+   size responsively and paint them a trustworthy green. Scoped to Icon Box /
+   standalone Icon widgets — the brand's other icons live inside buttons and
+   pill badges, not these widgets. To limit the green to only this section,
+   add the CSS class `fs-trust-badges` to the Elementor section. */
+.elementor-widget-icon-box .elementor-icon,
+.elementor-widget-icon .elementor-icon,
+.fs-trust-badges .elementor-icon{
+  color:var(--fs-trust-green) !important;
+}
+.elementor-widget-icon-box .elementor-icon svg,
+.elementor-widget-icon .elementor-icon svg,
+.fs-trust-badges .elementor-icon svg{
+  fill:var(--fs-trust-green) !important; stroke:var(--fs-trust-green) !important;
+}
+.elementor-widget-icon-box .elementor-icon a,
+.elementor-widget-icon .elementor-icon a{ color:var(--fs-trust-green) !important; }
+
+/* Reasonable icon sizes so they never dominate the viewport. */
+.elementor-widget-icon-box .elementor-icon,
+.elementor-widget-icon .elementor-icon{ font-size:56px; }
+.elementor-widget-icon-box .elementor-icon svg,
+.elementor-widget-icon .elementor-icon svg{ width:1em; height:1em; }
+@media (max-width:1024px){
+  .elementor-widget-icon-box .elementor-icon,
+  .elementor-widget-icon .elementor-icon{ font-size:48px !important; }
+}
+@media (max-width:767px){
+  .elementor-widget-icon-box .elementor-icon,
+  .elementor-widget-icon .elementor-icon{ font-size:40px !important; }
+  .elementor-widget-icon-box .elementor-icon svg,
+  .elementor-widget-icon .elementor-icon svg{ width:40px !important; height:40px !important; }
 }

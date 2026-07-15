@@ -17,7 +17,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		null
 	);
 	// Child (brand) style — loaded last so it wins
-	wp_enqueue_style( 'fs-child', get_stylesheet_uri(), array( 'hello-elementor-parent', 'fs-google-fonts' ), '1.1.0' );
+	wp_enqueue_style( 'fs-child', get_stylesheet_uri(), array( 'hello-elementor-parent', 'fs-google-fonts' ), '1.2.0' );
 }, 20 );
 
 // Optional: expose the brand palette to the block editor.
