@@ -17,7 +17,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		null
 	);
 	// Child (brand) style — loaded last so it wins
-	wp_enqueue_style( 'fs-child', get_stylesheet_uri(), array( 'hello-elementor-parent', 'fs-google-fonts' ), '1.3.0' );
+	wp_enqueue_style( 'fs-child', get_stylesheet_uri(), array( 'hello-elementor-parent', 'fs-google-fonts' ), '1.3.1' );
 }, 20 );
 
 // Optional: expose the brand palette to the block editor.
@@ -46,58 +46,9 @@ function fs_email_header_logo() {
 	return get_stylesheet_directory_uri() . '/assets/logo-email.png';
 }
 
-/**
- * Launch guard — hide the card-to-crypto payment gateway at checkout.
- *
- * The card→crypto option still needs testing, so keep it off the storefront
- * for now. This removes it from the payment choices customers see while
- * NEVER touching manual / offline methods (Zelle, bank transfer, etc.), so
- * checkout keeps working. It only hides the option — no gateway settings are
- * deleted, so re-enabling later is just removing this block (or toggling the
- * FS_HIDE_CARD_CRYPTO switch to false).
- *
- * If you know the exact gateway id from WooCommerce → Settings → Payments,
- * add it to $exact_ids for a precise match; otherwise the keyword check below
- * catches typical card / crypto gateway names.
+/*
+ * NOTE: hiding the card-to-crypto payment option is now done via the
+ * WooCommerce admin (Settings → Payments → toggle the method off), not in
+ * code, to keep checkout crash-proof for launch. If a code-side guard is
+ * wanted later, reintroduce it here once it can be tested on staging.
  */
-define( 'FS_HIDE_CARD_CRYPTO', true );
-add_filter( 'woocommerce_available_payment_gateways', 'fs_hide_card_crypto_gateway', 99 );
-function fs_hide_card_crypto_gateway( $gateways ) {
-	if ( ! FS_HIDE_CARD_CRYPTO || is_admin() || ! is_array( $gateways ) ) {
-		return $gateways;
-	}
-
-	// Pin exact gateway id(s) here for a precise match (optional).
-	$exact_ids = array();
-
-	// Manual / peer-to-peer methods that must always stay available.
-	$protected = array( 'bacs', 'cheque', 'cod', 'zelle', 'venmo', 'cashapp', 'cash', 'bank', 'transfer', 'manual', 'paypal' );
-
-	// Keywords that identify the card-to-crypto option.
-	$hide_words = array( 'crypto', 'coin', 'card', 'bitcoin', 'btc', 'usdt', 'onramp', 'on-ramp' );
-
-	foreach ( $gateways as $id => $gateway ) {
-		if ( in_array( $id, $exact_ids, true ) ) {
-			unset( $gateways[ $id ] );
-			continue;
-		}
-
-		$haystack = strtolower( $id . ' ' . $gateway->get_title() . ' ' . $gateway->get_method_title() );
-
-		// Never hide a protected manual/offline method, even on a keyword hit.
-		$is_protected = false;
-		foreach ( $protected as $safe ) {
-			if ( strpos( $haystack, $safe ) !== false ) { $is_protected = true; break; }
-		}
-		if ( $is_protected ) { continue; }
-
-		foreach ( $hide_words as $word ) {
-			if ( strpos( $haystack, $word ) !== false ) {
-				unset( $gateways[ $id ] );
-				break;
-			}
-		}
-	}
-
-	return $gateways;
-}
