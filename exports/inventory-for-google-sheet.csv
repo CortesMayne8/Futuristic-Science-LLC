@@ -1,0 +1,87 @@
+Product,Category,Strength,Option,SKU,Price,In Stock
+GLOW,Dermal Research,70mg,Single Vial,FS-GLOW-70mg-V,$65,Yes
+GLOW,Dermal Research,70mg,Box of 10 Vials,FS-GLOW-70mg-B,$360,Yes
+RETA-3,Metabolic Research,10mg,Single Vial,FS-RETATRUTIDE-10mg-V,$50,Yes
+RETA-3,Metabolic Research,10mg,Box of 10 Vials,FS-RETATRUTIDE-10mg-B,$225,Yes
+RETA-3,Metabolic Research,20mg,Single Vial,FS-RETATRUTIDE-20mg-V,$75,Yes
+RETA-3,Metabolic Research,20mg,Box of 10 Vials,FS-RETATRUTIDE-20mg-B,$360,Yes
+RETA-3,Metabolic Research,30mg,Single Vial,FS-RETATRUTIDE-30mg-V,$100,Yes
+RETA-3,Metabolic Research,30mg,Box of 10 Vials,FS-RETATRUTIDE-30mg-B,$440,Yes
+TIRZ-2,Metabolic Research,10mg,Single Vial,FS-TIRZEPATIDE-10mg-V,$55,Yes
+TIRZ-2,Metabolic Research,10mg,Box of 10 Vials,FS-TIRZEPATIDE-10mg-B,$325,Yes
+TIRZ-2,Metabolic Research,20mg,Single Vial,FS-TIRZEPATIDE-20mg-V,$75,Yes
+TIRZ-2,Metabolic Research,20mg,Box of 10 Vials,FS-TIRZEPATIDE-20mg-B,$400,Yes
+TIRZ-2,Metabolic Research,30mg,Single Vial,FS-TIRZEPATIDE-30mg-V,$100,Yes
+TIRZ-2,Metabolic Research,30mg,Box of 10 Vials,FS-TIRZEPATIDE-30mg-B,$425,Yes
+GHK-Cu,Dermal Research,50mg,Single Vial,FS-GHK-CU-50mg-V,$30,Yes
+GHK-Cu,Dermal Research,50mg,Box of 10 Vials,FS-GHK-CU-50mg-B,$115,Yes
+GHK-Cu,Dermal Research,100mg,Single Vial,FS-GHK-CU-100mg-V,$45,Yes
+GHK-Cu,Dermal Research,100mg,Box of 10 Vials,FS-GHK-CU-100mg-B,$140,Yes
+BPC-157,Tissue Repair Research,5mg,Single Vial,FS-BPC-157-5mg-V,$20,Yes
+BPC-157,Tissue Repair Research,5mg,Box of 10 Vials,FS-BPC-157-5mg-B,$120,Yes
+BPC-157,Tissue Repair Research,10mg,Single Vial,FS-BPC-157-10mg-V,$40,Yes
+BPC-157,Tissue Repair Research,10mg,Box of 10 Vials,FS-BPC-157-10mg-B,$205,Yes
+TB-500,Tissue Repair Research,5mg,Single Vial,FS-TB-500-5mg-V,$27,Yes
+TB-500,Tissue Repair Research,5mg,Box of 10 Vials,FS-TB-500-5mg-B,$250,Yes
+TB-500,Tissue Repair Research,10mg,Single Vial,FS-TB-500-10mg-V,$40,Yes
+TB-500,Tissue Repair Research,10mg,Box of 10 Vials,FS-TB-500-10mg-B,$290,Yes
+MOTS-c,Cellular Research,10mg,Single Vial,FS-MOTS-C-10mg-V,$45,Yes
+MOTS-c,Cellular Research,10mg,Box of 10 Vials,FS-MOTS-C-10mg-B,$200,Yes
+MOTS-c,Cellular Research,20mg,Single Vial,FS-MOTS-C-20mg-V,$55,Yes
+MOTS-c,Cellular Research,20mg,Box of 10 Vials,FS-MOTS-C-20mg-B,$340,Yes
+Selank,Neuro Research,5mg,Single Vial,FS-SELANK-5mg-V,$25,Yes
+Selank,Neuro Research,5mg,Box of 10 Vials,FS-SELANK-5mg-B,,Yes
+Selank,Neuro Research,10mg,Single Vial,FS-SELANK-10mg-V,$40,Yes
+Selank,Neuro Research,10mg,Box of 10 Vials,FS-SELANK-10mg-B,$195,Yes
+Semax,Neuro Research,5mg,Single Vial,FS-SEMAX-5mg-V,$30,Yes
+Semax,Neuro Research,5mg,Box of 10 Vials,FS-SEMAX-5mg-B,,Yes
+Semax,Neuro Research,10mg,Single Vial,FS-SEMAX-10mg-V,$40,Yes
+Semax,Neuro Research,10mg,Box of 10 Vials,FS-SEMAX-10mg-B,$300,Yes
+NAD+,Circadian Research,100mg,Single Vial,FS-NAD-PLUS-100mg-V,$35,Yes
+NAD+,Circadian Research,100mg,Box of 10 Vials,FS-NAD-PLUS-100mg-B,,Yes
+NAD+,Circadian Research,500mg,Single Vial,FS-NAD-PLUS-500mg-V,$45,Yes
+NAD+,Circadian Research,500mg,Box of 10 Vials,FS-NAD-PLUS-500mg-B,,Yes
+NAD+,Circadian Research,1000mg,Single Vial,FS-NAD-PLUS-1000mg-V,$75,Yes
+NAD+,Circadian Research,1000mg,Box of 10 Vials,FS-NAD-PLUS-1000mg-B,$575,Yes
+Tesamorelin,Secretagogue Research,5mg,Single Vial,FS-TESAMORELIN-5mg-V,$45,Yes
+Tesamorelin,Secretagogue Research,5mg,Box of 10 Vials,FS-TESAMORELIN-5mg-B,$300,Yes
+Tesamorelin,Secretagogue Research,10mg,Single Vial,FS-TESAMORELIN-10mg-V,$65,Yes
+Tesamorelin,Secretagogue Research,10mg,Box of 10 Vials,FS-TESAMORELIN-10mg-B,$375,Yes
+KLOW,Tissue Repair Research,80mg,Single Vial,FS-KLOW-80mg-V,$75,Yes
+KLOW,Tissue Repair Research,80mg,Box of 10 Vials,FS-KLOW-80mg-B,$385,Yes
+Survodutide,Metabolic Research,10mg,Single Vial,FS-SURVODUTIDE-10mg-V,$60,Yes
+Survodutide,Metabolic Research,10mg,Box of 10 Vials,FS-SURVODUTIDE-10mg-B,$360,Yes
+AOD-9604,Metabolic Research,10mg,Single Vial,FS-AOD-9604-10mg-V,$45,Yes
+AOD-9604,Metabolic Research,10mg,Box of 10 Vials,FS-AOD-9604-10mg-B,$250,Yes
+LIPO-C,Metabolic Research,10ml,Single Vial,FS-LIPO-C-10ml-V,$40,Yes
+LIPO-C,Metabolic Research,10ml,Box of 10 Vials,FS-LIPO-C-10ml-B,$280,Yes
+L-Carnitine,Metabolic Research,10ml,Single Vial,FS-L-CARNITINE-10ml-V,$30,Yes
+L-Carnitine,Metabolic Research,10ml,Box of 10 Vials,FS-L-CARNITINE-10ml-B,$180,Yes
+Ipamorelin,Secretagogue Research,10mg,Single Vial,FS-IPAMORELIN-10mg-V,$35,Yes
+Ipamorelin,Secretagogue Research,10mg,Box of 10 Vials,FS-IPAMORELIN-10mg-B,$200,Yes
+Sermorelin,Secretagogue Research,10mg,Single Vial,FS-SERMORELIN-10mg-V,$35,Yes
+Sermorelin,Secretagogue Research,10mg,Box of 10 Vials,FS-SERMORELIN-10mg-B,$200,Yes
+CJC-1295 w/o DAC,Secretagogue Research,5mg + 5mg,Single Vial,FS-CJC-1295-5mg + 5mg-V,$45,Yes
+CJC-1295 w/o DAC,Secretagogue Research,5mg + 5mg,Box of 10 Vials,FS-CJC-1295-5mg + 5mg-B,$250,Yes
+IGF-1LR3,Secretagogue Research,.1mg,Single Vial,FS-IGF-1LR3-.1mg-V,$55,Yes
+IGF-1LR3,Secretagogue Research,.1mg,Box of 10 Vials,FS-IGF-1LR3-.1mg-B,$360,Yes
+KissPeptin-10,Secretagogue Research,10mg,Single Vial,FS-KISSPEPTIN-10-10mg-V,$45,Yes
+KissPeptin-10,Secretagogue Research,10mg,Box of 10 Vials,FS-KISSPEPTIN-10-10mg-B,$250,Yes
+Epithalon,Cellular Research,10mg,Single Vial,FS-EPITHALON-10mg-V,$40,Yes
+Epithalon,Cellular Research,10mg,Box of 10 Vials,FS-EPITHALON-10mg-B,$220,Yes
+Cartalax,Cellular Research,20mg,Single Vial,FS-CARTALAX-20mg-V,$45,Yes
+Cartalax,Cellular Research,20mg,Box of 10 Vials,FS-CARTALAX-20mg-B,$240,Yes
+Glutathione,Cellular Research,1500mg,Single Vial,FS-GLUTATHIONE-1500mg-V,$50,Yes
+Glutathione,Cellular Research,1500mg,Box of 10 Vials,FS-GLUTATHIONE-1500mg-B,$320,Yes
+SS-31,Cellular Research,10mg,Single Vial,FS-SS-31-10mg-V,$55,Yes
+SS-31,Cellular Research,10mg,Box of 10 Vials,FS-SS-31-10mg-B,$340,Yes
+KPV,Tissue Repair Research,10mg,Single Vial,FS-KPV-10mg-V,$35,Yes
+KPV,Tissue Repair Research,10mg,Box of 10 Vials,FS-KPV-10mg-B,$190,Yes
+ARA-290,Tissue Repair Research,10mg,Single Vial,FS-ARA-290-10mg-V,$50,Yes
+ARA-290,Tissue Repair Research,10mg,Box of 10 Vials,FS-ARA-290-10mg-B,$300,Yes
+TB/BPC Wolverine,Tissue Repair Research,10mg + 10mg,Single Vial,FS-WOLVERINE-10mg + 10mg-V,$70,Yes
+TB/BPC Wolverine,Tissue Repair Research,10mg + 10mg,Box of 10 Vials,FS-WOLVERINE-10mg + 10mg-B,$400,Yes
+AHK-Cu,Dermal Research,100mg,Single Vial,FS-AHK-CU-100mg-V,$40,Yes
+AHK-Cu,Dermal Research,100mg,Box of 10 Vials,FS-AHK-CU-100mg-B,$150,Yes
+MT-2,Dermal Research,10mg,Single Vial,FS-MT-2-10mg-V,$30,Yes
+MT-2,Dermal Research,10mg,Box of 10 Vials,FS-MT-2-10mg-B,$160,Yes
