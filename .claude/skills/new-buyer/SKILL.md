@@ -7,8 +7,9 @@ description: >
   "new lead from my buyer form", "Leonel's Real Estate Questionnaire / Buyer", or when the user
   forwards/pastes a Jotform email whose subject contains "Real Estate Questionnaire / Buyer" or
   "Real Estate Buyer Questionnaire". Executes a full buyer-lead workflow: extract every
-  questionnaire field → build a clean readout → forward the lead to the lender for pre-approval →
-  draft a personalized outreach text to the buyer.
+  questionnaire field → build a clean readout → log the lead everywhere (MLS prospect,
+  Google Contacts, and the Lead Tracker Google Sheet) → forward the lead to the lender for
+  pre-approval → draft a personalized outreach text to the buyer.
 user-invocable: true
 ---
 
@@ -20,8 +21,10 @@ When Leonel receives a **Buyer Questionnaire** submission (from his Jotform buye
 "**Leonel's Real Estate Questionnaire / Buyer**", form ID `251486534442156`), this skill:
 
 1. Extracts every field from the submission into a clean, scannable readout.
-2. Forwards the lead to Leonel's lender for pre-approval.
-3. Drafts a personalized first-contact text message to the buyer.
+2. **Logs the lead in every place it belongs** — MLS (Paragon prospect + saved search),
+   Google Contacts, and the **Lead Tracker** Google Sheet.
+3. Forwards the lead to Leonel's lender for pre-approval.
+4. Drafts a personalized first-contact text message to the buyer.
 
 Leonel reviews everything before anything is sent. Claude prepares; Leonel sends.
 
@@ -110,7 +113,71 @@ Flag hot leads: **pre-approved + desire 4-5 + timeline ≤ 3 months** → call t
 
 ---
 
-## Step 3 — Forward the Lead to the Lender
+## Step 3 — Log the Lead Everywhere (MLS · Google Contacts · Lead Tracker)
+
+Every new buyer gets recorded in all three places so nothing slips through the cracks. Use
+the **Claude in Chrome** browser tool for the destinations that have no direct API
+(same pattern as the Forewarn lookup in the `sold-com-referral` skill). Confirm each entry
+with Leonel as you go, or batch them and confirm once — ask his preference if unsure.
+
+### 3a — MLS (RANW Paragon) — add as a Buyer Prospect + Saved Search
+Log in to Paragon and set the buyer up so listings auto-flow to them:
+1. Go to **Contacts → Add Contact** and create the buyer (name, phone, email).
+2. Tag/type the contact as a **Buyer / Prospect**.
+3. Create a **Saved Search / Auto-Email (Prospect)** matching their criteria:
+   - **Area(s):** from "What areas are you wanting to live in?" (e.g. Green Bay)
+   - **Price:** from their price range (e.g. $100k – $150k)
+   - **Beds:** ≥ requested (e.g. 3+)
+   - **Baths:** ≥ requested (e.g. 2+)
+   - **Garage / car storage:** ≥ requested (e.g. 1+)
+   - **Basement:** apply if it's a stated preference (soft filter if "not a deal breaker")
+4. Set the auto-email to notify the buyer of new/updated matches. Confirm the schedule
+   (e.g. ASAP/daily) with Leonel.
+
+### 3b — Google Contacts — create the contact
+Create a new Google contact for the buyer:
+- **Name**, **Phone**, **Email** (and the co-buyer as a separate/linked contact if present)
+- **Label:** `Buyer Lead` (and/or `Real Estate`)
+- **Notes:** timeline, price range, beds/baths, target area, pre-approval status, source
+  ("Buyer Questionnaire")
+- Company/where-met optional: `LC Real Estate — Buyer Questionnaire`
+
+> There's also a **"Google Contacts"** spreadsheet in Leonel's Drive that mirrors his
+> contacts — if he keeps that in sync, add a matching row there too.
+
+### 3c — Lead Tracker (Google Sheet) — append a row
+Add the buyer as a new row in the **Lead Tracker** sheet
+(`Lead Tracker`, file ID `1gdj9EgMDEdGUGsf4VrfPOY2atyzETK1u4gc1g3aOXqY`). Match the existing
+columns in order:
+
+| Column | Value for a buyer questionnaire lead |
+|---|---|
+| Rating | A / B / C — A if pre-approved + desire 4-5 + timeline ≤ 3 mo |
+| Agent | Leonel Cortes |
+| Client Name | Buyer's full name |
+| Client Phone # | Buyer's phone |
+| Client Email | Buyer's email |
+| Lead Date | Date the questionnaire came in |
+| First Contact Date | Fill when Leonel first reaches out |
+| Next Scheduled Touch | Set a follow-up date |
+| Client Type | `Buyer` |
+| Source | `Buyer Questionnaire` |
+| Property Type | `Residential` (default) |
+| Property Value | Target price (use top of their range, e.g. $150,000) |
+| Potential Revenue Value | ≈ 3% of property value |
+| Added to CRM | `Yes` once 3a/3b are done |
+| Probability | From pre-approval + desire (e.g. Yes + 5/5 → 80-90%) |
+| Status | `New Lead` |
+| Win / Loss | leave blank |
+| Notes | Beds/baths, area, timeline, "needs to sell?", kids, free-text notes |
+
+> No Google Sheets API tool is connected in this environment, so append the row via the
+> **Claude in Chrome** browser tool (open the sheet and add the row), the same way the MLS
+> and Contacts steps work. If Leonel prefers, present the row values for him to paste.
+
+---
+
+## Step 4 — Forward the Lead to the Lender
 
 Leonel routes buyer leads to his lender for pre-approval / financing. Prepare a
 **forward** of the original Jotform email to the lender.
@@ -127,7 +194,7 @@ tool to create the draft/forward; do not send without Leonel's OK.
 
 ---
 
-## Step 4 — Determine Language
+## Step 5 — Determine Language
 
 Check the buyer's name and notes for language clues.
 - Spanish-speaking lead → Spanish outreach text.
@@ -135,7 +202,7 @@ Check the buyer's name and notes for language clues.
 
 ---
 
-## Step 5 — Draft Buyer Outreach Text
+## Step 6 — Draft Buyer Outreach Text
 
 Personalize with the buyer's first name, target area, timeline, and anything notable from
 their notes.
@@ -176,16 +243,18 @@ presupuesto exacto — trabajo con un excelente prestamista que lo puede iniciar
 
 ---
 
-## Step 6 — Present & Confirm
+## Step 7 — Present & Confirm
 
 Show Leonel:
 1. The lead readout (Step 2).
-2. The forward-to-lender draft (Step 3).
-3. The buyer outreach text (Step 5).
+2. Where the lead was logged — MLS prospect, Google Contacts, Lead Tracker row (Step 3).
+3. The forward-to-lender draft (Step 4).
+4. The buyer outreach text (Step 6).
 
-Ask: **"Ready to forward this to Michelle and text [First Name] at [phone]?"**
+Ask: **"Ready to log this everywhere, forward it to Michelle, and text [First Name] at [phone]?"**
 
 Once confirmed:
+- Save the MLS prospect + saved search, Google contact, and Lead Tracker row.
 - Send/queue the forward to Michelle Clark.
 - Copy the outreach text for Leonel to send, or open the SMS with the number pre-filled.
 
@@ -217,11 +286,14 @@ If Leonel wants to send the questionnaire to a new prospective buyer:
 - [ ] Submission found / pasted
 - [ ] All questionnaire fields extracted
 - [ ] Readout built (hot lead flagged if applicable)
+- [ ] Logged in MLS (Paragon prospect + saved search / auto-email)
+- [ ] Added to Google Contacts (label: Buyer Lead)
+- [ ] Row appended to Lead Tracker Google Sheet
 - [ ] Forward-to-lender draft prepared (Michelle Clark)
 - [ ] Language determined (EN/ES)
 - [ ] Buyer outreach text drafted and personalized
 - [ ] Leonel reviewed and confirmed
-- [ ] Lead forwarded + outreach sent/copied
+- [ ] Lead logged everywhere + forwarded + outreach sent/copied
 
 ---
 
