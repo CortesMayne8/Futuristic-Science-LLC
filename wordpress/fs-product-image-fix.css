@@ -1,0 +1,56 @@
+/* ============================================================
+   Futuristic Science — product image fix
+   ------------------------------------------------------------
+   Symptom: vial photos render as a hard-cropped square close-up
+   (label blown up, cap and "100mg" cut off).
+
+   Cause: the vial PNGs are tall (807 x 1956, ~1:2.4). Anything
+   that forces them into a square frame with `object-fit: cover`
+   center-crops straight through the middle of the label.
+
+   Fix: never crop product photography — letterbox it. Every
+   product image is fitted with `object-fit: contain` inside its
+   frame, so the whole vial always shows.
+
+   Paste into Appearance > Customize > Additional CSS, or leave it
+   to the child theme (same rules ship in style.css v1.1.0).
+   ============================================================ */
+
+.woocommerce div.product div.images img,
+.woocommerce div.product .woocommerce-product-gallery__image img,
+.woocommerce ul.products li.product img,
+.woocommerce ul.products li.product a img,
+.wc-block-grid__product-image img,
+.wp-block-woocommerce-product-image img,
+.elementor-widget-woocommerce-product-images img,
+.elementor-widget-wc-archive-products img,
+img.attachment-woocommerce_thumbnail,
+img.attachment-woocommerce_single,
+img.wp-post-image {
+  object-fit: contain !important;
+  object-position: center center !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  background: transparent !important;
+}
+
+/* Keep the square product card, but fit the vial inside it
+   instead of cropping to fill. */
+.woocommerce ul.products li.product a img,
+.wc-block-grid__product-image img {
+  aspect-ratio: 1 / 1;
+  padding: 10px;
+}
+
+/* Single-product gallery: give the tall vial room to breathe. */
+.woocommerce div.product div.images .woocommerce-product-gallery__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.woocommerce div.product div.images .woocommerce-product-gallery__image img {
+  max-height: 620px;
+  width: auto !important;
+  margin: 0 auto;
+}
