@@ -36,6 +36,10 @@ Create these two **before** importing so variations map cleanly:
    Library — no manual upload needed. (Give it a minute; 30 images.)
 4. Spot-check a product (e.g. TIRZ-2): it should be a **variable product** with strength options,
    Single Vial / Box of 10 pricing, an image, category, and the RUO short description.
+5. Variation rows carry their own **Images** URL for every multi-strength product, so a 5mg
+   variation shows a 5mg vial instead of falling back to the parent render. If you are updating an
+   existing store rather than importing fresh, tick **"Update existing products"** — matching is by
+   SKU. Details: `assets/variants/README.md`.
 
 Categories created by the import: Tissue Repair, Dermal, Metabolic, Secretagogue, Cellular,
 Neuro, Circadian Research.
@@ -68,7 +72,16 @@ Now follow `ELEMENTOR-BUILD-PLAN.md`:
   Terms). **Lawyer-review the legal pages.**
 - Add the **age (21+) + researcher** gate as Elementor Popups (show once per session via cookie)
 
-## 7. Reference while building
+## 7. Cart & checkout snippets (WPCode)
+Add each as **Code Snippets → Add New → "Add Your Custom Code" → PHP Snippet**, pasting the file
+*without* its opening `<?php` line, Insertion **Auto Insert / Run Everywhere**, then Activate:
+
+- **`wordpress/fs-cart-toast.php`** — branded "added to cart" toast.
+- **`wordpress/fs-cart-polish.php`** — cart & checkout polish. Turns the black trust-badge bars
+  into cream-and-gold pills, fixes the pale-gold TOTAL, and puts ink type on the gold CTA.
+  See it before installing: open `wordpress/fs-cart-polish-preview.html` in a browser.
+
+## 8. Reference while building
 - Desktop look: `screenshots/` · Mobile look: `screenshots/mobile/`
 - Brand rules: `DESIGN-SYSTEM.md`
 

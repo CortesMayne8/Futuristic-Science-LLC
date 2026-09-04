@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart Polish — Before / After</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#C8A24C; --gold-deep:#8F6E2B; --gold-light:#FBF6E9;
+    --ink:#0B1B33; --ink-deep:#08111F; --teal:#12877F;
+    --line:rgba(11,27,51,.10); --muted:#6B7686; --cream:#FBF9F3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#EEF0F4;font-family:'Manrope',system-ui,sans-serif;color:var(--ink);padding:28px 16px 64px}
+  h1{font-size:22px;margin:0 0 6px;letter-spacing:-.01em}
+  .lede{color:var(--muted);font-size:14px;margin:0 0 26px;max-width:60ch;line-height:1.55}
+  .cols{display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
+  .col{flex:1 1 330px;max-width:380px}
+  .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+       padding:5px 11px;border-radius:999px;margin-bottom:10px}
+  .tag.bad{background:#FBE7E5;color:#C8403A}
+  .tag.good{background:#E4F4EC;color:#1F9D6B}
+  .card{background:var(--cream);border-radius:22px;padding:22px 20px;box-shadow:0 16px 40px rgba(11,27,51,.10)}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+  .amt{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+  .badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:20px 0 16px}
+  .note{font-size:12.5px;color:var(--muted);line-height:1.6;margin:12px 2px 0}
+
+  /* ---------- BEFORE: what the live cart is doing today ---------- */
+  .b .row span:first-child{font-size:15px;color:#3B4657}
+  .b .total span:first-child{font-size:19px;letter-spacing:.02em}
+  .b .total{border-bottom:0;border-top:2px solid #000;padding-top:16px}
+  .b .total .amt{font-size:26px;font-weight:700;color:#E0C277}   /* pale gold on cream */
+  .b .badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg,#1B1F22,#12161A);
+            color:#8D97A3;font-size:13px;font-weight:600;padding:7px 12px;border-radius:2px}
+  .b .badge svg{width:15px;height:15px;color:var(--teal)}
+  .b .cta{display:block;width:100%;margin-top:16px;padding:17px;border:0;border-radius:14px;
+          background:#D3A97F;color:#fff;font:800 16px 'Manrope',sans-serif;text-align:center}
+
+  /* ---------- AFTER: what fs-cart-polish.php ships ---------- */
+  .a .row span:first-child{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .a .row .amt{font-weight:600;font-size:15px}
+  .a .total{border-bottom:0;border-top:1px solid var(--line);padding-top:18px}
+  .a .total span:first-child{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  .a .total .amt{font-size:26px;font-weight:800;color:var(--gold-deep);letter-spacing:-.01em}
+  .a .badge{display:inline-flex;align-items:center;gap:8px;
+            background:linear-gradient(180deg,#fff 0%,var(--gold-light) 100%);
+            border:1px solid rgba(200,162,76,.42);border-radius:999px;padding:9px 16px;
+            color:var(--ink);font-size:12.5px;font-weight:700;line-height:1.2;white-space:nowrap;
+            box-shadow:0 1px 2px rgba(11,27,51,.06), inset 0 1px 0 rgba(255,255,255,.9)}
+  .a .badge svg{width:16px;height:16px;color:var(--teal)}
+  .a .cta{display:block;width:100%;margin-top:16px;padding:17px;border-radius:14px;
+          border:1px solid rgba(143,110,43,.55);
+          background:linear-gradient(135deg,#E0C277 0%,#C8A24C 45%,#AE8838 100%);
+          color:var(--ink-deep);font:800 16px 'Manrope',sans-serif;letter-spacing:.02em;text-align:center;
+          box-shadow:0 8px 24px rgba(200,162,76,.32)}
+</style>
+</head>
+<body>
+<h1>Cart summary — before / after</h1>
+<p class="lede">Left is the live cart today: three black chips, a pale-gold total that all but vanishes on cream,
+a hard black rule, and a washed-out white-on-tan button. Right is what <code>fs-cart-polish.php</code> renders.</p>
+
+<div class="cols">
+  <div class="col b">
+    <span class="tag bad">Before</span>
+    <div class="card">
+      <div class="row"><span>Subtotal</span><span class="amt">$20.00</span></div>
+      <div class="row"><span>Standard Delivery</span><span class="amt">$12.50</span></div>
+      <div class="row"><span>WI Sales Tax</span><span class="amt">$1.79</span></div>
+      <div class="row total"><span>TOTAL</span><span class="amt">$34.29</span></div>
+      <div class="badges">
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/></svg>Secure checkout</span>
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>COA verified</span>
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ships from USA</span>
+      </div>
+      <div class="cta">Proceed to checkout</div>
+    </div>
+    <p class="note">Dark chip styling on a cream page, 2.4:1 button text, and a total the eye slides straight past.</p>
+  </div>
+
+  <div class="col a">
+    <span class="tag good">After</span>
+    <div class="card">
+      <div class="row"><span>Subtotal</span><span class="amt">$20.00</span></div>
+      <div class="row"><span>Standard Delivery</span><span class="amt">$12.50</span></div>
+      <div class="row"><span>WI Sales Tax</span><span class="amt">$1.79</span></div>
+      <div class="row total"><span>Total</span><span class="amt">$34.29</span></div>
+      <div class="badges">
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/></svg>Secure checkout</span>
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>COA verified</span>
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ships from USA</span>
+      </div>
+      <div class="cta">Proceed to checkout</div>
+    </div>
+    <p class="note">Cream-and-gold pills with ink text and a teal mark, deep-gold total, hairline rules,
+    and the brand's gold CTA with ink type.</p>
+  </div>
+</div>
+</body>
+</html>
