@@ -84,7 +84,7 @@ function HomeScreen({ onNav, onAdd, onOpenProduct }) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 22 }}>
               {featured.map((p) => (
               <ProductCard key={p.id} name={p.name} subtitle={t('sub.' + p.id)} size={p.size} price={p.price}
-                purity={p.purity.replace(/\..*/, '') + '%+'} purityLabel={t('word.purity')}
+                purity={p.purity ? p.purity.replace(/\..*/, '') + '%+' : null} purityLabel={t('word.purity')}
                 selectLabel={t('btn.selectOptions')} outOfStockLabel={t('btn.outOfStock')}
                 image={window.R(p.image || D.image)} inStock={p.inStock} fromPrice
                 badge={p.id === 'glow' ? { tone: 'gold', label: t('badge.bestseller') } : null}

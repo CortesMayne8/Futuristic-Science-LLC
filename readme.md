@@ -51,12 +51,29 @@ ui_kits/website/        The full storefront UI kit — start here (index.html)
 assets/                 Full-resolution logos and product-vial photography
 assets-min/             Optimized/minified versions used by the live site
 uploads/                Raw source images (originals, no-background cutouts, drafts)
-exports/                Audit screenshots + a WooCommerce product CSV
+exports/                Audit screenshots + the WooCommerce product CSV (generated)
+tools/                  Build scripts: WooCommerce CSV export, design-system bundle rebuild
 _ds_bundle.js           Compiled design-system bundle loaded by the storefront
 readme.md               This file
 DESIGN-SYSTEM.md        Full brand + design-system guidelines (colors, voice, motion, etc.)
 SKILL.md                Agent skill definition for generating on-brand interfaces
 ```
+
+## Updating prices
+
+`ui_kits/website/data.js` is the single source of truth for the catalog. Each strength variant
+carries three tiers — `vial` (single), `half` (5-vial kit) and `box` (10-vial kit); a tier set to
+`null` is simply not offered for that strength.
+
+After editing it, regenerate the two artifacts that derive from it:
+
+```bash
+npm install            # once — pulls @babel/standalone for the build scripts
+npm run build:bundle   # refresh _ds_bundle.js from the JSX/JS sources
+npm run build:csv      # refresh exports/woocommerce-import-ready.csv
+```
+
+`npm run check:bundle` reports whether the bundle has drifted from the sources without writing.
 
 ## Where to go next
 - **Building the site?** Start in `ui_kits/website/` — `README.md` there maps every screen.

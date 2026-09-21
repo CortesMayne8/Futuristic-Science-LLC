@@ -175,7 +175,7 @@ function ShopScreen({ onOpenProduct }) {
 
       {/* research-category chip bar */}
       <div style={{ background: 'var(--white)', borderBottom: '1px solid var(--border-subtle)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '16px 28px', display: 'flex', flexWrap: 'nowrap', alignItems: 'center', gap: 7, overflowX: 'auto' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '16px 28px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 7 }}>
           {D.categories.map((c) => {
             const active = cat === c;
             return (
@@ -244,7 +244,7 @@ function ShopScreen({ onOpenProduct }) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }}>
             {list.map((p) => (
               <ProductCard key={p.id} name={p.name} subtitle={t('sub.' + p.id)} size={p.size} price={p.price}
-                purity={p.purity.replace(/\..*/, '') + '%+'} purityLabel={t('word.purity')}
+                purity={p.purity ? p.purity.replace(/\..*/, '') + '%+' : null} purityLabel={t('word.purity')}
                 selectLabel={t('btn.selectOptions')} outOfStockLabel={t('btn.outOfStock')}
                 image={window.R(p.image || D.image)} inStock={p.inStock} fromPrice
                 badge={p.featured ? { tone: 'gold', label: t('badge.featured') } : null}

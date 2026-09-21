@@ -48,9 +48,11 @@ export function ProductCard({
             <Badge tone={badge.tone || 'gold'} variant="solid" size="sm">{badge.label}</Badge>
           </div>
         )}
-        <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2 }}>
-          <Badge tone="gold" variant="soft" size="sm">{purity} {purityLabel}</Badge>
-        </div>
+        {purity && (
+          <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2 }}>
+            <Badge tone="gold" variant="soft" size="sm">{purity} {purityLabel}</Badge>
+          </div>
+        )}
         {image && (
           <img src={image} alt={name} style={{
             height: '82%', objectFit: 'contain',

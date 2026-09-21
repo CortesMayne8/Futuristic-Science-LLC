@@ -1,0 +1,13 @@
+{
+  "name": "futuristic-science-storefront",
+  "private": true,
+  "description": "Build scripts for the Futuristic Science storefront: catalog exports and the design-system bundle.",
+  "scripts": {
+    "build:csv": "node tools/build-woocommerce-csv.js",
+    "build:bundle": "node tools/rebuild-ds-bundle.js",
+    "check:bundle": "node tools/rebuild-ds-bundle.js --check"
+  },
+  "devDependencies": {
+    "@babel/standalone": "^7.29.0"
+  }
+}

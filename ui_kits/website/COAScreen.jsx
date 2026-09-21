@@ -16,8 +16,10 @@ function COAScreen() {
     });
   };
 
-  const str = D.products.filter((p) => p.category === 'Metabolic Research');
-  const others = D.products.filter((p) => p.category !== 'Metabolic Research')
+  // Lab supplies (diluents) carry no HPLC certificate, so they stay out of the library.
+  const assayed = D.products.filter((p) => !p.supplies);
+  const str = assayed.filter((p) => p.category === 'Metabolic Research');
+  const others = assayed.filter((p) => p.category !== 'Metabolic Research')
     .sort((a, b) => a.name.localeCompare(b.name));
 
   const [open, setOpen] = React.useState({});
@@ -34,7 +36,7 @@ function COAScreen() {
     setSearched(q);
     if (!q) { setOpen({}); return; }
     const next = {};
-    D.products.forEach((p) => {
+    assayed.forEach((p) => {
       const ql = q.toLowerCase();
       if (p.name.toLowerCase().includes(ql) || certsFor(p).some((c) => c.batch.toLowerCase().includes(ql))) next[p.id] = true;
     });

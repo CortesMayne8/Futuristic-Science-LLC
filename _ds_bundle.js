@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"1c82d1a101e6","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"10937c7cb3ce","ui_kits/website/COAScreen.jsx":"9e527c9d1b16","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"b91cc2ca7579","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"76dd1f30ea92","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"7c798f02bdae","ui_kits/website/ShopScreen.jsx":"2af964fd9f63","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"a5f47cf988cc","ui_kits/website/i18n.js":"f9f9e7c6984d","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"1b2f4a285c4c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"c418a20581d2","ui_kits/website/i18n.js":"f1212d4826aa","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -899,7 +899,7 @@ function ProductCard({
     tone: badge.tone || 'gold',
     variant: "solid",
     size: "sm"
-  }, badge.label)), /*#__PURE__*/React.createElement("div", {
+  }, badge.label)), purity && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       top: 12,
@@ -1418,12 +1418,13 @@ Object.assign(window, {
 
 // ui_kits/website/AuthGate.jsx
 try { (() => {
-/* AuthGate — hard login/registration wall shown after the age gate.
+/* AuthGate — sign-in wall shown when a visitor opens their cart / proceeds to checkout.
    Multiple sign-in methods: Google, Apple, email/password, magic link.
    Demo only: any submit (with the qualified-researcher box checked) enters the site.
    Wire to your store login (WooCommerce / Auth0 / Firebase) to make it real. */
 function AuthGate({
-  onAuth
+  onAuth,
+  onDismiss
 }) {
   const {
     Button
@@ -1472,8 +1473,11 @@ function AuthGate({
       borderRadius: 'var(--radius-md)'
     }
   }));
+
+  // Social sign-in (Google/Apple) authenticates directly — no extra registration gate.
+  // Researcher/compliance acknowledgments are enforced at checkout instead.
   const social = (label, icon) => /*#__PURE__*/React.createElement("button", {
-    onClick: go,
+    onClick: onAuth,
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -1619,7 +1623,36 @@ function AuthGate({
       boxShadow: '0 40px 100px rgba(0,0,0,.5)',
       margin: 'auto'
     }
-  }, /*#__PURE__*/React.createElement("img", {
+  }, onDismiss && /*#__PURE__*/React.createElement("button", {
+    onClick: onDismiss,
+    "aria-label": "Close",
+    style: {
+      position: 'absolute',
+      top: 14,
+      right: 14,
+      width: 32,
+      height: 32,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'var(--gray-500)',
+      borderRadius: 'var(--radius-pill)'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "18",
+    height: "18",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M18 6L6 18M6 6l12 12"
+  }))), /*#__PURE__*/React.createElement("img", {
     src: window.R("../../assets/emblem-mark.png"),
     alt: "",
     style: {
@@ -1790,8 +1823,11 @@ function COAScreen() {
       };
     });
   };
-  const str = D.products.filter(p => p.category === 'Metabolic Research');
-  const others = D.products.filter(p => p.category !== 'Metabolic Research').sort((a, b) => a.name.localeCompare(b.name));
+
+  // Lab supplies (diluents) carry no HPLC certificate, so they stay out of the library.
+  const assayed = D.products.filter(p => !p.supplies);
+  const str = assayed.filter(p => p.category === 'Metabolic Research');
+  const others = assayed.filter(p => p.category !== 'Metabolic Research').sort((a, b) => a.name.localeCompare(b.name));
   const [open, setOpen] = React.useState({});
   const [query, setQuery] = React.useState('');
   const [searched, setSearched] = React.useState('');
@@ -1808,7 +1844,7 @@ function COAScreen() {
       return;
     }
     const next = {};
-    D.products.forEach(p => {
+    assayed.forEach(p => {
       const ql = q.toLowerCase();
       if (p.name.toLowerCase().includes(ql) || certsFor(p).some(c => c.batch.toLowerCase().includes(ql))) next[p.id] = true;
     });
@@ -2392,7 +2428,52 @@ Object.assign(window, {
 
 // ui_kits/website/CheckoutScreen.jsx
 try { (() => {
-/* CheckoutScreen — fast, mobile-friendly checkout with order summary. */
+/* CheckoutScreen — luxury multi-step wizard checkout (Contact / Shipping / Payment / Review). */
+/* Extra i18n keys for validation + wizard chrome (registered at load). */
+Object.assign(window.FS_DICT.en, {
+  'co.optional': '(optional)',
+  'co.fieldRequired': 'Required',
+  'co.emailInvalid': 'Enter a valid email address',
+  'co.fieldsRequired': 'Please complete all required fields marked with *.',
+  'co.stepContact': 'Contact',
+  'co.stepShipping': 'Shipping',
+  'co.stepPayment': 'Payment',
+  'co.stepReview': 'Review',
+  'co.stepOf': 'Step {n} of 4',
+  'co.back': 'Back',
+  'co.continue': 'Continue',
+  'co.edit': 'Edit',
+  'co.contactSub': 'Where we send your order confirmation and updates.',
+  'co.shipSub': 'Where your research materials will be delivered.',
+  'co.paySub': 'Select your payment method. Instructions follow after you place the order.',
+  'co.reviewSub': 'Confirm your details and acknowledgments, then place your order.',
+  'co.secure': 'Secure checkout',
+  'co.reviewContact': 'Contact',
+  'co.reviewShip': 'Ship to',
+  'co.reviewPay': 'Payment'
+});
+Object.assign(window.FS_DICT.es, {
+  'co.optional': '(opcional)',
+  'co.fieldRequired': 'Obligatorio',
+  'co.emailInvalid': 'Ingresa un correo electrónico válido',
+  'co.fieldsRequired': 'Completa todos los campos obligatorios marcados con *.',
+  'co.stepContact': 'Contacto',
+  'co.stepShipping': 'Envío',
+  'co.stepPayment': 'Pago',
+  'co.stepReview': 'Revisar',
+  'co.stepOf': 'Paso {n} de 4',
+  'co.back': 'Atrás',
+  'co.continue': 'Continuar',
+  'co.edit': 'Editar',
+  'co.contactSub': 'A dónde enviamos la confirmación y las actualizaciones de tu pedido.',
+  'co.shipSub': 'A dónde se entregarán tus materiales de investigación.',
+  'co.paySub': 'Selecciona tu método de pago. Las instrucciones se muestran después de realizar el pedido.',
+  'co.reviewSub': 'Confirma tus datos y reconocimientos, luego realiza tu pedido.',
+  'co.secure': 'Pago seguro',
+  'co.reviewContact': 'Contacto',
+  'co.reviewShip': 'Enviar a',
+  'co.reviewPay': 'Pago'
+});
 function CheckoutScreen({
   cart,
   onNav
@@ -2410,15 +2491,100 @@ function CheckoutScreen({
   const shipping = subtotal > 0 ? 12 : 0;
   const total = subtotal + shipping;
   const ACKS = ['ackLawful', 'ackResearcher', 'ackNoHuman', 'ackLiability', 'ackFinal', 'ackAuthorized', 'ackChargeback', 'ackRecord'];
+  const [step, setStep] = React.useState(1);
   const [checks, setChecks] = React.useState({});
   const [tried, setTried] = React.useState(false);
   const [payMethod, setPayMethod] = React.useState('zelle');
+  const [placed, setPlaced] = React.useState(null);
+  const [fields, setFields] = React.useState({
+    email: '',
+    phone: '',
+    fullName: '',
+    institution: '',
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  });
+  const REQUIRED = ['email', 'phone', 'fullName', 'street', 'city', 'state', 'zip'];
+  const setF = k => e => setFields(f => ({
+    ...f,
+    [k]: e.target.value
+  }));
+  const emailOk = /^[^ @]+@[^ @]+[.][^ @]+$/.test(fields.email.trim());
+  const fieldsOk = REQUIRED.every(k => fields[k].trim()) && emailOk;
+  const step1Ok = fields.email.trim() && fields.phone.trim() && emailOk;
+  const step2Ok = ['fullName', 'street', 'city', 'state', 'zip'].every(k => fields[k].trim());
+  const fieldErr = k => {
+    if (!tried) return '';
+    if (!fields[k].trim()) return t('co.fieldRequired');
+    if (k === 'email' && !emailOk) return t('co.emailInvalid');
+    return '';
+  };
   const allChecked = ACKS.every(k => checks[k]);
   const toggle = k => setChecks(c => ({
     ...c,
     [k]: !c[k]
   }));
   const setAll = v => setChecks(v ? Object.fromEntries(ACKS.map(k => [k, true])) : {});
+  const PAY_LABELS = {
+    zelle: t('co.pay.zelle'),
+    cashapp: t('co.pay.cashapp'),
+    venmo: t('co.pay.venmo')
+  };
+
+  // Acceptance logging — records checkbox acceptance to the compliance sheet on Place Order.
+  const LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyOMpiSu5x4IWz_MSjj0IOMURRiy8pk8jls80TnGqXZ0JmFdQYhY6zk9uGXruZXdvMQ/exec';
+  const POLICY_VERSION = '2026-07-10';
+  const logAcceptance = () => {
+    const orderRef = 'FS-' + Date.now().toString(36).toUpperCase();
+    try {
+      const payload = {
+        orderRef,
+        name: fields.fullName.trim(),
+        email: fields.email.trim(),
+        phone: fields.phone.trim(),
+        paymentMethod: payMethod,
+        total: '$' + total.toFixed(2),
+        policyVersion: POLICY_VERSION,
+        acks: ACKS.filter(k => checks[k]),
+        notes: cart.map(x => x.name + ' (' + x.size + ') x' + x.qty).join('; ') + ' | Ship to: ' + [fields.institution.trim(), fields.street.trim(), fields.city.trim(), fields.state.trim(), fields.zip.trim()].filter(Boolean).join(', ')
+      };
+      fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({})).then(({
+        ip
+      }) => fetch(LOG_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: JSON.stringify({
+          ...payload,
+          ip: ip || ''
+        })
+      }));
+    } catch (err) {/* logging must never block checkout */}
+    return orderRef;
+  };
+  const goTo = n => {
+    setTried(false);
+    setStep(n);
+  };
+  const goBack = () => goTo(Math.max(1, step - 1));
+  const goNext = () => {
+    if (step === 1) {
+      if (!step1Ok) return setTried(true);
+      goTo(2);
+    } else if (step === 2) {
+      if (!step2Ok) return setTried(true);
+      goTo(3);
+    } else if (step === 3) {
+      goTo(4);
+    } else if (step === 4) {
+      if (!allChecked) return setTried(true);
+      setPlaced(logAcceptance());
+    }
+  };
   if (cart.length === 0) {
     return /*#__PURE__*/React.createElement("div", {
       style: {
@@ -2452,111 +2618,319 @@ function CheckoutScreen({
       onClick: () => onNav('shop')
     }, t('co.browse'))));
   }
+  const STEPS = [{
+    n: 1,
+    label: t('co.stepContact')
+  }, {
+    n: 2,
+    label: t('co.stepShipping')
+  }, {
+    n: 3,
+    label: t('co.stepPayment')
+  }, {
+    n: 4,
+    label: t('co.stepReview')
+  }];
+  const eyebrow = text => /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: 11.5,
+      fontWeight: 800,
+      letterSpacing: '.16em',
+      textTransform: 'uppercase',
+      color: 'var(--gold-700)',
+      marginBottom: 9
+    }
+  }, text);
+  const stepTitle = (title, sub) => /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 22
+    }
+  }, eyebrow(t('co.stepOf', {
+    n: step
+  })), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 25,
+      fontWeight: 800,
+      color: 'var(--ink-900)',
+      letterSpacing: '-.02em',
+      margin: '0 0 6px'
+    }
+  }, title), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 13.5,
+      lineHeight: 1.55,
+      color: 'var(--text-muted)',
+      margin: 0
+    }
+  }, sub), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 2,
+      width: 44,
+      background: 'var(--gold-500)',
+      marginTop: 16,
+      borderRadius: 2
+    }
+  }));
+  const reviewRow = (label, value, toStep) => /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      gap: 14,
+      padding: '13px 0',
+      borderBottom: '1px solid var(--border-subtle)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: 11,
+      fontWeight: 800,
+      letterSpacing: '.1em',
+      textTransform: 'uppercase',
+      color: 'var(--text-muted)',
+      marginBottom: 4
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13.5,
+      lineHeight: 1.5,
+      color: 'var(--ink-900)',
+      wordBreak: 'break-word'
+    }
+  }, value)), /*#__PURE__*/React.createElement("button", {
+    onClick: () => goTo(toStep),
+    style: {
+      flex: 'none',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-body)',
+      fontSize: 12.5,
+      fontWeight: 700,
+      color: 'var(--accent-teal)'
+    }
+  }, t('co.edit')));
   return /*#__PURE__*/React.createElement("div", {
     style: {
       background: 'var(--surface-subtle)',
       minHeight: '100%'
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("style", null, '.fsco-grid{display:grid;grid-template-columns:1.35fr 0.9fr;gap:32px;align-items:start}@media (max-width:860px){.fsco-grid{grid-template-columns:1fr}.fsco-summary{position:static !important;order:-1}}'), /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: 1080,
       margin: '0 auto',
       padding: '48px 28px 80px'
     }
-  }, /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontFamily: 'var(--font-display)',
-      fontSize: 34,
-      fontWeight: 800,
-      color: 'var(--ink-900)',
-      letterSpacing: '-.025em',
-      marginBottom: 28
-    }
-  }, t('co.title')), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: '1.3fr 0.9fr',
-      gap: 32,
-      alignItems: 'start'
+      textAlign: 'center',
+      marginBottom: 30
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 22
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 7,
+      fontFamily: 'var(--font-body)',
+      fontSize: 11.5,
+      fontWeight: 700,
+      letterSpacing: '.12em',
+      textTransform: 'uppercase',
+      color: 'var(--gold-700)',
+      marginBottom: 10
     }
-  }, [[t('co.contact'), [[t('co.email'), 'you@lab.org', 'email'], [t('co.phone'), D.contact.phone, 'tel']]], [t('co.shipAddr'), [[t('co.fullName'), 'Dr. Jane Researcher', 'text'], [t('co.institution'), 'University Research Lab', 'text'], [t('co.street'), '123 Science Park Dr', 'text']]]].map(([title, fields], si) => /*#__PURE__*/React.createElement("div", {
-    key: title,
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "13",
+    height: "13",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.4",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "11",
+    width: "18",
+    height: "11",
+    rx: "2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M7 11V7a5 5 0 0 1 10 0v4"
+  })), t('co.secure')), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 36,
+      fontWeight: 800,
+      color: 'var(--ink-900)',
+      letterSpacing: '-.03em',
+      margin: 0
+    }
+  }, t('co.title'))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      maxWidth: 540,
+      margin: '0 auto 42px'
+    }
+  }, STEPS.map((s, i) => {
+    const done = s.n < step,
+      active = s.n === step;
+    const circleStyle = {
+      width: 38,
+      height: 38,
+      flex: 'none',
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: 'var(--font-display)',
+      fontSize: 16,
+      fontWeight: 800,
+      transition: 'all var(--dur-fast) var(--ease-out)',
+      background: done ? 'var(--gold-600)' : active ? 'var(--ink-900)' : 'var(--white)',
+      color: done ? '#fff' : active ? '#fff' : 'var(--gold-700)',
+      border: done || active ? 'none' : '1.5px solid var(--gold-200)',
+      boxShadow: active ? '0 0 0 4px var(--gold-100)' : 'none'
+    };
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      key: s.n
+    }, /*#__PURE__*/React.createElement("div", {
+      onClick: () => {
+        if (done) goTo(s.n);
+      },
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 9,
+        flex: 'none',
+        width: 76,
+        cursor: done ? 'pointer' : 'default'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: circleStyle
+    }, done ? /*#__PURE__*/React.createElement("svg", {
+      width: "17",
+      height: "17",
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "#fff",
+      strokeWidth: "3",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M20 6L9 17l-5-5"
+    })) : s.n), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: 12,
+        fontWeight: active ? 700 : 600,
+        letterSpacing: '.02em',
+        color: active ? 'var(--ink-900)' : done ? 'var(--gold-700)' : 'var(--text-muted)'
+      }
+    }, s.label)), i < STEPS.length - 1 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        height: 2,
+        marginTop: 18,
+        borderRadius: 2,
+        background: s.n < step ? 'var(--gold-500)' : 'var(--gold-100)',
+        transition: 'background var(--dur-base) var(--ease-out)'
+      }
+    }));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "fsco-grid"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       background: 'var(--white)',
       border: '1px solid var(--border-subtle)',
-      borderRadius: 'var(--radius-lg)',
-      padding: 22
+      borderRadius: 'var(--radius-xl)',
+      padding: '30px 30px 32px'
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-display)',
-      fontSize: 16,
-      fontWeight: 700,
-      color: 'var(--ink-900)',
-      marginBottom: 16
-    }
-  }, title), /*#__PURE__*/React.createElement("div", {
+  }, step === 1 && /*#__PURE__*/React.createElement("div", null, stepTitle(t('co.contact'), t('co.contactSub')), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      gap: 14
+      gap: 16
     }
-  }, fields.map(([l, ph, ty]) => /*#__PURE__*/React.createElement(Input, {
-    key: l,
-    label: l,
-    type: ty,
-    placeholder: ph
-  })), si === 1 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(Input, {
+    label: t('co.email') + ' *',
+    type: "email",
+    placeholder: "you@lab.org",
+    value: fields.email,
+    onChange: setF('email'),
+    error: fieldErr('email')
+  }), /*#__PURE__*/React.createElement(Input, {
+    label: t('co.phone') + ' *',
+    type: "tel",
+    placeholder: D.contact.phone,
+    value: fields.phone,
+    onChange: setF('phone'),
+    error: fieldErr('phone')
+  }))), step === 2 && /*#__PURE__*/React.createElement("div", null, stepTitle(t('co.shipAddr'), t('co.shipSub')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 16
+    }
+  }, /*#__PURE__*/React.createElement(Input, {
+    label: t('co.fullName') + ' *',
+    type: "text",
+    placeholder: "Dr. Jane Researcher",
+    value: fields.fullName,
+    onChange: setF('fullName'),
+    error: fieldErr('fullName')
+  }), /*#__PURE__*/React.createElement(Input, {
+    label: t('co.institution') + ' ' + t('co.optional'),
+    type: "text",
+    placeholder: "University Research Lab",
+    value: fields.institution,
+    onChange: setF('institution')
+  }), /*#__PURE__*/React.createElement(Input, {
+    label: t('co.street') + ' *',
+    type: "text",
+    placeholder: "123 Science Park Dr",
+    value: fields.street,
+    onChange: setF('street'),
+    error: fieldErr('street')
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr 1fr',
       gap: 12
     }
   }, /*#__PURE__*/React.createElement(Input, {
-    label: t('co.city'),
-    placeholder: "City"
+    label: t('co.city') + ' *',
+    placeholder: "City",
+    value: fields.city,
+    onChange: setF('city'),
+    error: fieldErr('city')
   }), /*#__PURE__*/React.createElement(Input, {
-    label: t('co.state'),
-    placeholder: "WI"
+    label: t('co.state') + ' *',
+    placeholder: "WI",
+    value: fields.state,
+    onChange: setF('state'),
+    error: fieldErr('state')
   }), /*#__PURE__*/React.createElement(Input, {
-    label: t('co.zip'),
-    placeholder: "53703"
-  }))))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: 'var(--white)',
-      border: '1px solid var(--border-subtle)',
-      borderRadius: 'var(--radius-lg)',
-      padding: 22
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-display)',
-      fontSize: 16,
-      fontWeight: 700,
-      color: 'var(--ink-900)',
-      marginBottom: 6
-    }
-  }, t('co.payMethodsTitle')), /*#__PURE__*/React.createElement("p", {
+    label: t('co.zip') + ' *',
+    placeholder: "53703",
+    value: fields.zip,
+    onChange: setF('zip'),
+    error: fieldErr('zip')
+  })))), step === 3 && /*#__PURE__*/React.createElement("div", null, stepTitle(t('co.payMethodsTitle'), t('co.paySub')), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 13,
       lineHeight: 1.6,
       color: 'var(--text-muted)',
-      margin: '0 0 16px'
+      margin: '0 0 18px'
     }
   }, t('co.payIntro')), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12.5,
-      fontWeight: 700,
-      color: 'var(--ink-800)',
-      marginBottom: 10
-    }
-  }, t('co.paySelect')), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -2574,10 +2948,6 @@ function CheckoutScreen({
     id: 'venmo',
     label: t('co.pay.venmo'),
     color: '#008CFF'
-  }, {
-    id: 'applecash',
-    label: t('co.pay.applecash'),
-    color: 'var(--ink-900)'
   }].map(m => {
     const on = payMethod === m.id;
     return /*#__PURE__*/React.createElement("button", {
@@ -2589,7 +2959,7 @@ function CheckoutScreen({
         gap: 11,
         cursor: 'pointer',
         textAlign: 'left',
-        padding: '14px 15px',
+        padding: '15px 16px',
         borderRadius: 'var(--radius-md)',
         border: '1.5px solid ' + (on ? 'var(--ink-900)' : 'var(--border-subtle)'),
         background: on ? 'var(--surface-subtle)' : 'var(--white)',
@@ -2640,14 +3010,14 @@ function CheckoutScreen({
     })));
   })), /*#__PURE__*/React.createElement("div", {
     style: {
-      marginTop: 14,
+      marginTop: 16,
       display: 'flex',
       gap: 10,
       alignItems: 'flex-start',
       background: 'var(--gold-50)',
       border: '1px solid var(--gold-200)',
       borderRadius: 'var(--radius-md)',
-      padding: '12px 14px'
+      padding: '13px 15px'
     }
   }, /*#__PURE__*/React.createElement("svg", {
     width: "16",
@@ -2674,14 +3044,11 @@ function CheckoutScreen({
       lineHeight: 1.55,
       color: 'var(--gold-800, #7a5a17)'
     }
-  }, t('co.payWindow')))), /*#__PURE__*/React.createElement("div", {
+  }, t('co.payWindow')))), step === 4 && /*#__PURE__*/React.createElement("div", null, stepTitle(t('co.stepReview'), t('co.reviewSub')), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: 'var(--white)',
-      border: '1px solid var(--border-subtle)',
-      borderRadius: 'var(--radius-lg)',
-      padding: 22
+      marginBottom: 24
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, reviewRow(t('co.reviewContact'), fields.email + (fields.phone ? '  ·  ' + fields.phone : ''), 1), reviewRow(t('co.reviewShip'), [fields.fullName, fields.institution, fields.street, [fields.city, fields.state, fields.zip].filter(Boolean).join(', ')].filter(Boolean).join(' · '), 2), reviewRow(t('co.reviewPay'), PAY_LABELS[payMethod], 3)), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -2804,7 +3171,72 @@ function CheckoutScreen({
       color: 'rgba(255,255,255,.78)',
       margin: 0
     }
-  }, t('co.recordNote')))))), /*#__PURE__*/React.createElement("div", {
+  }, t('co.recordNote')))))), tried && step === 1 && !step1Ok && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 600,
+      color: 'var(--danger-600, #c0392b)',
+      margin: '14px 2px 0'
+    }
+  }, t('co.fieldsRequired')), tried && step === 2 && !step2Ok && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 600,
+      color: 'var(--danger-600, #c0392b)',
+      margin: '14px 2px 0'
+    }
+  }, t('co.fieldsRequired')), tried && step === 4 && !allChecked && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 600,
+      color: 'var(--danger-600, #c0392b)',
+      margin: '14px 2px 0'
+    }
+  }, t('co.compRequired')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 14,
+      marginTop: 18
+    }
+  }, step > 1 ? /*#__PURE__*/React.createElement("button", {
+    onClick: goBack,
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 7,
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-body)',
+      fontSize: 14,
+      fontWeight: 700,
+      color: 'var(--ink-800)',
+      padding: '10px 4px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "16",
+    height: "16",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.4",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M19 12H5M12 19l-7-7 7-7"
+  })), t('co.back')) : /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 190
+    }
+  }, /*#__PURE__*/React.createElement(Button, {
+    variant: "primary",
+    size: "lg",
+    fullWidth: true,
+    onClick: goNext
+  }, step === 4 ? t('co.placeOrder') : t('co.continue'))))), /*#__PURE__*/React.createElement("div", {
+    className: "fsco-summary",
     style: {
       position: 'sticky',
       top: 88,
@@ -2935,26 +3367,6 @@ function CheckoutScreen({
     style: {
       marginTop: 18
     }
-  }, tried && !allChecked && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12.5,
-      fontWeight: 600,
-      color: 'var(--danger-600, #c0392b)',
-      marginBottom: 12
-    }
-  }, t('co.compRequired')), /*#__PURE__*/React.createElement("div", {
-    onClick: () => {
-      if (!allChecked) setTried(true);
-    }
-  }, /*#__PURE__*/React.createElement(Button, {
-    variant: "primary",
-    size: "lg",
-    fullWidth: true,
-    disabled: !allChecked
-  }, t('co.placeOrder')))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 14
-    }
   }, /*#__PURE__*/React.createElement(DisclaimerBanner, {
     variant: "strip",
     text: t('ruo'),
@@ -2963,7 +3375,7 @@ function CheckoutScreen({
     }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
-      marginTop: 12,
+      marginTop: 14,
       display: 'flex',
       flexWrap: 'wrap',
       gap: '4px 10px',
@@ -3005,7 +3417,130 @@ function CheckoutScreen({
       lineHeight: 1.55,
       color: 'var(--text-muted)'
     }
-  }, t('co.fraudNote'))))));
+  }, t('co.fraudNote'))))), placed && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 300,
+      background: 'rgba(8, 14, 30, 0.6)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 24
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'var(--white)',
+      borderRadius: 'var(--radius-xl)',
+      padding: '38px 34px 30px',
+      maxWidth: 460,
+      width: '100%',
+      textAlign: 'center',
+      boxShadow: '0 40px 100px rgba(0,0,0,.45)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 58,
+      height: 58,
+      margin: '0 auto 16px',
+      borderRadius: '50%',
+      background: 'var(--gold-50)',
+      border: '2px solid var(--gold-600)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "26",
+    height: "26",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "var(--gold-700)",
+    strokeWidth: "2.6",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M20 6L9 17l-5-5"
+  }))), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 24,
+      fontWeight: 800,
+      color: 'var(--ink-900)',
+      margin: '0 0 6px'
+    }
+  }, t('co.placedTitle')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 14,
+      fontWeight: 600,
+      color: 'var(--gold-700)',
+      marginBottom: 16
+    }
+  }, t('co.placedRef'), ": ", placed), payMethod === 'zelle' ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'left',
+      background: 'var(--surface-subtle)',
+      border: '1px solid var(--border-subtle)',
+      borderRadius: 'var(--radius-md)',
+      padding: '16px 18px',
+      marginBottom: 18
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: 12,
+      fontWeight: 800,
+      letterSpacing: '.08em',
+      textTransform: 'uppercase',
+      color: 'var(--gold-700)',
+      marginBottom: 12
+    }
+  }, t('co.zelleTitle')), [[t('co.zelleAmount'), '$' + total.toFixed(2)], [t('co.zelleTo'), 'FuturisticScienceUSA@gmail.com'], [t('co.zelleMemo'), placed]].map(([k, v]) => /*#__PURE__*/React.createElement("div", {
+    key: k,
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'baseline',
+      gap: 12,
+      padding: '5px 0',
+      borderTop: k === t('co.zelleAmount') ? 'none' : '1px solid var(--border-subtle)'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12.5,
+      color: 'var(--text-muted)',
+      flex: 'none'
+    }
+  }, k), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 13,
+      fontWeight: 700,
+      color: 'var(--ink-900)',
+      textAlign: 'right',
+      wordBreak: 'break-all'
+    }
+  }, v))), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 12,
+      lineHeight: 1.5,
+      color: 'var(--text-muted)',
+      margin: '12px 0 0'
+    }
+  }, t('co.zelleNote'))) : /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 14,
+      lineHeight: 1.6,
+      color: 'var(--text-body)',
+      margin: '0 0 22px'
+    }
+  }, t('co.placedBody')), /*#__PURE__*/React.createElement(Button, {
+    variant: "primary",
+    size: "lg",
+    fullWidth: true,
+    onClick: () => onNav('home')
+  }, t('co.placedBtn')))));
 }
 Object.assign(window, {
   CheckoutScreen
@@ -3767,7 +4302,7 @@ function HomeScreen({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: '24px 0'
+      padding: '36px 0 24px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3857,7 +4392,7 @@ function HomeScreen({
     subtitle: t('sub.' + p.id),
     size: p.size,
     price: p.price,
-    purity: p.purity.replace(/\..*/, '') + '%+',
+    purity: p.purity ? p.purity.replace(/\..*/, '') + '%+' : null,
     purityLabel: t('word.purity'),
     selectLabel: t('btn.selectOptions'),
     outOfStockLabel: t('btn.outOfStock'),
@@ -4242,7 +4777,25 @@ function ProductScreen({
     setQty(1);
   }, [productId]);
   const variant = p.variants[vi] || p.variants[0];
-  const hasBox = variant.box != null;
+  // Three purchase tiers: single vial, half kit (5 vials), full kit (10 vials).
+  // A tier priced `null` is not offered for that strength.
+  const FORMATS = [{
+    key: 'vial',
+    vials: 1,
+    label: 'pd.singleVial',
+    unitLabel: 'pd.perVial'
+  }, {
+    key: 'half',
+    vials: 5,
+    label: 'pd.halfKit',
+    unitLabel: 'pd.perHalfKit'
+  }, {
+    key: 'box',
+    vials: 10,
+    label: 'pd.fullKit',
+    unitLabel: 'pd.perFullKit'
+  }];
+  const priceOf = key => key === 'box' ? variant.box : key === 'half' ? variant.half : variant.vial;
   const refs = p.references || [{
     source: 'PubChem',
     title: p.name + ' — Compound Summary',
@@ -4252,13 +4805,14 @@ function ProductScreen({
     title: p.name + ' Research Literature',
     url: 'https://pubmed.ncbi.nlm.nih.gov/?term=' + encodeURIComponent(p.name)
   }];
-  const effFormat = hasBox ? format : 'vial';
-  const unit = effFormat === 'box' ? variant.box : variant.vial;
+  const effFormat = priceOf(format) != null ? format : 'vial';
+  const effMeta = FORMATS.find(f => f.key === effFormat);
+  const unit = priceOf(effFormat);
   const addItem = () => onAdd({
     id: `${p.id}-${variant.strength}-${effFormat}`,
     name: p.name,
     subtitle: psub,
-    size: `${variant.strength} · ${effFormat === 'box' ? t('pd.boxOf10') : t('pd.singleVial')}`,
+    size: `${variant.strength} · ${t(effMeta.label)}`,
     price: unit,
     image: pimg
   }, qty);
@@ -4322,7 +4876,7 @@ function ProductScreen({
       position: 'relative',
       overflow: 'hidden'
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, p.purity && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       top: 16,
@@ -4344,7 +4898,7 @@ function ProductScreen({
       gap: 8,
       marginBottom: 14
     }
-  }, /*#__PURE__*/React.createElement(Badge, {
+  }, !p.supplies && /*#__PURE__*/React.createElement(Badge, {
     tone: "teal",
     variant: "soft"
   }, t('badge.coaVerified')), p.inStock ? /*#__PURE__*/React.createElement(Badge, {
@@ -4386,7 +4940,7 @@ function ProductScreen({
       fontSize: 14,
       color: 'var(--text-muted)'
     }
-  }, effFormat === 'box' ? t('pd.perBox') : t('pd.perVial'))), /*#__PURE__*/React.createElement("p", {
+  }, t(effMeta.unitLabel))), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 15.5,
       lineHeight: 1.65,
@@ -4446,33 +5000,24 @@ function ProductScreen({
   }, t('pd.purchaseOption')), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: 10
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: 9
     }
-  }, [{
-    key: 'vial',
-    label: t('pd.singleVial'),
-    price: variant.vial,
-    disabled: false
-  }, {
-    key: 'box',
-    label: t('pd.boxOf10'),
-    price: variant.box,
-    disabled: !hasBox
-  }].map(opt => {
-    const active = effFormat === opt.key;
-    const save = opt.key === 'box' && hasBox ? Math.round((1 - variant.box / (variant.vial * 10)) * 100) : 0;
+  }, FORMATS.map(f => {
+    const price = priceOf(f.key);
+    const disabled = price == null;
+    const active = effFormat === f.key;
+    const save = disabled ? 0 : Math.round((1 - price / (variant.vial * f.vials)) * 100);
     return /*#__PURE__*/React.createElement("button", {
-      key: opt.key,
-      disabled: opt.disabled,
-      onClick: () => setFormat(opt.key),
+      key: f.key,
+      disabled: disabled,
+      onClick: () => setFormat(f.key),
       style: {
         textAlign: 'left',
-        cursor: opt.disabled ? 'not-allowed' : 'pointer',
-        position: 'relative',
-        padding: '13px 15px',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        padding: '12px 12px 11px',
         borderRadius: 'var(--radius-md)',
-        opacity: opt.disabled ? 0.45 : 1,
+        opacity: disabled ? 0.45 : 1,
         background: active ? 'var(--gold-50)' : 'var(--white)',
         border: active ? '1.5px solid var(--gold-500)' : '1.5px solid var(--border-strong)',
         boxShadow: active ? '0 0 0 3px var(--ring)' : 'none'
@@ -4480,31 +5025,40 @@ function ProductScreen({
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: 13.5,
+        fontSize: 13,
         fontWeight: 700,
         color: 'var(--ink-900)',
-        marginBottom: 3
+        marginBottom: 1
       }
-    }, opt.label), /*#__PURE__*/React.createElement("div", {
+    }, t(f.label)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: 11,
+        fontWeight: 600,
+        color: 'var(--gray-500)',
+        marginBottom: 5
+      }
+    }, t(f.vials === 1 ? 'pd.vialOne' : 'pd.vialsCount', {
+      n: f.vials
+    })), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: 15,
         fontWeight: 600,
         color: active ? 'var(--gold-700)' : 'var(--ink-800)'
       }
-    }, opt.disabled ? '—' : `$${opt.price.toFixed(2)}`), save > 0 && /*#__PURE__*/React.createElement("span", {
+    }, disabled ? '—' : `$${price.toFixed(2)}`), save > 0 && /*#__PURE__*/React.createElement("span", {
       style: {
-        position: 'absolute',
-        top: 11,
-        right: 12,
+        display: 'inline-block',
+        marginTop: 6,
         fontFamily: 'var(--font-body)',
-        fontSize: 10.5,
+        fontSize: 10,
         fontWeight: 800,
-        letterSpacing: '.04em',
+        letterSpacing: '.03em',
         color: 'var(--teal-600)',
         background: 'var(--teal-50)',
         borderRadius: 'var(--radius-pill)',
-        padding: '2px 7px'
+        padding: '2px 6px'
       }
     }, t('pd.save'), " ", save, "%"));
   }))), /*#__PURE__*/React.createElement("div", {
@@ -4525,7 +5079,7 @@ function ProductScreen({
     style: {
       flex: 1
     }
-  }, p.inStock ? `${t('btn.addToCart')} · $${(unit * qty).toFixed(2)}` : t('pd.outOfStock'))), /*#__PURE__*/React.createElement("button", {
+  }, p.inStock ? `${t('btn.addToCart')} · $${(unit * qty).toFixed(2)}` : t('pd.outOfStock'))), !p.supplies && /*#__PURE__*/React.createElement("button", {
     onClick: () => onNav('coa'),
     style: {
       display: 'flex',
@@ -5116,10 +5670,9 @@ function ShopScreen({
       margin: '0 auto',
       padding: '16px 28px',
       display: 'flex',
-      flexWrap: 'nowrap',
+      flexWrap: 'wrap',
       alignItems: 'center',
-      gap: 7,
-      overflowX: 'auto'
+      gap: 7
     }
   }, D.categories.map(c => {
     const active = cat === c;
@@ -5287,7 +5840,7 @@ function ShopScreen({
     subtitle: t('sub.' + p.id),
     size: p.size,
     price: p.price,
-    purity: p.purity.replace(/\..*/, '') + '%+',
+    purity: p.purity ? p.purity.replace(/\..*/, '') + '%+' : null,
     purityLabel: t('word.purity'),
     selectLabel: t('btn.selectOptions'),
     outOfStockLabel: t('btn.outOfStock'),
@@ -6734,7 +7287,9 @@ Object.assign(window, {
 // ui_kits/website/data.js
 try { (() => {
 /* Futuristic Science — sample catalog data (research-use-only mock).
-   Real pricing: each product has strength variants with vial + box (10-vial) prices.
+   Real pricing: each strength variant carries three tiers — `vial` (single),
+   `half` (5-vial kit) and `box` (10-vial kit). A null tier is not offered.
+   Source: Futuristic Science price sheet, September 2026.
    `price` = lowest vial price (used for "from" display + filters).
    `size`  = strength range label for cards.
    NOTE: all cards reuse the GHK-CU vial photo — brand supplied only that image.
@@ -6816,6 +7371,7 @@ try { (() => {
     variants: [{
       strength: '70mg',
       vial: 65,
+      half: null,
       box: 360
     }]
   }, {
@@ -6831,16 +7387,29 @@ try { (() => {
     blurb: 'A synthetic multi-receptor peptide supplied as lyophilized powder for in-vitro laboratory research.',
     variants: [{
       strength: '10mg',
-      vial: 50,
-      box: 225
+      vial: 65,
+      half: 220,
+      box: 275
     }, {
       strength: '20mg',
-      vial: 75,
-      box: 360
+      vial: 90,
+      half: 295,
+      box: 365
     }, {
       strength: '30mg',
-      vial: 100,
-      box: 440
+      vial: 110,
+      half: 315,
+      box: 465
+    }, {
+      strength: '40mg',
+      vial: 140,
+      half: 355,
+      box: 560
+    }, {
+      strength: '60mg',
+      vial: 180,
+      half: 475,
+      box: 750
     }]
   }, {
     id: 'tirzepatide',
@@ -6856,15 +7425,23 @@ try { (() => {
     variants: [{
       strength: '10mg',
       vial: 55,
-      box: 325
+      half: 195,
+      box: 230
     }, {
       strength: '20mg',
       vial: 75,
-      box: 400
+      half: 245,
+      box: 355
     }, {
       strength: '30mg',
       vial: 100,
+      half: 350,
       box: 425
+    }, {
+      strength: '60mg',
+      vial: 150,
+      half: 425,
+      box: 675
     }]
   }, {
     id: 'ghk-cu',
@@ -6879,11 +7456,13 @@ try { (() => {
     variants: [{
       strength: '50mg',
       vial: 30,
-      box: 115
+      half: 75,
+      box: 130
     }, {
       strength: '100mg',
       vial: 45,
-      box: 140
+      half: 120,
+      box: 180
     }]
   }, {
     id: 'bpc-157',
@@ -6899,10 +7478,12 @@ try { (() => {
     variants: [{
       strength: '5mg',
       vial: 20,
-      box: 120
+      half: 75,
+      box: 125
     }, {
       strength: '10mg',
       vial: 40,
+      half: 120,
       box: 205
     }]
   }, {
@@ -6918,10 +7499,12 @@ try { (() => {
     variants: [{
       strength: '5mg',
       vial: 27,
+      half: 120,
       box: 250
     }, {
       strength: '10mg',
       vial: 40,
+      half: 150,
       box: 290
     }]
   }, {
@@ -6937,11 +7520,18 @@ try { (() => {
     variants: [{
       strength: '10mg',
       vial: 45,
-      box: 200
+      half: 145,
+      box: 245
     }, {
       strength: '20mg',
       vial: 55,
-      box: 340
+      half: null,
+      box: null
+    }, {
+      strength: '40mg',
+      vial: 105,
+      half: 435,
+      box: 625
     }]
   }, {
     id: 'selank',
@@ -6956,11 +7546,13 @@ try { (() => {
     variants: [{
       strength: '5mg',
       vial: 25,
-      box: null
+      half: 100,
+      box: 190
     }, {
       strength: '10mg',
       vial: 40,
-      box: 195
+      half: 160,
+      box: 250
     }]
   }, {
     id: 'semax',
@@ -6974,12 +7566,14 @@ try { (() => {
     blurb: 'A synthetic peptide investigated in laboratory research. For in-vitro use only.',
     variants: [{
       strength: '5mg',
-      vial: 30,
-      box: null
+      vial: 25,
+      half: 100,
+      box: 190
     }, {
       strength: '10mg',
       vial: 40,
-      box: 300
+      half: 160,
+      box: 250
     }]
   }, {
     id: 'nad-plus',
@@ -6992,16 +7586,14 @@ try { (() => {
     image: '../../assets/vial-nad-plus.png',
     blurb: 'A coenzyme supplied as lyophilized powder for laboratory research applications.',
     variants: [{
-      strength: '100mg',
-      vial: 35,
-      box: null
-    }, {
       strength: '500mg',
       vial: 45,
+      half: 195,
       box: null
     }, {
       strength: '1000mg',
       vial: 75,
+      half: 400,
       box: 575
     }]
   }, {
@@ -7017,11 +7609,13 @@ try { (() => {
     variants: [{
       strength: '5mg',
       vial: 45,
+      half: 185,
       box: 300
     }, {
       strength: '10mg',
       vial: 65,
-      box: 375
+      half: 235,
+      box: 405
     }]
   }, {
     id: 'klow',
@@ -7036,6 +7630,7 @@ try { (() => {
     variants: [{
       strength: '80mg',
       vial: 75,
+      half: null,
       box: 385
     }]
   }, {
@@ -7050,8 +7645,9 @@ try { (() => {
     blurb: 'A synthetic dual-receptor peptide supplied as lyophilized powder for in-vitro laboratory research.',
     variants: [{
       strength: '10mg',
-      vial: 60,
-      box: 360
+      vial: 65,
+      half: 225,
+      box: 445
     }]
   }, {
     id: 'aod-9604',
@@ -7066,6 +7662,7 @@ try { (() => {
     variants: [{
       strength: '10mg',
       vial: 45,
+      half: null,
       box: 250
     }]
   }, {
@@ -7081,6 +7678,7 @@ try { (() => {
     variants: [{
       strength: '10ml',
       vial: 40,
+      half: null,
       box: 280
     }]
   }, {
@@ -7096,6 +7694,7 @@ try { (() => {
     variants: [{
       strength: '10ml',
       vial: 30,
+      half: null,
       box: 180
     }]
   }, {
@@ -7110,8 +7709,9 @@ try { (() => {
     blurb: 'A synthetic pentapeptide supplied as lyophilized powder for qualified in-vitro research.',
     variants: [{
       strength: '10mg',
-      vial: 35,
-      box: 200
+      vial: 29,
+      half: 140,
+      box: 220
     }]
   }, {
     id: 'sermorelin',
@@ -7125,8 +7725,9 @@ try { (() => {
     blurb: 'A synthetic peptide supplied for laboratory research applications.',
     variants: [{
       strength: '10mg',
-      vial: 35,
-      box: 200
+      vial: 55,
+      half: 200,
+      box: 350
     }]
   }, {
     id: 'cjc-1295',
@@ -7139,9 +7740,10 @@ try { (() => {
     image: '../../assets/vial-cjc-1295.png',
     blurb: 'A synthetic peptide supplied as lyophilized powder for qualified in-vitro research.',
     variants: [{
-      strength: '5mg + 5mg',
-      vial: 45,
-      box: 250
+      strength: '10mg',
+      vial: 40,
+      half: 160,
+      box: 275
     }]
   }, {
     id: 'igf-1lr3',
@@ -7154,9 +7756,10 @@ try { (() => {
     image: '../../assets/vial-igf-1lr3.png',
     blurb: 'A synthetic growth factor analog supplied for qualified in-vitro research.',
     variants: [{
-      strength: '.1mg',
-      vial: 55,
-      box: 360
+      strength: '1mg',
+      vial: 60,
+      half: 240,
+      box: 450
     }]
   }, {
     id: 'kisspeptin-10',
@@ -7171,6 +7774,7 @@ try { (() => {
     variants: [{
       strength: '10mg',
       vial: 45,
+      half: null,
       box: 250
     }]
   }, {
@@ -7185,8 +7789,14 @@ try { (() => {
     blurb: 'A synthetic tetrapeptide studied in laboratory research.',
     variants: [{
       strength: '10mg',
-      vial: 40,
-      box: 220
+      vial: 27,
+      half: 100,
+      box: 225
+    }, {
+      strength: '50mg',
+      vial: 59,
+      half: 220,
+      box: 400
     }]
   }, {
     id: 'cartalax',
@@ -7201,6 +7811,7 @@ try { (() => {
     variants: [{
       strength: '20mg',
       vial: 45,
+      half: null,
       box: 240
     }]
   }, {
@@ -7215,8 +7826,9 @@ try { (() => {
     blurb: 'A tripeptide antioxidant supplied as lyophilized powder for laboratory research.',
     variants: [{
       strength: '1500mg',
-      vial: 50,
-      box: 320
+      vial: 55,
+      half: 300,
+      box: 355
     }]
   }, {
     id: 'ss-31',
@@ -7230,8 +7842,14 @@ try { (() => {
     blurb: 'A synthetic mitochondria-targeting peptide studied in laboratory research.',
     variants: [{
       strength: '10mg',
-      vial: 55,
-      box: 340
+      vial: 30,
+      half: 145,
+      box: 185
+    }, {
+      strength: '50mg',
+      vial: 85,
+      half: 495,
+      box: 600
     }]
   }, {
     id: 'kpv',
@@ -7245,8 +7863,9 @@ try { (() => {
     blurb: 'A synthetic tripeptide used as a research reference compound.',
     variants: [{
       strength: '10mg',
-      vial: 35,
-      box: 190
+      vial: 30,
+      half: 125,
+      box: 235
     }]
   }, {
     id: 'ara-290',
@@ -7260,8 +7879,14 @@ try { (() => {
     blurb: 'A synthetic peptide supplied as lyophilized powder for qualified in-vitro research.',
     variants: [{
       strength: '10mg',
-      vial: 50,
-      box: 300
+      vial: 35,
+      half: 100,
+      box: 190
+    }, {
+      strength: '50mg',
+      vial: 75,
+      half: 300,
+      box: 450
     }]
   }, {
     id: 'wolverine',
@@ -7274,9 +7899,15 @@ try { (() => {
     image: '../../assets/vial-wolverine.png',
     blurb: 'A multi-peptide research blend supplied as lyophilized powder for in-vitro laboratory research.',
     variants: [{
-      strength: '10mg + 10mg',
-      vial: 70,
-      box: 400
+      strength: '10mg',
+      vial: 41,
+      half: 175,
+      box: 275
+    }, {
+      strength: '20mg',
+      vial: 65,
+      half: 265,
+      box: 420
     }]
   }, {
     id: 'ahk-cu',
@@ -7290,8 +7921,9 @@ try { (() => {
     blurb: 'A copper-binding tripeptide studied in laboratory research. Supplied as lyophilized powder for in-vitro investigation.',
     variants: [{
       strength: '100mg',
-      vial: 40,
-      box: 150
+      vial: 35,
+      half: 120,
+      box: 180
     }]
   }, {
     id: 'mt-2',
@@ -7305,8 +7937,109 @@ try { (() => {
     blurb: 'A synthetic melanocortin peptide supplied as lyophilized powder for qualified in-vitro research.',
     variants: [{
       strength: '10mg',
-      vial: 30,
-      box: 160
+      vial: 20,
+      half: 75,
+      box: 120
+    }]
+  }, {
+    id: 'cagrilintide',
+    name: 'Cagrilintide',
+    subtitle: 'Amylin Analog',
+    category: 'Metabolic Research',
+    inStock: true,
+    purity: '99.1%',
+    batch: 'FUTURE-CN-MARK-CAGR-0921-001',
+    blurb: 'A synthetic long-acting amylin analog supplied as lyophilized powder for in-vitro laboratory research.',
+    variants: [{
+      strength: '5mg',
+      vial: 65,
+      half: 175,
+      box: 230
+    }, {
+      strength: '10mg',
+      vial: 110,
+      half: null,
+      box: 375
+    }]
+  }, {
+    id: 'pinealon',
+    name: 'Pinealon',
+    subtitle: 'Peptide Bioregulator',
+    category: 'Neuro Research',
+    inStock: true,
+    purity: '99.0%',
+    batch: 'FUTURE-CN-MARK-PINE-0921-001',
+    blurb: 'A synthetic tripeptide bioregulator supplied as lyophilized powder for qualified in-vitro research.',
+    variants: [{
+      strength: '10mg',
+      vial: 40,
+      half: 155,
+      box: 245
+    }]
+  }, {
+    id: 'adamax',
+    name: 'Adamax',
+    subtitle: 'Research Peptide',
+    category: 'Neuro Research',
+    inStock: true,
+    purity: '99.0%',
+    batch: 'FUTURE-CN-MARK-ADAM-0921-001',
+    blurb: 'A synthetic peptide used as a research reference compound. For in-vitro use only.',
+    variants: [{
+      strength: '5mg',
+      vial: 35,
+      half: 125,
+      box: 225
+    }]
+  }, {
+    id: 'amino-1mq',
+    name: '5-Amino-1MQ',
+    subtitle: 'Small Molecule',
+    category: 'Cellular Research',
+    inStock: true,
+    purity: '99.0%',
+    batch: 'FUTURE-CN-MARK-A1MQ-0921-001',
+    blurb: 'A small-molecule research compound supplied as lyophilized powder for in-vitro laboratory research.',
+    variants: [{
+      strength: '50mg',
+      vial: 50,
+      half: null,
+      box: 375
+    }]
+  }, {
+    id: 'bac-water',
+    name: 'BAC Water',
+    subtitle: 'Bacteriostatic Water',
+    category: 'Lab Supplies',
+    inStock: true,
+    supplies: true,
+    batch: 'FUTURE-CN-MARK-BACW-0921-001',
+    blurb: 'Bacteriostatic water supplied as a laboratory reconstitution diluent. For research use only.',
+    variants: [{
+      strength: '10mL',
+      vial: 12,
+      half: 50,
+      box: 90
+    }, {
+      strength: '30mL',
+      vial: 20,
+      half: 90,
+      box: 175
+    }]
+  }, {
+    id: 'acetic-acid',
+    name: 'Acetic Acid',
+    subtitle: 'Reconstitution Diluent',
+    category: 'Lab Supplies',
+    inStock: true,
+    supplies: true,
+    batch: 'FUTURE-CN-MARK-ACET-0921-001',
+    blurb: 'Dilute acetic acid supplied as a laboratory reconstitution diluent. For research use only.',
+    variants: [{
+      strength: '3mL',
+      vial: 9,
+      half: null,
+      box: 85
     }]
   }];
 
@@ -7322,7 +8055,7 @@ try { (() => {
       phone: '920-265-2896',
       company: 'Futuristic Science, LLC'
     },
-    categories: ['Tissue Repair Research', 'Dermal Research', 'Metabolic Research', 'Secretagogue Research', 'Cellular Research', 'Neuro Research', 'Circadian Research'],
+    categories: ['Tissue Repair Research', 'Dermal Research', 'Metabolic Research', 'Secretagogue Research', 'Cellular Research', 'Neuro Research', 'Circadian Research', 'Lab Supplies'],
     products,
     image: '../../assets/vial-ghk-cu.png'
   };
@@ -7404,9 +8137,9 @@ try { (() => {
       'trust.accuracy': 'Measured Accuracy',
       'trust.shipping': 'Fast Shipping',
       /* age gate */
-      'age.eyebrow': 'Age Verification',
+      'age.eyebrow': 'Age & Researcher Verification',
       'age.title': 'You must be at least 21 to visit this site.',
-      'age.terms.pre': 'By entering this site, you are acknowledging that you have read and agree to our ',
+      'age.terms.pre': 'By entering, you confirm you are at least 21 years old and a qualified researcher or institution purchasing for lawful laboratory research, and that you have read and agree to our ',
       'age.terms.link': 'Terms of Service',
       'age.terms.post': '.',
       'age.remember': 'Remember me',
@@ -7418,7 +8151,7 @@ try { (() => {
       'auth.eyebrow': 'Member Access',
       'auth.signinTitle': 'Sign in to continue',
       'auth.signupTitle': 'Create your account',
-      'auth.signinSub': 'Access to this site is restricted to registered researchers.',
+      'auth.signinSub': 'Please sign in to view your cart and check out.',
       'auth.signupSub': 'Register to access the Futuristic Science catalog.',
       'auth.google': 'Continue with Google',
       'auth.apple': 'Continue with Apple',
@@ -7449,9 +8182,9 @@ try { (() => {
       'track.estimate': 'Estimated delivery',
       'track.statusLabel': 'Status',
       'track.viewCarrier': 'View on carrier site',
-      'track.empty': 'Enter a tracking number above and we\u2019ll pull up its latest carrier scan.',
-      'track.notFound': 'We couldn\u2019t read that tracking number. Check the digits on your shipping confirmation email, or contact {email}.',
-      'track.help': 'Tracking numbers are emailed when your order ships. Don\u2019t have yours? Contact {email}.',
+      'track.empty': 'Enter a tracking number above and we’ll pull up its latest carrier scan.',
+      'track.notFound': 'We couldn’t read that tracking number. Check the digits on your shipping confirmation email, or contact {email}.',
+      'track.help': 'Tracking numbers are emailed when your order ships. Don’t have yours? Contact {email}.',
       'track.st.delivered': 'Delivered',
       'track.st.out': 'Out for delivery',
       'track.st.transit': 'In transit',
@@ -7475,7 +8208,8 @@ try { (() => {
       'home.featuredTitle': 'Research peptides, in stock',
       /* proof */
       'home.proofEyebrow': 'Proof, not promises',
-      'home.proofTitle': 'Every batch is tested.\nEvery result is published.',
+      'home.proofTitle': `Every batch is tested.
+Every result is published.`,
       'home.proofBody': 'We work with independent third-party laboratories to verify identity and purity. Search any batch number to view its Certificate of Analysis.',
       'home.proof1t': 'HPLC purity verification',
       'home.proof1d': 'Independent labs confirm 99%+ purity per batch.',
@@ -7494,7 +8228,7 @@ try { (() => {
       /* shop */
       'shop.eyebrow': 'Catalog',
       'shop.title': 'Research Peptides',
-      'shop.intro': 'All products supplied are 3rd party tested for >98% Purity. COA\u2019s available.',
+      'shop.intro': 'All products supplied are 3rd party tested for >98% Purity. COA’s available.',
       'shop.category': 'Research Category',
       'shop.maxPrice': 'Max Price',
       'shop.products': 'products',
@@ -7576,6 +8310,7 @@ try { (() => {
       'cat.Cellular Research': 'Cellular Research',
       'cat.Neuro Research': 'Neuro Research',
       'cat.Circadian Research': 'Circadian Research',
+      'cat.Lab Supplies': 'Lab Supplies',
       /* product */
       'pd.inStock': 'In Stock',
       'pd.outOfStock': 'Out of Stock',
@@ -7583,15 +8318,22 @@ try { (() => {
       'pd.purchaseOption': 'Purchase Option',
       'pd.singleVial': 'Single Vial',
       'pd.boxOf10': 'Box of 10 Vials',
+      'pd.halfKit': 'Half Kit',
+      'pd.fullKit': 'Full Kit',
+      'pd.vialOne': '1 vial',
+      'pd.vialsCount': '{n} vials',
       'pd.save': 'SAVE',
       'pd.perVial': '/ single vial',
       'pd.perBox': '/ box of 10 vials',
+      'pd.perHalfKit': '/ half kit (5 vials)',
+      'pd.perFullKit': '/ full kit (10 vials)',
       'pd.form': 'Lyophilized powder',
       'pd.viewCoa': 'View Certificates of Analysis',
       'pd.tabDesc': 'Description',
       'pd.tabHandling': 'Storage & Lab Handling',
       'pd.tabShipping': 'Shipping',
-      'pd.handling': 'Store lyophilized powder at -20°C, protected from light and moisture. Once reconstituted for laboratory use, store according to your institutional protocols.\nHandle in accordance with institutional safety guidelines and standard laboratory practice. This product is a research chemical — not a drug, food, or cosmetic.',
+      'pd.handling': `Store lyophilized powder at -20°C, protected from light and moisture. Once reconstituted for laboratory use, store according to your institutional protocols.
+Handle in accordance with institutional safety guidelines and standard laboratory practice. This product is a research chemical — not a drug, food, or cosmetic.`,
       'pd.shipping': 'Orders ship in temperature-appropriate packaging via expedited carriers. Tracking is provided on dispatch. Research-use-only documentation is included with every order.',
       'pd.descTail': 'is supplied as lyophilized powder for in-vitro laboratory research. Each batch is assayed by an independent third-party laboratory for identity and purity, and ships with a batch-specific Certificate of Analysis. Intended for use by qualified researchers in a controlled laboratory environment.',
       'pd.ruoDetail': 'No medical, dosing, or human-use claims. Reconstitution information is lab-handling guidance for qualified researchers only.',
@@ -7679,14 +8421,23 @@ try { (() => {
       'co.recordNote': 'For your protection and ours, this order is logged with a timestamp, IP address, accepted policy versions, payment-verification (AVS/CVV) result, and shipment tracking with delivery confirmation. A copy of these acknowledgments is attached to your order and emailed to you.',
       'co.compRequired': 'Please check every box above to place your order.',
       'co.payMethodsTitle': 'Direct Payment Methods',
-      'co.payIntro': 'After placing your order, you\u2019ll complete payment using Zelle, Venmo, Apple Cash, or Cash App. Due to payment-processor restrictions in the research industry, we use trusted direct payment methods for a more reliable checkout experience. Payment instructions are shown after checkout.',
-      'co.paySelect': 'Choose how you\u2019ll pay',
+      'co.payIntro': 'After placing your order, you’ll complete payment using Zelle, Venmo, or Cash App. Due to payment-processor restrictions in the research industry, we use trusted direct payment methods for a more reliable checkout experience. Payment instructions are shown after checkout.',
+      'co.paySelect': 'Choose how you’ll pay',
       'co.pay.zelle': 'Zelle',
       'co.pay.cashapp': 'Cash App',
       'co.pay.venmo': 'Venmo',
       'co.pay.applecash': 'Apple Cash',
       'co.payWindow': 'Please complete payment within 1 hour of placing your order. If payment has not been received by the next business day, your order may be automatically cancelled and inventory released.',
-      'co.ackLawful': 'I certify that I am purchasing these products solely for lawful research purposes. I have read and agree to the Terms & Conditions and understand that all products are sold for Research Use Only, and are not sold, marketed, or intended for human consumption.',
+      'co.placedTitle': 'Order received!',
+      'co.placedRef': 'Order reference',
+      'co.placedBody': 'Thank you — your order has been recorded. Payment instructions for your selected method will be emailed to you shortly. Please complete payment within 1 hour to hold your inventory.',
+      'co.placedBtn': 'Back to Home',
+      'co.zelleTitle': 'Complete your Zelle payment',
+      'co.zelleAmount': 'Amount',
+      'co.zelleTo': 'Zelle to',
+      'co.zelleMemo': 'Memo / note',
+      'co.zelleNote': 'Send the exact amount and include the memo above so we can match your payment. Complete within 1 hour to hold your inventory. A confirmation will follow by email.',
+      'co.ackLawful': 'I certify that I am purchasing these products solely for lawful research purposes. I have read and agree to the Terms & Conditions, Privacy Policy, and Returns & Refunds Policy, and understand that all products are sold for Research Use Only, and are not sold, marketed, or intended for human consumption.',
       'co.emptyDesc': 'Add research peptides to your cart before checking out.',
       'co.browse': 'Browse Catalog',
       /* footer */
@@ -7793,6 +8544,12 @@ try { (() => {
       'sub.wolverine': 'Peptide Blend',
       'sub.ahk-cu': 'Copper Tripeptide',
       'sub.mt-2': 'Melanocortin Peptide',
+      'sub.cagrilintide': 'Amylin Analog',
+      'sub.pinealon': 'Peptide Bioregulator',
+      'sub.adamax': 'Research Peptide',
+      'sub.amino-1mq': 'Small Molecule',
+      'sub.bac-water': 'Bacteriostatic Water',
+      'sub.acetic-acid': 'Reconstitution Diluent',
       'word.purity': 'Purity',
       'blurb.retatrutide': 'A synthetic multi-receptor peptide supplied as lyophilized powder for in-vitro laboratory research.',
       'blurb.tirzepatide': 'A synthetic dual-receptor peptide supplied for laboratory research applications.',
@@ -7824,17 +8581,23 @@ try { (() => {
       'blurb.wolverine': 'A multi-peptide research blend supplied as lyophilized powder for in-vitro laboratory research.',
       'blurb.ahk-cu': 'A copper-binding tripeptide studied in laboratory research. Supplied as lyophilized powder for in-vitro investigation.',
       'blurb.mt-2': 'A synthetic melanocortin peptide supplied as lyophilized powder for qualified in-vitro research.',
-      'faq.items': [['What does "Research Use Only" mean?', 'All products are intended exclusively for in-vitro laboratory research by qualified researchers. They are not drugs, supplements, foods, or cosmetics, and are not for human or veterinary use.'], ['Are products third-party tested?', 'Yes. Every batch is assayed by an independent laboratory for identity and purity. A batch-specific Certificate of Analysis is available on the Test Results page.'], ['How do I find a Certificate of Analysis?', 'Locate the batch number printed on your vial label and enter it in the COA Library to view that batch\'s Certificate of Analysis.'], ['How are products supplied and stored?', 'Products are supplied as lyophilized powder. Store at -20°C, protected from light and moisture, and handle in accordance with institutional safety guidelines.'], ['Do you provide handling instructions?', 'We provide general lab-handling and storage information for qualified researchers only. We do not provide dosing, usage, or application guidance of any kind.']],
+      'blurb.cagrilintide': 'A synthetic long-acting amylin analog supplied as lyophilized powder for in-vitro laboratory research.',
+      'blurb.pinealon': 'A synthetic tripeptide bioregulator supplied as lyophilized powder for qualified in-vitro research.',
+      'blurb.adamax': 'A synthetic peptide used as a research reference compound. For in-vitro use only.',
+      'blurb.amino-1mq': 'A small-molecule research compound supplied as lyophilized powder for in-vitro laboratory research.',
+      'blurb.bac-water': 'Bacteriostatic water supplied as a laboratory reconstitution diluent. For research use only.',
+      'blurb.acetic-acid': 'Dilute acetic acid supplied as a laboratory reconstitution diluent. For research use only.',
+      'faq.items': [['What does "Research Use Only" mean?', 'All products are intended exclusively for in-vitro laboratory research by qualified researchers. They are not drugs, supplements, foods, or cosmetics, and are not for human or veterinary use.'], ['Are products third-party tested?', 'Yes. Every batch is assayed by an independent laboratory for identity and purity. A batch-specific Certificate of Analysis is available on the Test Results page.'], ['How do I find a Certificate of Analysis?', "Locate the batch number printed on your vial label and enter it in the COA Library to view that batch's Certificate of Analysis."], ['How are products supplied and stored?', 'Products are supplied as lyophilized powder. Store at -20°C, protected from light and moisture, and handle in accordance with institutional safety guidelines.'], ['Do you provide handling instructions?', 'We provide general lab-handling and storage information for qualified researchers only. We do not provide dosing, usage, or application guidance of any kind.']],
       'lp.disclaimer.title': 'Research Disclaimer',
       'lp.disclaimer.sec': [['Research use only', 'All products sold by Futuristic Science, LLC are intended strictly for laboratory and research purposes. They are NOT intended for human or veterinary use, consumption, or any in-vivo application.'], ['No medical claims', 'Nothing on this website constitutes medical advice or a claim to diagnose, treat, cure, or prevent any disease or condition. No statements have been evaluated by any regulatory authority.'], ['Buyer responsibility', 'By purchasing, the buyer affirms they are a qualified researcher aged 21 or older and will handle, store, and dispose of materials in accordance with all applicable laws and institutional safety guidelines.']],
       'lp.privacy.title': 'Privacy Policy',
       'lp.privacy.sec': [['Information we collect', 'We collect only the information needed to process orders and respond to inquiries — name, contact details, and order history. We do not sell personal data.'], ['How we use it', 'Order fulfillment, customer support, and required record-keeping. Payment details are processed by our payment provider and not stored on our servers.'], ['Your choices', 'You may request access to or deletion of your data by contacting us at the email below.']],
       'lp.shipping.title': 'Shipping Policy',
       'lp.shipping.intro': 'This Shipping Policy explains how {company} processes, ships, and protects your order, and how to report a shipping or fulfillment issue.',
-      'lp.shipping.sec': [['Shipping & Fulfillment', 'Orders placed before 12:00 PM MST typically ship the same business day, and no later than the following business day. Orders placed on weekends, or on holidays ship on the next business day.'], ['Shipping Protection Coverage', ['All orders placed with {company} include Shipping Protection by default. This coverage is applied automatically at checkout and is non-optional.', 'Shipping Protection covers qualifying issues related to non-delivery, damage, or fulfillment errors, subject to the conditions described in this policy. All claims and coverage determinations are governed by the terms below.']], ['Delivered Packages', ['{company} is not responsible for packages that are marked \u201cDelivered\u201d by the carrier and subsequently lost or stolen, outside of the conditions and coverage defined in this policy.', 'Customers are responsible for:', ['Ensuring a secure delivery location', 'Monitoring tracking updates', 'Retrieving packages promptly upon delivery'], 'We strongly recommend using carrier hold options, signature-required delivery (when available), or a secure delivery address if package theft is a concern.']], ['Non-Delivery, Damage, or Fulfillment Errors', ['All shipping-related issues other than theft after delivery must be reported within five (5) calendar days of the carrier\u2019s delivery or attempted-delivery date. This timeframe is firm \u2014 requests submitted outside this window will be declined without exception.', 'For claims involving damage, missing items, or fulfillment errors, the following documentation is required in full:', ['A complete unboxing video recorded from the moment the package is first opened', 'Clear photos of the external packaging', 'Clear photos of the contents of the package', 'Clear photos of the packing slip included inside the package', 'The tracking number', 'A brief written description of the issue'], 'Failure to provide all required documentation will result in the claim being denied.']], ['Resolution', 'If a claim is reviewed and verified as a {company} fulfillment or shipping error, the affected items will be reshipped at no additional cost. No cash refunds will be issued.']],
+      'lp.shipping.sec': [['Shipping & Fulfillment', 'Orders placed before 12:00 PM MST typically ship the same business day, and no later than the following business day. Orders placed on weekends, or on holidays ship on the next business day.'], ['Shipping Protection Coverage', ['All orders placed with {company} include Shipping Protection by default. This coverage is applied automatically at checkout and is non-optional.', 'Shipping Protection covers qualifying issues related to non-delivery, damage, or fulfillment errors, subject to the conditions described in this policy. All claims and coverage determinations are governed by the terms below.']], ['Delivered Packages', ['{company} is not responsible for packages that are marked “Delivered” by the carrier and subsequently lost or stolen, outside of the conditions and coverage defined in this policy.', 'Customers are responsible for:', ['Ensuring a secure delivery location', 'Monitoring tracking updates', 'Retrieving packages promptly upon delivery'], 'We strongly recommend using carrier hold options, signature-required delivery (when available), or a secure delivery address if package theft is a concern.']], ['Non-Delivery, Damage, or Fulfillment Errors', ['All shipping-related issues other than theft after delivery must be reported within five (5) calendar days of the carrier’s delivery or attempted-delivery date. This timeframe is firm — requests submitted outside this window will be declined without exception.', 'For claims involving damage, missing items, or fulfillment errors, the following documentation is required in full:', ['A complete unboxing video recorded from the moment the package is first opened', 'Clear photos of the external packaging', 'Clear photos of the contents of the package', 'Clear photos of the packing slip included inside the package', 'The tracking number', 'A brief written description of the issue'], 'Failure to provide all required documentation will result in the claim being denied.']], ['Resolution', 'If a claim is reviewed and verified as a {company} fulfillment or shipping error, the affected items will be reshipped at no additional cost. No cash refunds will be issued.']],
       'lp.terms.title': 'Terms & Conditions',
-      'lp.terms.intro': 'Welcome to {company}. Please read these Terms & Conditions (\u201cTerms\u201d) carefully \u2014 they govern your access to and use of the {company} website, products, and services (collectively, the \u201cServices\u201d). By using the Services, you agree to these Terms and our Privacy Policy. If you do not agree, please discontinue use of the Services.',
-      'lp.terms.sec': [['Eligibility', 'You must be at least 18 years of age to use the Services. By using them, you represent that you meet this age requirement and are a qualified purchaser acting on behalf of legitimate research.'], ['Use of Services', 'Our products are supplied for laboratory research use only. They are not intended for personal use or consumption, and are not intended to diagnose, treat, cure, or prevent any disease. You agree to use the Services and products in compliance with all applicable laws and regulations. {company} reserves the right to refuse a sale where it believes a customer is violating these Terms.'], ['Intellectual Property', 'All content, logos, graphics, imagery, and other material within the Services are the intellectual property of {company} and are protected by copyright and trademark law. Unauthorized use is prohibited.'], ['Orders & Payments', 'You agree to provide current, complete, and accurate purchase and account information for every order. You also agree to keep your account and payment details \u2014 including email, payment method, and card expiration \u2014 up to date so we can process your transactions and reach you when needed.'], ['Order Acceptance & Cancellation', '{company} reserves the right, at its sole discretion, to refuse, limit, cancel, or terminate any order at any time and for any reason \u2014 including suspected fraud, misuse, policy violations, availability issues, pricing or listing errors, or regulatory concerns. If an order is canceled after payment is received, a refund may be issued at our discretion in accordance with these policies.'], ['Refunds & Returns', ['Due to the sensitive nature of our products and applicable regulatory requirements, all sales are final.', '{company} does not accept returns, issue refunds, or allow cancellations once an order has been placed, regardless of delivery status, except where required by applicable law or as otherwise provided in our policies.', 'Nothing in these Terms limits any remedy that applicable law requires us to provide — for example, where we shipped the wrong item, an item never shipped, or a product arrived damaged due to our handling or packaging.']], ['Delivered Packages', ['Once a shipment is marked \u201cDelivered\u201d by the carrier, responsibility for the package transfers to the customer.', '{company} is not responsible for packages lost or stolen after delivery \u2014 including theft from porches, mailrooms, front desks, lockers, or other locations. Refunds, credits, or replacements will not be issued for packages confirmed as delivered by the carrier.']], ['Shipping Damage or Fulfillment Errors', ['In the event of a verified {company} fulfillment or shipping error \u2014 such as incorrect items, missing items, or damage incurred in transit prior to delivery \u2014 you must notify us within seven (7) calendar days of the carrier\u2019s delivery date.', 'This reporting window is firm. Requests submitted outside this timeframe will be denied without exception.']], ['Required Documentation', ['All claims must include complete, verifiable documentation:', ['A full unboxing video recorded from the moment the package is first opened', 'Photos of the external packaging', 'Photos of the package contents', 'Photos of the packing slip enclosed with the order'], 'Claims submitted without all required documentation will be denied.']], ['Resolution', ['Upon confirmation of an eligible shipping or fulfillment error caused by {company}, we may, at our sole discretion, issue a replacement of the affected items.', 'Cash refunds, store credits, or alternative compensation are not guaranteed and are not provided for delivered, refused, or stolen packages.']], ['Chargebacks', 'Chargebacks submitted for delivered, refused, or stolen packages will be disputed using carrier confirmation, delivery records, and the customer\u2019s agreement to these Terms.'], ['Communications Consent', ['By placing an order, creating an account, or otherwise using the Services, you consent to receive communications from {company} \u2014 including transactional, operational, support-related, and marketing messages \u2014 via email, SMS/text, and other electronic means using the contact details you provide. Message frequency may vary; message and data rates may apply.', 'Consent to receive communications is not a condition of purchase. You may opt out of non-transactional messages at any time by following the unsubscribe instructions in our emails or replying STOP to any SMS. Transactional and service messages (order confirmations, shipping notices, account and support responses) may continue as permitted by law.']], ['Limitation of Liability', 'To the maximum extent permitted by law, {company} shall not be liable for any indirect, incidental, or consequential damages arising from the use of \u2014 or inability to use \u2014 the Services or any products procured through them.'], ['Fraud Screening & Verification', ['To protect our customers and our business, {company} reserves the right, at its sole discretion, to:', ['Verify the identity of any customer', 'Request additional identification or documentation for orders flagged as suspicious or high in value', 'Decline, hold, or cancel any order we reasonably believe to be fraudulent, unauthorized, or non-compliant'], 'Orders may be held pending completion of verification.']], ['Fulfillment & Processing', ['Orders are processed after payment is received and verified. {company} may delay or cancel an order if:', ['Payment or address verification (including AVS/CVV) fails or is inconclusive', 'Fraud is suspected', 'Inventory or supply issues arise', 'Regulatory or compliance concerns arise'], 'Where an order is canceled before fulfillment, any amount charged for that order will be refunded.']], ['Inspection of Shipments', 'Customers should inspect all shipments promptly upon delivery. Any claim for a shipping or fulfillment error must be submitted within the reporting window stated above, together with the required documentation. Prompt inspection helps ensure that claims can be verified and resolved.'], ['Governing Law & Venue', 'These Terms are governed by the laws of the State of Wisconsin, without regard to its conflict-of-laws principles. Any dispute arising out of or relating to these Terms or the Services shall be brought exclusively in the state or federal courts located in Wisconsin, and you consent to the personal jurisdiction of those courts.'], ['No Transfer of Orders', 'Orders and any associated rights may not be transferred, assigned, or reassigned to another party without the prior written consent of {company}.'], ['Force Majeure', '{company} is not liable for any delay or failure to perform resulting from causes beyond its reasonable control, including but not limited to carrier disruptions, natural disasters, acts of government, labor disputes, or supply-chain interruptions.'], ['Severability', 'If any provision of these Terms is held invalid or unenforceable, that provision will be limited or eliminated to the minimum extent necessary, and the remaining provisions will remain in full force and effect.'], ['Changes to the Terms', 'We may modify these Terms at any time. Your continued use of the Services after changes are posted constitutes acceptance of those changes.'], ['Contact Us', 'Questions about these Terms? Reach our team at {email}. By using the Services, you consent to these Terms; if you do not agree with any part, you must discontinue use of the Services.']],
+      'lp.terms.intro': 'Welcome to {company}. Please read these Terms & Conditions (“Terms”) carefully — they govern your access to and use of the {company} website, products, and services (collectively, the “Services”). By using the Services, you agree to these Terms and our Privacy Policy. If you do not agree, please discontinue use of the Services.',
+      'lp.terms.sec': [['Eligibility', 'You must be at least 18 years of age to use the Services. By using them, you represent that you meet this age requirement and are a qualified purchaser acting on behalf of legitimate research.'], ['Use of Services', 'Our products are supplied for laboratory research use only. They are not intended for personal use or consumption, and are not intended to diagnose, treat, cure, or prevent any disease. You agree to use the Services and products in compliance with all applicable laws and regulations. {company} reserves the right to refuse a sale where it believes a customer is violating these Terms.'], ['Intellectual Property', 'All content, logos, graphics, imagery, and other material within the Services are the intellectual property of {company} and are protected by copyright and trademark law. Unauthorized use is prohibited.'], ['Orders & Payments', 'You agree to provide current, complete, and accurate purchase and account information for every order. You also agree to keep your account and payment details — including email, payment method, and card expiration — up to date so we can process your transactions and reach you when needed.'], ['Order Acceptance & Cancellation', '{company} reserves the right, at its sole discretion, to refuse, limit, cancel, or terminate any order at any time and for any reason — including suspected fraud, misuse, policy violations, availability issues, pricing or listing errors, or regulatory concerns. If an order is canceled after payment is received, a refund may be issued at our discretion in accordance with these policies.'], ['Refunds & Returns', ['Due to the sensitive nature of our products and applicable regulatory requirements, all sales are final.', '{company} does not accept returns, issue refunds, or allow cancellations once an order has been placed, regardless of delivery status, except where required by applicable law or as otherwise provided in our policies.', 'Nothing in these Terms limits any remedy that applicable law requires us to provide — for example, where we shipped the wrong item, an item never shipped, or a product arrived damaged due to our handling or packaging.']], ['Delivered Packages', ['Once a shipment is marked “Delivered” by the carrier, responsibility for the package transfers to the customer.', '{company} is not responsible for packages lost or stolen after delivery — including theft from porches, mailrooms, front desks, lockers, or other locations. Refunds, credits, or replacements will not be issued for packages confirmed as delivered by the carrier.']], ['Shipping Damage or Fulfillment Errors', ['In the event of a verified {company} fulfillment or shipping error — such as incorrect items, missing items, or damage incurred in transit prior to delivery — you must notify us within seven (7) calendar days of the carrier’s delivery date.', 'This reporting window is firm. Requests submitted outside this timeframe will be denied without exception.']], ['Required Documentation', ['All claims must include complete, verifiable documentation:', ['A full unboxing video recorded from the moment the package is first opened', 'Photos of the external packaging', 'Photos of the package contents', 'Photos of the packing slip enclosed with the order'], 'Claims submitted without all required documentation will be denied.']], ['Resolution', ['Upon confirmation of an eligible shipping or fulfillment error caused by {company}, we may, at our sole discretion, issue a replacement of the affected items.', 'Cash refunds, store credits, or alternative compensation are not guaranteed and are not provided for delivered, refused, or stolen packages.']], ['Chargebacks', 'Chargebacks submitted for delivered, refused, or stolen packages will be disputed using carrier confirmation, delivery records, and the customer’s agreement to these Terms.'], ['Communications Consent', ['By placing an order, creating an account, or otherwise using the Services, you consent to receive communications from {company} — including transactional, operational, support-related, and marketing messages — via email, SMS/text, and other electronic means using the contact details you provide. Message frequency may vary; message and data rates may apply.', 'Consent to receive communications is not a condition of purchase. You may opt out of non-transactional messages at any time by following the unsubscribe instructions in our emails or replying STOP to any SMS. Transactional and service messages (order confirmations, shipping notices, account and support responses) may continue as permitted by law.']], ['Limitation of Liability', 'To the maximum extent permitted by law, {company} shall not be liable for any indirect, incidental, or consequential damages arising from the use of — or inability to use — the Services or any products procured through them.'], ['Fraud Screening & Verification', ['To protect our customers and our business, {company} reserves the right, at its sole discretion, to:', ['Verify the identity of any customer', 'Request additional identification or documentation for orders flagged as suspicious or high in value', 'Decline, hold, or cancel any order we reasonably believe to be fraudulent, unauthorized, or non-compliant'], 'Orders may be held pending completion of verification.']], ['Fulfillment & Processing', ['Orders are processed after payment is received and verified. {company} may delay or cancel an order if:', ['Payment or address verification (including AVS/CVV) fails or is inconclusive', 'Fraud is suspected', 'Inventory or supply issues arise', 'Regulatory or compliance concerns arise'], 'Where an order is canceled before fulfillment, any amount charged for that order will be refunded.']], ['Inspection of Shipments', 'Customers should inspect all shipments promptly upon delivery. Any claim for a shipping or fulfillment error must be submitted within the reporting window stated above, together with the required documentation. Prompt inspection helps ensure that claims can be verified and resolved.'], ['Governing Law & Venue', 'These Terms are governed by the laws of the State of Wisconsin, without regard to its conflict-of-laws principles. Any dispute arising out of or relating to these Terms or the Services shall be brought exclusively in the state or federal courts located in Wisconsin, and you consent to the personal jurisdiction of those courts.'], ['No Transfer of Orders', 'Orders and any associated rights may not be transferred, assigned, or reassigned to another party without the prior written consent of {company}.'], ['Force Majeure', '{company} is not liable for any delay or failure to perform resulting from causes beyond its reasonable control, including but not limited to carrier disruptions, natural disasters, acts of government, labor disputes, or supply-chain interruptions.'], ['Severability', 'If any provision of these Terms is held invalid or unenforceable, that provision will be limited or eliminated to the minimum extent necessary, and the remaining provisions will remain in full force and effect.'], ['Changes to the Terms', 'We may modify these Terms at any time. Your continued use of the Services after changes are posted constitutes acceptance of those changes.'], ['Contact Us', 'Questions about these Terms? Reach our team at {email}. By using the Services, you consent to these Terms; if you do not agree with any part, you must discontinue use of the Services.']],
       'ruo.eyebrow': 'Legal',
       'ruo.title': 'Research Use Only (RUO) Policy',
       'ruo.intro': 'All products sold by {company} are intended strictly for laboratory research purposes only. {company} supplies materials designated as Research Use Only (RUO) — not for human or animal consumption, medical use, diagnostic use, or therapeutic use.',
@@ -7875,9 +8638,9 @@ try { (() => {
       'trust.coas': 'COA por lote',
       'trust.accuracy': 'Precisión medida',
       'trust.shipping': 'Envío rápido',
-      'age.eyebrow': 'Verificación de edad',
+      'age.eyebrow': 'Verificación de edad e investigador',
       'age.title': 'Debes tener al menos 21 años para visitar este sitio.',
-      'age.terms.pre': 'Al entrar a este sitio, reconoces que has leído y aceptas nuestros ',
+      'age.terms.pre': 'Al entrar, confirmas que tienes al menos 21 años y que eres un investigador o institución calificada que compra para investigación de laboratorio lícita, y que has leído y aceptas nuestros ',
       'age.terms.link': 'Términos de servicio',
       'age.terms.post': '.',
       'age.remember': 'Recordarme',
@@ -7889,7 +8652,7 @@ try { (() => {
       'auth.eyebrow': 'Acceso de Miembros',
       'auth.signinTitle': 'Inicia sesión para continuar',
       'auth.signupTitle': 'Crea tu cuenta',
-      'auth.signinSub': 'El acceso a este sitio está restringido a investigadores registrados.',
+      'auth.signinSub': 'Inicia sesión para ver tu carrito y finalizar la compra.',
       'auth.signupSub': 'Regístrate para acceder al catálogo de Futuristic Science.',
       'auth.google': 'Continuar con Google',
       'auth.apple': 'Continuar con Apple',
@@ -7943,7 +8706,8 @@ try { (() => {
       'home.featuredEyebrow': 'Catálogo destacado',
       'home.featuredTitle': 'Péptidos de investigación, en stock',
       'home.proofEyebrow': 'Pruebas, no promesas',
-      'home.proofTitle': 'Cada lote se prueba.\nCada resultado se publica.',
+      'home.proofTitle': `Cada lote se prueba.
+Cada resultado se publica.`,
       'home.proofBody': 'Trabajamos con laboratorios independientes de terceros para verificar la identidad y la pureza. Busca cualquier número de lote para ver su Certificado de Análisis.',
       'home.proof1t': 'Verificación de pureza HPLC',
       'home.proof1d': 'Laboratorios independientes confirman 99%+ de pureza por lote.',
@@ -8043,21 +8807,29 @@ try { (() => {
       'cat.Cellular Research': 'Investigación celular',
       'cat.Neuro Research': 'Investigación neurológica',
       'cat.Circadian Research': 'Investigación circadiana',
+      'cat.Lab Supplies': 'Insumos de laboratorio',
       'pd.inStock': 'En stock',
       'pd.outOfStock': 'Agotado',
       'pd.strength': 'Concentración',
       'pd.purchaseOption': 'Opción de compra',
       'pd.singleVial': 'Vial individual',
       'pd.boxOf10': 'Caja de 10 viales',
+      'pd.halfKit': 'Medio kit',
+      'pd.fullKit': 'Kit completo',
+      'pd.vialOne': '1 vial',
+      'pd.vialsCount': '{n} viales',
       'pd.save': 'AHORRA',
       'pd.perVial': '/ vial individual',
       'pd.perBox': '/ caja de 10 viales',
+      'pd.perHalfKit': '/ medio kit (5 viales)',
+      'pd.perFullKit': '/ kit completo (10 viales)',
       'pd.form': 'Polvo liofilizado',
       'pd.viewCoa': 'Ver Certificados de Análisis',
       'pd.tabDesc': 'Descripción',
       'pd.tabHandling': 'Almacenamiento y manejo',
       'pd.tabShipping': 'Envío',
-      'pd.handling': 'Almacenar el polvo liofilizado a -20°C, protegido de la luz y la humedad. Una vez reconstituido para uso de laboratorio, almacenar según los protocolos de su institución.\nManipular conforme a las pautas de seguridad institucionales y la práctica estándar de laboratorio. Este producto es un químico de investigación, no un fármaco, alimento ni cosmético.',
+      'pd.handling': `Almacenar el polvo liofilizado a -20°C, protegido de la luz y la humedad. Una vez reconstituido para uso de laboratorio, almacenar según los protocolos de su institución.
+Manipular conforme a las pautas de seguridad institucionales y la práctica estándar de laboratorio. Este producto es un químico de investigación, no un fármaco, alimento ni cosmético.`,
       'pd.shipping': 'Los pedidos se envían en embalaje a temperatura adecuada mediante transportistas urgentes. Se proporciona seguimiento al despacho. Cada pedido incluye documentación de uso exclusivo en investigación.',
       'pd.descTail': 'se suministra como polvo liofilizado para investigación de laboratorio in vitro. Cada lote es analizado por un laboratorio independiente para identidad y pureza, y se envía con un Certificado de Análisis por lote. Destinado al uso por investigadores calificados en un entorno de laboratorio controlado.',
       'pd.ruoDetail': 'Sin afirmaciones médicas, de dosificación o de uso humano. La información de reconstitución es solo una guía de manejo de laboratorio para investigadores calificados.',
@@ -8141,15 +8913,24 @@ try { (() => {
       'co.recordTitle': 'Registro del pedido',
       'co.recordNote': 'Para su protección y la nuestra, este pedido se registra con marca de tiempo, dirección IP, versiones de políticas aceptadas, resultado de verificación de pago (AVS/CVV) y seguimiento de envío con confirmación de entrega. Una copia de estos reconocimientos se adjunta a su pedido y se le envía por correo.',
       'co.compRequired': 'Marca todas las casillas anteriores para realizar tu pedido.',
-      'co.payMethodsTitle': 'M\u00e9todos de Pago Directo',
-      'co.payIntro': 'Despu\u00e9s de realizar tu pedido, completar\u00e1s el pago con Zelle, Venmo, Apple Cash o Cash App. Debido a las restricciones de los procesadores de pago en la industria de investigaci\u00f3n, usamos m\u00e9todos de pago directo confiables para una experiencia de pago m\u00e1s confiable. Las instrucciones de pago se muestran despu\u00e9s de finalizar la compra.',
-      'co.paySelect': 'Elige c\u00f3mo pagar\u00e1s',
+      'co.payMethodsTitle': 'Métodos de Pago Directo',
+      'co.payIntro': 'Después de realizar tu pedido, completarás el pago con Zelle, Venmo o Cash App. Debido a las restricciones de los procesadores de pago en la industria de investigación, usamos métodos de pago directo confiables para una experiencia de pago más confiable. Las instrucciones de pago se muestran después de finalizar la compra.',
+      'co.paySelect': 'Elige cómo pagarás',
       'co.pay.zelle': 'Zelle',
       'co.pay.cashapp': 'Cash App',
       'co.pay.venmo': 'Venmo',
       'co.pay.applecash': 'Apple Cash',
-      'co.payWindow': 'Completa el pago dentro de 1 hora de haber realizado tu pedido. Si no se recibe el pago para el siguiente d\u00eda h\u00e1bil, tu pedido puede cancelarse autom\u00e1ticamente y el inventario ser\u00e1 liberado.',
-      'co.ackLawful': 'Certifico que compro estos productos \u00fanicamente con fines de investigaci\u00f3n l\u00edcita. He le\u00eddo y acepto los T\u00e9rminos y Condiciones y entiendo que todos los productos se venden solo para Uso en Investigaci\u00f3n, y no se venden, comercializan ni est\u00e1n destinados al consumo humano.',
+      'co.payWindow': 'Completa el pago dentro de 1 hora de haber realizado tu pedido. Si no se recibe el pago para el siguiente día hábil, tu pedido puede cancelarse automáticamente y el inventario será liberado.',
+      'co.placedTitle': '¡Pedido recibido!',
+      'co.placedRef': 'Referencia del pedido',
+      'co.placedBody': 'Gracias — tu pedido ha sido registrado. Las instrucciones de pago para tu método seleccionado se enviarán a tu correo en breve. Completa el pago dentro de 1 hora para reservar tu inventario.',
+      'co.placedBtn': 'Volver al Inicio',
+      'co.zelleTitle': 'Completa tu pago por Zelle',
+      'co.zelleAmount': 'Monto',
+      'co.zelleTo': 'Zelle a',
+      'co.zelleMemo': 'Memo / nota',
+      'co.zelleNote': 'Envía el monto exacto e incluye el memo de arriba para poder identificar tu pago. Completa dentro de 1 hora para reservar tu inventario. Recibirás una confirmación por correo.',
+      'co.ackLawful': 'Certifico que compro estos productos únicamente con fines de investigación lícita. He leído y acepto los Términos y Condiciones, la Política de Privacidad y la Política de Devoluciones y Reembolsos, y entiendo que todos los productos se venden solo para Uso en Investigación, y no se venden, comercializan ni están destinados al consumo humano.',
       'co.emptyDesc': 'Añade péptidos de investigación a tu carrito antes de pagar.',
       'co.browse': 'Explorar catálogo',
       'foot.desc': 'Péptidos de grado investigación, probados por terceros con Certificados de Análisis. Suministrados a investigadores calificados.',
@@ -8254,6 +9035,12 @@ try { (() => {
       'sub.wolverine': 'Mezcla de péptidos',
       'sub.ahk-cu': 'Tripéptido de cobre',
       'sub.mt-2': 'Péptido melanocortina',
+      'sub.cagrilintide': 'Análogo de amilina',
+      'sub.pinealon': 'Biorregulador peptídico',
+      'sub.adamax': 'Péptido de investigación',
+      'sub.amino-1mq': 'Molécula pequeña',
+      'sub.bac-water': 'Agua bacteriostática',
+      'sub.acetic-acid': 'Diluyente de reconstitución',
       'word.purity': 'Pureza',
       'blurb.retatrutide': 'Un péptido sintético multirreceptor suministrado como polvo liofilizado para investigación de laboratorio in vitro.',
       'blurb.tirzepatide': 'Un péptido sintético de doble receptor suministrado para aplicaciones de investigación de laboratorio.',
@@ -8285,17 +9072,23 @@ try { (() => {
       'blurb.wolverine': 'Una mezcla de investigación multipéptido suministrada como polvo liofilizado para investigación de laboratorio in vitro.',
       'blurb.ahk-cu': 'Un tripéptido de unión al cobre estudiado en investigación de laboratorio. Suministrado como polvo liofilizado para investigación in vitro.',
       'blurb.mt-2': 'Un péptido melanocortina sintético suministrado como polvo liofilizado para investigación in vitro calificada.',
+      'blurb.cagrilintide': 'Un análogo sintético de amilina de acción prolongada suministrado como polvo liofilizado para investigación de laboratorio in vitro.',
+      'blurb.pinealon': 'Un tripéptido biorregulador sintético suministrado como polvo liofilizado para investigación in vitro calificada.',
+      'blurb.adamax': 'Un péptido sintético usado como compuesto de referencia de investigación. Solo para uso in vitro.',
+      'blurb.amino-1mq': 'Un compuesto de investigación de molécula pequeña suministrado como polvo liofilizado para investigación de laboratorio in vitro.',
+      'blurb.bac-water': 'Agua bacteriostática suministrada como diluyente de reconstitución de laboratorio. Solo para uso en investigación.',
+      'blurb.acetic-acid': 'Ácido acético diluido suministrado como diluyente de reconstitución de laboratorio. Solo para uso en investigación.',
       'faq.items': [['¿Qué significa "Solo para investigación"?', 'Todos los productos están destinados exclusivamente a investigación de laboratorio in vitro por investigadores calificados. No son fármacos, suplementos, alimentos ni cosméticos, y no son para uso humano ni veterinario.'], ['¿Los productos son probados por terceros?', 'Sí. Cada lote es analizado por un laboratorio independiente para identidad y pureza. Hay un Certificado de Análisis por lote disponible en la página de Resultados.'], ['¿Cómo encuentro un Certificado de Análisis?', 'Localiza el número de lote impreso en la etiqueta de tu vial e ingrésalo en la Biblioteca COA para ver el Certificado de Análisis de ese lote.'], ['¿Cómo se suministran y almacenan los productos?', 'Los productos se suministran como polvo liofilizado. Almacenar a -20°C, protegido de la luz y la humedad, y manipular conforme a las pautas de seguridad institucionales.'], ['¿Proporcionan instrucciones de manejo?', 'Proporcionamos información general de manejo y almacenamiento de laboratorio solo para investigadores calificados. No proporcionamos ninguna guía de dosificación, uso o aplicación.']],
       'lp.disclaimer.title': 'Aviso de investigación',
       'lp.disclaimer.sec': [['Solo para uso en investigación', 'Todos los productos vendidos por Futuristic Science, LLC están destinados estrictamente a fines de laboratorio e investigación. NO están destinados al uso humano o veterinario, al consumo ni a ninguna aplicación in vivo.'], ['Sin afirmaciones médicas', 'Nada en este sitio web constituye consejo médico ni una afirmación de diagnosticar, tratar, curar o prevenir ninguna enfermedad o condición. Ninguna declaración ha sido evaluada por ninguna autoridad reguladora.'], ['Responsabilidad del comprador', 'Al comprar, el comprador afirma que es un investigador calificado de 21 años o más y que manipulará, almacenará y desechará los materiales conforme a todas las leyes aplicables y las pautas de seguridad institucionales.']],
       'lp.privacy.title': 'Política de privacidad',
       'lp.privacy.sec': [['Información que recopilamos', 'Recopilamos solo la información necesaria para procesar pedidos y responder consultas: nombre, datos de contacto e historial de pedidos. No vendemos datos personales.'], ['Cómo la usamos', 'Cumplimiento de pedidos, atención al cliente y mantenimiento de registros requerido. Los datos de pago son procesados por nuestro proveedor de pagos y no se almacenan en nuestros servidores.'], ['Tus opciones', 'Puedes solicitar acceso o eliminación de tus datos contactándonos al correo a continuación.']],
-      'lp.shipping.title': 'Pol\u00edtica de Env\u00edo',
-      'lp.shipping.intro': 'Esta Pol\u00edtica de Env\u00edo explica c\u00f3mo {company} procesa, env\u00eda y protege tu pedido, y c\u00f3mo reportar un problema de env\u00edo o de cumplimiento.',
-      'lp.shipping.sec': [['Env\u00edo y Cumplimiento', 'Los pedidos realizados antes de las 12:00 PM MST normalmente se env\u00edan el mismo d\u00eda h\u00e1bil, y a m\u00e1s tardar el siguiente d\u00eda h\u00e1bil. Los pedidos realizados en fines de semana o d\u00edas festivos se env\u00edan el siguiente d\u00eda h\u00e1bil.'], ['Cobertura de Protecci\u00f3n de Env\u00edo', ['Todos los pedidos realizados con {company} incluyen Protecci\u00f3n de Env\u00edo de forma predeterminada. Esta cobertura se aplica autom\u00e1ticamente al finalizar la compra y no es opcional.', 'La Protecci\u00f3n de Env\u00edo cubre problemas que califiquen relacionados con la no entrega, da\u00f1os o errores de cumplimiento, sujeto a las condiciones descritas en esta pol\u00edtica. Todas las reclamaciones y determinaciones de cobertura se rigen por los t\u00e9rminos a continuaci\u00f3n.']], ['Paquetes Entregados', ['{company} no es responsable de los paquetes marcados como \u201cEntregados\u201d por el transportista y posteriormente perdidos o robados, fuera de las condiciones y la cobertura definidas en esta pol\u00edtica.', 'Los clientes son responsables de:', ['Asegurar un lugar de entrega seguro', 'Monitorear las actualizaciones de seguimiento', 'Recoger los paquetes de inmediato tras la entrega'], 'Recomendamos encarecidamente usar opciones de retenci\u00f3n del transportista, entrega con firma requerida (cuando est\u00e9 disponible) o una direcci\u00f3n de entrega segura si te preocupa el robo de paquetes.']], ['No Entrega, Da\u00f1o o Errores de Cumplimiento', ['Todos los problemas relacionados con el env\u00edo que no sean robo despu\u00e9s de la entrega deben reportarse dentro de los cinco (5) d\u00edas calendario a partir de la fecha de entrega o intento de entrega del transportista. Este plazo es firme \u2014 las solicitudes presentadas fuera de esta ventana ser\u00e1n rechazadas sin excepci\u00f3n.', 'Para reclamaciones que involucren da\u00f1os, art\u00edculos faltantes o errores de cumplimiento, se requiere la siguiente documentaci\u00f3n completa:', ['Un video completo del desempaque grabado desde el momento en que se abre el paquete por primera vez', 'Fotos claras del embalaje externo', 'Fotos claras del contenido del paquete', 'Fotos claras del albar\u00e1n incluido dentro del paquete', 'El n\u00famero de seguimiento', 'Una breve descripci\u00f3n escrita del problema'], 'No proporcionar toda la documentaci\u00f3n requerida resultar\u00e1 en la denegaci\u00f3n de la reclamaci\u00f3n.']], ['Resoluci\u00f3n', 'Si una reclamaci\u00f3n es revisada y verificada como un error de cumplimiento o env\u00edo de {company}, los art\u00edculos afectados se reenviar\u00e1n sin costo adicional. No se emitir\u00e1n reembolsos en efectivo.']],
-      'lp.terms.title': 'T\u00e9rminos y condiciones',
-      'lp.terms.intro': 'Bienvenido a {company}. Lea atentamente estos T\u00e9rminos y Condiciones (\u201cT\u00e9rminos\u201d) \u2014 rigen su acceso y uso del sitio web, los productos y los servicios de {company} (en conjunto, los \u201cServicios\u201d). Al usar los Servicios, usted acepta estos T\u00e9rminos y nuestra Pol\u00edtica de Privacidad. Si no est\u00e1 de acuerdo, deje de usar los Servicios.',
-      'lp.terms.sec': [['Elegibilidad', 'Debe tener al menos 18 a\u00f1os para usar los Servicios. Al usarlos, declara que cumple con este requisito de edad y que es un comprador calificado que act\u00faa con fines leg\u00edtimos de investigaci\u00f3n.'], ['Uso de los Servicios', 'Nuestros productos se suministran \u00fanicamente para uso en investigaci\u00f3n de laboratorio. No est\u00e1n destinados al uso o consumo personal, ni a diagnosticar, tratar, curar o prevenir ninguna enfermedad. Usted acepta usar los Servicios y productos cumpliendo con todas las leyes y regulaciones aplicables. {company} se reserva el derecho de rechazar una venta cuando considere que un cliente est\u00e1 infringiendo estos T\u00e9rminos.'], ['Propiedad Intelectual', 'Todo el contenido, logotipos, gr\u00e1ficos, im\u00e1genes y dem\u00e1s material de los Servicios es propiedad intelectual de {company} y est\u00e1 protegido por las leyes de derechos de autor y marcas registradas. Se proh\u00edbe el uso no autorizado.'], ['Pedidos y Pagos', 'Usted acepta proporcionar informaci\u00f3n de compra y de cuenta actual, completa y precisa para cada pedido. Tambi\u00e9n acepta mantener actualizados los datos de su cuenta y pago \u2014 incluido el correo, el m\u00e9todo de pago y la fecha de vencimiento de la tarjeta \u2014 para que podamos procesar sus transacciones y contactarlo cuando sea necesario.'], ['Aceptaci\u00f3n y Cancelaci\u00f3n de Pedidos', '{company} se reserva el derecho, a su entera discreci\u00f3n, de rechazar, limitar, cancelar o terminar cualquier pedido en cualquier momento y por cualquier motivo \u2014 incluido sospecha de fraude, uso indebido, violaciones de pol\u00edticas, problemas de disponibilidad, errores de precio o de listado, o preocupaciones regulatorias. Si un pedido se cancela despu\u00e9s de recibir el pago, podr\u00e1 emitirse un reembolso a nuestra discreci\u00f3n conforme a estas pol\u00edticas.'], ['Reembolsos y Devoluciones', ['Debido a la naturaleza sensible de nuestros productos y a los requisitos regulatorios aplicables, todas las ventas son finales.', '{company} no acepta devoluciones, no emite reembolsos ni permite cancelaciones una vez realizado un pedido, independientemente del estado de entrega, salvo cuando lo exija la ley aplicable o seg\u00fan lo dispuesto en nuestras pol\u00edticas.', 'Nada en estos T\u00e9rminos limita cualquier recurso que la ley aplicable nos obligue a brindar \u2014 por ejemplo, cuando enviamos el art\u00edculo equivocado, un art\u00edculo nunca se envi\u00f3, o un producto lleg\u00f3 da\u00f1ado debido a nuestro manejo o embalaje.']], ['Paquetes Entregados', ['Una vez que el transportista marca un env\u00edo como \u201cEntregado\u201d, la responsabilidad del paquete se transfiere al cliente.', '{company} no se hace responsable de paquetes perdidos o robados despu\u00e9s de la entrega \u2014 incluido el robo en porches, salas de correo, recepciones, casilleros u otros lugares. No se emitir\u00e1n reembolsos, cr\u00e9ditos ni reemplazos por paquetes confirmados como entregados por el transportista.']], ['Da\u00f1os de Env\u00edo o Errores de Preparaci\u00f3n', ['En caso de un error verificado de preparaci\u00f3n o env\u00edo de {company} \u2014 como art\u00edculos incorrectos, art\u00edculos faltantes o da\u00f1os ocurridos en tr\u00e1nsito antes de la entrega \u2014 debe notificarnos dentro de los siete (7) d\u00edas calendario posteriores a la fecha de entrega del transportista.', 'Este plazo de notificaci\u00f3n es firme. Las solicitudes presentadas fuera de este per\u00edodo ser\u00e1n denegadas sin excepci\u00f3n.']], ['Documentaci\u00f3n Requerida', ['Todas las reclamaciones deben incluir documentaci\u00f3n completa y verificable:', ['Un video completo del desembalaje grabado desde el momento en que se abre el paquete por primera vez', 'Fotos del embalaje externo', 'Fotos del contenido del paquete', 'Fotos del albar\u00e1n incluido con el pedido'], 'Las reclamaciones presentadas sin toda la documentaci\u00f3n requerida ser\u00e1n denegadas.']], ['Resoluci\u00f3n', ['Tras la confirmaci\u00f3n de un error eleg\u00edble de env\u00edo o preparaci\u00f3n causado por {company}, podemos, a nuestra entera discreci\u00f3n, emitir un reemplazo de los art\u00edculos afectados.', 'No se garantizan reembolsos en efectivo, cr\u00e9ditos en tienda ni compensaciones alternativas, y no se proporcionan para paquetes entregados, rechazados o robados.']], ['Contracargos', 'Los contracargos presentados por paquetes entregados, rechazados o robados ser\u00e1n disputados utilizando la confirmaci\u00f3n del transportista, los registros de entrega y la aceptaci\u00f3n de estos T\u00e9rminos por parte del cliente.'], ['Consentimiento de Comunicaciones', ['Al realizar un pedido, crear una cuenta o usar los Servicios, usted consiente recibir comunicaciones de {company} \u2014 incluidas transaccionales, operativas, de soporte y de marketing \u2014 por correo, SMS y otros medios electr\u00f3nicos usando los datos que proporcione. La frecuencia de los mensajes puede variar; pueden aplicarse tarifas de mensajes y datos.', 'El consentimiento para recibir comunicaciones no es una condici\u00f3n de compra. Puede cancelar los mensajes no transaccionales en cualquier momento siguiendo las instrucciones de cancelaci\u00f3n en nuestros correos o respondiendo STOP a cualquier SMS. Los mensajes transaccionales y de servicio (confirmaciones de pedido, avisos de env\u00edo, cuenta y soporte) pueden continuar seg\u00fan lo permita la ley.']], ['Limitaci\u00f3n de Responsabilidad', 'En la m\u00e1xima medida permitida por la ley, {company} no ser\u00e1 responsable de da\u00f1os indirectos, incidentales o consecuentes que surjan del uso \u2014 o la imposibilidad de uso \u2014 de los Servicios o de cualquier producto adquirido a trav\u00e9s de ellos.'], ['Detecci\u00f3n de Fraude y Verificaci\u00f3n', ['Para proteger a nuestros clientes y a nuestro negocio, {company} se reserva el derecho, a su entera discreci\u00f3n, de:', ['Verificar la identidad de cualquier cliente', 'Solicitar identificaci\u00f3n o documentaci\u00f3n adicional para pedidos marcados como sospechosos o de alto valor', 'Rechazar, retener o cancelar cualquier pedido que razonablemente consideremos fraudulento, no autorizado o no conforme'], 'Los pedidos pueden retenerse hasta completar la verificaci\u00f3n.']], ['Preparaci\u00f3n y Procesamiento', ['Los pedidos se procesan despu\u00e9s de recibir y verificar el pago. {company} puede retrasar o cancelar un pedido si:', ['La verificaci\u00f3n del pago o la direcci\u00f3n (incluidos AVS/CVV) falla o no es concluyente', 'Se sospecha fraude', 'Surgen problemas de inventario o suministro', 'Surgen preocupaciones regulatorias o de cumplimiento'], 'Cuando un pedido se cancela antes de su preparaci\u00f3n, se reembolsar\u00e1 cualquier monto cobrado por ese pedido.']], ['Inspecci\u00f3n de los Env\u00edos', 'Los clientes deben inspeccionar todos los env\u00edos de inmediato al recibirlos. Cualquier reclamo por un error de env\u00edo o preparaci\u00f3n debe presentarse dentro del plazo indicado anteriormente, junto con la documentaci\u00f3n requerida. La inspecci\u00f3n oportuna ayuda a garantizar que los reclamos puedan verificarse y resolverse.'], ['Ley Aplicable y Jurisdicci\u00f3n', 'Estos T\u00e9rminos se rigen por las leyes del Estado de Wisconsin, sin tener en cuenta sus principios de conflicto de leyes. Cualquier disputa que surja de o se relacione con estos T\u00e9rminos o los Servicios se presentar\u00e1 exclusivamente en los tribunales estatales o federales ubicados en Wisconsin, y usted consiente la jurisdicci\u00f3n personal de dichos tribunales.'], ['Intransferibilidad de los Pedidos', 'Los pedidos y los derechos asociados no pueden transferirse, cederse ni reasignarse a otra parte sin el consentimiento previo por escrito de {company}.'], ['Fuerza Mayor', '{company} no se hace responsable de ning\u00fan retraso o incumplimiento que resulte de causas fuera de su control razonable, incluidas, entre otras, interrupciones del transportista, desastres naturales, actos de gobierno, conflictos laborales o interrupciones de la cadena de suministro.'], ['Divisibilidad', 'Si alguna disposici\u00f3n de estos T\u00e9rminos se considera inv\u00e1lida o inaplicable, dicha disposici\u00f3n se limitar\u00e1 o eliminar\u00e1 en la medida m\u00ednima necesaria, y las disposiciones restantes permanecer\u00e1n en pleno vigor y efecto.'], ['Cambios en los T\u00e9rminos', 'Podemos modificar estos T\u00e9rminos en cualquier momento. Su uso continuado de los Servicios despu\u00e9s de publicarse los cambios constituye la aceptaci\u00f3n de dichos cambios.'], ['Cont\u00e1ctenos', '\u00bfPreguntas sobre estos T\u00e9rminos? Escriba a nuestro equipo a {email}. Al usar los Servicios, usted acepta estos T\u00e9rminos; si no est\u00e1 de acuerdo con alguna parte, debe dejar de usar los Servicios.']],
+      'lp.shipping.title': 'Política de Envío',
+      'lp.shipping.intro': 'Esta Política de Envío explica cómo {company} procesa, envía y protege tu pedido, y cómo reportar un problema de envío o de cumplimiento.',
+      'lp.shipping.sec': [['Envío y Cumplimiento', 'Los pedidos realizados antes de las 12:00 PM MST normalmente se envían el mismo día hábil, y a más tardar el siguiente día hábil. Los pedidos realizados en fines de semana o días festivos se envían el siguiente día hábil.'], ['Cobertura de Protección de Envío', ['Todos los pedidos realizados con {company} incluyen Protección de Envío de forma predeterminada. Esta cobertura se aplica automáticamente al finalizar la compra y no es opcional.', 'La Protección de Envío cubre problemas que califiquen relacionados con la no entrega, daños o errores de cumplimiento, sujeto a las condiciones descritas en esta política. Todas las reclamaciones y determinaciones de cobertura se rigen por los términos a continuación.']], ['Paquetes Entregados', ['{company} no es responsable de los paquetes marcados como “Entregados” por el transportista y posteriormente perdidos o robados, fuera de las condiciones y la cobertura definidas en esta política.', 'Los clientes son responsables de:', ['Asegurar un lugar de entrega seguro', 'Monitorear las actualizaciones de seguimiento', 'Recoger los paquetes de inmediato tras la entrega'], 'Recomendamos encarecidamente usar opciones de retención del transportista, entrega con firma requerida (cuando esté disponible) o una dirección de entrega segura si te preocupa el robo de paquetes.']], ['No Entrega, Daño o Errores de Cumplimiento', ['Todos los problemas relacionados con el envío que no sean robo después de la entrega deben reportarse dentro de los cinco (5) días calendario a partir de la fecha de entrega o intento de entrega del transportista. Este plazo es firme — las solicitudes presentadas fuera de esta ventana serán rechazadas sin excepción.', 'Para reclamaciones que involucren daños, artículos faltantes o errores de cumplimiento, se requiere la siguiente documentación completa:', ['Un video completo del desempaque grabado desde el momento en que se abre el paquete por primera vez', 'Fotos claras del embalaje externo', 'Fotos claras del contenido del paquete', 'Fotos claras del albarán incluido dentro del paquete', 'El número de seguimiento', 'Una breve descripción escrita del problema'], 'No proporcionar toda la documentación requerida resultará en la denegación de la reclamación.']], ['Resolución', 'Si una reclamación es revisada y verificada como un error de cumplimiento o envío de {company}, los artículos afectados se reenviarán sin costo adicional. No se emitirán reembolsos en efectivo.']],
+      'lp.terms.title': 'Términos y condiciones',
+      'lp.terms.intro': 'Bienvenido a {company}. Lea atentamente estos Términos y Condiciones (“Términos”) — rigen su acceso y uso del sitio web, los productos y los servicios de {company} (en conjunto, los “Servicios”). Al usar los Servicios, usted acepta estos Términos y nuestra Política de Privacidad. Si no está de acuerdo, deje de usar los Servicios.',
+      'lp.terms.sec': [['Elegibilidad', 'Debe tener al menos 18 años para usar los Servicios. Al usarlos, declara que cumple con este requisito de edad y que es un comprador calificado que actúa con fines legítimos de investigación.'], ['Uso de los Servicios', 'Nuestros productos se suministran únicamente para uso en investigación de laboratorio. No están destinados al uso o consumo personal, ni a diagnosticar, tratar, curar o prevenir ninguna enfermedad. Usted acepta usar los Servicios y productos cumpliendo con todas las leyes y regulaciones aplicables. {company} se reserva el derecho de rechazar una venta cuando considere que un cliente está infringiendo estos Términos.'], ['Propiedad Intelectual', 'Todo el contenido, logotipos, gráficos, imágenes y demás material de los Servicios es propiedad intelectual de {company} y está protegido por las leyes de derechos de autor y marcas registradas. Se prohíbe el uso no autorizado.'], ['Pedidos y Pagos', 'Usted acepta proporcionar información de compra y de cuenta actual, completa y precisa para cada pedido. También acepta mantener actualizados los datos de su cuenta y pago — incluido el correo, el método de pago y la fecha de vencimiento de la tarjeta — para que podamos procesar sus transacciones y contactarlo cuando sea necesario.'], ['Aceptación y Cancelación de Pedidos', '{company} se reserva el derecho, a su entera discreción, de rechazar, limitar, cancelar o terminar cualquier pedido en cualquier momento y por cualquier motivo — incluido sospecha de fraude, uso indebido, violaciones de políticas, problemas de disponibilidad, errores de precio o de listado, o preocupaciones regulatorias. Si un pedido se cancela después de recibir el pago, podrá emitirse un reembolso a nuestra discreción conforme a estas políticas.'], ['Reembolsos y Devoluciones', ['Debido a la naturaleza sensible de nuestros productos y a los requisitos regulatorios aplicables, todas las ventas son finales.', '{company} no acepta devoluciones, no emite reembolsos ni permite cancelaciones una vez realizado un pedido, independientemente del estado de entrega, salvo cuando lo exija la ley aplicable o según lo dispuesto en nuestras políticas.', 'Nada en estos Términos limita cualquier recurso que la ley aplicable nos obligue a brindar — por ejemplo, cuando enviamos el artículo equivocado, un artículo nunca se envió, o un producto llegó dañado debido a nuestro manejo o embalaje.']], ['Paquetes Entregados', ['Una vez que el transportista marca un envío como “Entregado”, la responsabilidad del paquete se transfiere al cliente.', '{company} no se hace responsable de paquetes perdidos o robados después de la entrega — incluido el robo en porches, salas de correo, recepciones, casilleros u otros lugares. No se emitirán reembolsos, créditos ni reemplazos por paquetes confirmados como entregados por el transportista.']], ['Daños de Envío o Errores de Preparación', ['En caso de un error verificado de preparación o envío de {company} — como artículos incorrectos, artículos faltantes o daños ocurridos en tránsito antes de la entrega — debe notificarnos dentro de los siete (7) días calendario posteriores a la fecha de entrega del transportista.', 'Este plazo de notificación es firme. Las solicitudes presentadas fuera de este período serán denegadas sin excepción.']], ['Documentación Requerida', ['Todas las reclamaciones deben incluir documentación completa y verificable:', ['Un video completo del desembalaje grabado desde el momento en que se abre el paquete por primera vez', 'Fotos del embalaje externo', 'Fotos del contenido del paquete', 'Fotos del albarán incluido con el pedido'], 'Las reclamaciones presentadas sin toda la documentación requerida serán denegadas.']], ['Resolución', ['Tras la confirmación de un error elegíble de envío o preparación causado por {company}, podemos, a nuestra entera discreción, emitir un reemplazo de los artículos afectados.', 'No se garantizan reembolsos en efectivo, créditos en tienda ni compensaciones alternativas, y no se proporcionan para paquetes entregados, rechazados o robados.']], ['Contracargos', 'Los contracargos presentados por paquetes entregados, rechazados o robados serán disputados utilizando la confirmación del transportista, los registros de entrega y la aceptación de estos Términos por parte del cliente.'], ['Consentimiento de Comunicaciones', ['Al realizar un pedido, crear una cuenta o usar los Servicios, usted consiente recibir comunicaciones de {company} — incluidas transaccionales, operativas, de soporte y de marketing — por correo, SMS y otros medios electrónicos usando los datos que proporcione. La frecuencia de los mensajes puede variar; pueden aplicarse tarifas de mensajes y datos.', 'El consentimiento para recibir comunicaciones no es una condición de compra. Puede cancelar los mensajes no transaccionales en cualquier momento siguiendo las instrucciones de cancelación en nuestros correos o respondiendo STOP a cualquier SMS. Los mensajes transaccionales y de servicio (confirmaciones de pedido, avisos de envío, cuenta y soporte) pueden continuar según lo permita la ley.']], ['Limitación de Responsabilidad', 'En la máxima medida permitida por la ley, {company} no será responsable de daños indirectos, incidentales o consecuentes que surjan del uso — o la imposibilidad de uso — de los Servicios o de cualquier producto adquirido a través de ellos.'], ['Detección de Fraude y Verificación', ['Para proteger a nuestros clientes y a nuestro negocio, {company} se reserva el derecho, a su entera discreción, de:', ['Verificar la identidad de cualquier cliente', 'Solicitar identificación o documentación adicional para pedidos marcados como sospechosos o de alto valor', 'Rechazar, retener o cancelar cualquier pedido que razonablemente consideremos fraudulento, no autorizado o no conforme'], 'Los pedidos pueden retenerse hasta completar la verificación.']], ['Preparación y Procesamiento', ['Los pedidos se procesan después de recibir y verificar el pago. {company} puede retrasar o cancelar un pedido si:', ['La verificación del pago o la dirección (incluidos AVS/CVV) falla o no es concluyente', 'Se sospecha fraude', 'Surgen problemas de inventario o suministro', 'Surgen preocupaciones regulatorias o de cumplimiento'], 'Cuando un pedido se cancela antes de su preparación, se reembolsará cualquier monto cobrado por ese pedido.']], ['Inspección de los Envíos', 'Los clientes deben inspeccionar todos los envíos de inmediato al recibirlos. Cualquier reclamo por un error de envío o preparación debe presentarse dentro del plazo indicado anteriormente, junto con la documentación requerida. La inspección oportuna ayuda a garantizar que los reclamos puedan verificarse y resolverse.'], ['Ley Aplicable y Jurisdicción', 'Estos Términos se rigen por las leyes del Estado de Wisconsin, sin tener en cuenta sus principios de conflicto de leyes. Cualquier disputa que surja de o se relacione con estos Términos o los Servicios se presentará exclusivamente en los tribunales estatales o federales ubicados en Wisconsin, y usted consiente la jurisdicción personal de dichos tribunales.'], ['Intransferibilidad de los Pedidos', 'Los pedidos y los derechos asociados no pueden transferirse, cederse ni reasignarse a otra parte sin el consentimiento previo por escrito de {company}.'], ['Fuerza Mayor', '{company} no se hace responsable de ningún retraso o incumplimiento que resulte de causas fuera de su control razonable, incluidas, entre otras, interrupciones del transportista, desastres naturales, actos de gobierno, conflictos laborales o interrupciones de la cadena de suministro.'], ['Divisibilidad', 'Si alguna disposición de estos Términos se considera inválida o inaplicable, dicha disposición se limitará o eliminará en la medida mínima necesaria, y las disposiciones restantes permanecerán en pleno vigor y efecto.'], ['Cambios en los Términos', 'Podemos modificar estos Términos en cualquier momento. Su uso continuado de los Servicios después de publicarse los cambios constituye la aceptación de dichos cambios.'], ['Contáctenos', '¿Preguntas sobre estos Términos? Escriba a nuestro equipo a {email}. Al usar los Servicios, usted acepta estos Términos; si no está de acuerdo con alguna parte, debe dejar de usar los Servicios.']],
       'ruo.eyebrow': 'Legal',
       'ruo.title': 'Política de Uso Exclusivo para Investigación (RUO)',
       'ruo.intro': 'Todos los productos vendidos por {company} están destinados estrictamente a fines de investigación de laboratorio. {company} suministra materiales designados como de Uso Exclusivo para Investigación (RUO) — no aptos para consumo humano o animal, uso médico, diagnóstico ni terapéutico.',
