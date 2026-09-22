@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"1b2f4a285c4c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"4b1764e27c6a","ui_kits/website/i18n.js":"f1212d4826aa","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"1b2f4a285c4c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"4f4c51d2d1b1","ui_kits/website/i18n.js":"f1212d4826aa","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -7730,8 +7730,8 @@ try { (() => {
     variants: [{
       strength: '10mg',
       vial: 55,
-      half: 200,
-      box: 350
+      half: 225,
+      box: 375
     }]
   }, {
     id: 'cjc-1295',
@@ -7747,7 +7747,7 @@ try { (() => {
       strength: '10mg',
       vial: 40,
       half: 160,
-      box: 275
+      box: 300
     }]
   }, {
     id: 'igf-1lr3',
