@@ -1,7 +1,11 @@
 /* Futuristic Science — sample catalog data (research-use-only mock).
    Real pricing: each strength variant carries three tiers — `vial` (single),
    `half` (5-vial kit) and `box` (10-vial kit). A null tier is not offered.
-   Source: Futuristic Science price sheet, September 2026.
+   Source: Futuristic Science price sheet, September 2026, with six kit prices
+   corrected off the catalog's own average kit discounts (the sheet priced these
+   so that a smaller kit cost more than a larger one, or more than buying the
+   vials singly): SS-31 50mg, NAD+ 1000mg, Glutathione 1500mg and Acetic Acid
+   half kits; TB-500 5mg, Epithalon 10mg and Acetic Acid full kits.
    `price` = lowest vial price (used for "from" display + filters).
    `size`  = strength range label for cards.
    NOTE: all cards reuse the GHK-CU vial photo — brand supplied only that image.
@@ -73,7 +77,7 @@
       image: '../../assets/vial-tb-500.png',
       blurb: 'A synthetic fragment supplied as lyophilized powder for qualified in-vitro research.',
       variants: [
-        { strength: '5mg', vial: 27, half: 120, box: 250 },
+        { strength: '5mg', vial: 27, half: 120, box: 235 },
         { strength: '10mg', vial: 40, half: 150, box: 290 },
       ] },
     { id: 'mots-c', name: 'MOTS-c', subtitle: 'Mitochondrial Peptide', category: 'Cellular Research',
@@ -107,7 +111,7 @@
       blurb: 'A coenzyme supplied as lyophilized powder for laboratory research applications.',
       variants: [
         { strength: '500mg', vial: 45, half: 195, box: null },
-        { strength: '1000mg', vial: 75, half: 400, box: 575 },
+        { strength: '1000mg', vial: 75, half: 315, box: 575 },
       ] },
     { id: 'tesamorelin', name: 'Tesamorelin', subtitle: 'GHRH Analog', category: 'Secretagogue Research',
       inStock: true, purity: '99.0%', batch: 'FUTURE-CN-MARK-TESA-0701-001',
@@ -173,7 +177,7 @@
       inStock: true, purity: '99.2%', batch: 'FUTURE-CN-MARK-EPIT-0701-001',
       image: '../../assets/vial-epithalon.png',
       blurb: 'A synthetic tetrapeptide studied in laboratory research.',
-      variants: [ { strength: '10mg', vial: 27, half: 100, box: 225 }, { strength: '50mg', vial: 59, half: 220, box: 400 } ] },
+      variants: [ { strength: '10mg', vial: 27, half: 100, box: 195 }, { strength: '50mg', vial: 59, half: 220, box: 400 } ] },
     { id: 'cartalax', name: 'Cartalax', subtitle: 'Peptide Bioregulator', category: 'Cellular Research',
       inStock: true, purity: '99.0%', batch: 'FUTURE-CN-MARK-CART-0701-001',
       image: '../../assets/vial-cartalax.png',
@@ -183,12 +187,12 @@
       inStock: true, purity: '99.4%', batch: 'FUTURE-CN-MARK-GLUT-0701-001',
       image: '../../assets/vial-glutathione.png',
       blurb: 'A tripeptide antioxidant supplied as lyophilized powder for laboratory research.',
-      variants: [ { strength: '1500mg', vial: 55, half: 300, box: 355 } ] },
+      variants: [ { strength: '1500mg', vial: 55, half: 210, box: 355 } ] },
     { id: 'ss-31', name: 'SS-31', subtitle: 'Mitochondrial Peptide', category: 'Cellular Research',
       inStock: true, purity: '99.1%', batch: 'FUTURE-CN-MARK-SS31-0701-001',
       image: '../../assets/vial-ss-31.png',
       blurb: 'A synthetic mitochondria-targeting peptide studied in laboratory research.',
-      variants: [ { strength: '10mg', vial: 30, half: 145, box: 185 }, { strength: '50mg', vial: 85, half: 495, box: 600 } ] },
+      variants: [ { strength: '10mg', vial: 30, half: 145, box: 185 }, { strength: '50mg', vial: 85, half: 340, box: 600 } ] },
     { id: 'kpv', name: 'KPV', subtitle: 'Tripeptide', category: 'Tissue Repair Research',
       inStock: true, purity: '99.0%', batch: 'FUTURE-CN-MARK-KPVX-0701-001',
       image: '../../assets/vial-kpv.png',
@@ -243,7 +247,7 @@
     { id: 'acetic-acid', name: 'Acetic Acid', subtitle: 'Reconstitution Diluent', category: 'Lab Supplies',
       inStock: true, supplies: true, batch: 'FUTURE-CN-MARK-ACET-0921-001',
       blurb: 'Dilute acetic acid supplied as a laboratory reconstitution diluent. For research use only.',
-      variants: [ { strength: '3mL', vial: 9, half: null, box: 85 } ] },
+      variants: [ { strength: '3mL', vial: 9, half: 40, box: 75 } ] },
   ];
 
   // Derive `price` (min vial) and `size` (strength range label) for each product.
