@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"1b2f4a285c4c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"52d4cdbeaab4","ui_kits/website/i18n.js":"f1212d4826aa","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"1b2f4a285c4c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"4b1764e27c6a","ui_kits/website/i18n.js":"f1212d4826aa","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -7289,11 +7289,11 @@ try { (() => {
 /* Futuristic Science — sample catalog data (research-use-only mock).
    Real pricing: each strength variant carries three tiers — `vial` (single),
    `half` (5-vial kit) and `box` (10-vial kit). A null tier is not offered.
-   Source: Futuristic Science price sheet, September 2026, with six kit prices
-   corrected off the catalog's own average kit discounts (the sheet priced these
-   so that a smaller kit cost more than a larger one, or more than buying the
-   vials singly): SS-31 50mg, NAD+ 1000mg, Glutathione 1500mg and Acetic Acid
-   half kits; TB-500 5mg, Epithalon 10mg and Acetic Acid full kits.
+   Source: Futuristic Science price sheet, September 2026. Every vial and
+   full-kit price is the sheet's. Six half kits were rederived off the catalog's
+   own average kit discounts because the sheet priced them above five single
+   vials, or low enough that two half kits undercut the full kit: SS-31 50mg,
+   NAD+ 1000mg, Glutathione 1500mg, TB-500 5mg, Epithalon 10mg, Acetic Acid 3mL.
    `price` = lowest vial price (used for "from" display + filters).
    `size`  = strength range label for cards.
    NOTE: all cards reuse the GHK-CU vial photo — brand supplied only that image.
@@ -7503,8 +7503,8 @@ try { (() => {
     variants: [{
       strength: '5mg',
       vial: 27,
-      half: 120,
-      box: 235
+      half: 130,
+      box: 250
     }, {
       strength: '10mg',
       vial: 40,
@@ -7794,8 +7794,8 @@ try { (() => {
     variants: [{
       strength: '10mg',
       vial: 27,
-      half: 100,
-      box: 195
+      half: 120,
+      box: 225
     }, {
       strength: '50mg',
       vial: 59,
@@ -8042,8 +8042,8 @@ try { (() => {
     variants: [{
       strength: '3mL',
       vial: 9,
-      half: 40,
-      box: 75
+      half: 43,
+      box: 85
     }]
   }];
 
