@@ -21,6 +21,12 @@ Object.assign(window.FS_DICT.en, {
   'co.reviewContact': 'Contact',
   'co.reviewShip': 'Ship to',
   'co.reviewPay': 'Payment',
+  'co.codeLabel': 'Referral or discount code',
+  'co.codePlaceholder': 'Referral code',
+  'co.codeApply': 'Apply',
+  'co.codeRemove': 'Remove',
+  'co.codeApplied': '{p}% off applied to your order',
+  'co.codeInvalid': 'That code is not valid or has expired.',
 });
 Object.assign(window.FS_DICT.es, {
   'co.optional': '(opcional)',
@@ -43,6 +49,12 @@ Object.assign(window.FS_DICT.es, {
   'co.reviewContact': 'Contacto',
   'co.reviewShip': 'Enviar a',
   'co.reviewPay': 'Pago',
+  'co.codeLabel': 'Código de referido o descuento',
+  'co.codePlaceholder': 'Código de referido',
+  'co.codeApply': 'Aplicar',
+  'co.codeRemove': 'Quitar',
+  'co.codeApplied': '{p}% de descuento aplicado a tu pedido',
+  'co.codeInvalid': 'Ese código no es válido o ha caducado.',
 });
 function CheckoutScreen({ cart, onNav }) {
   const { Input, Button, DisclaimerBanner, Badge } = window.FuturisticScienceDesignSystem_2ca7b0;
@@ -51,7 +63,19 @@ function CheckoutScreen({ cart, onNav }) {
   const t = window.t;
   const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
   const shipping = subtotal > 0 ? 12 : 0;
-  const total = subtotal + shipping;
+  // Referral code: captured from an affiliate link on arrival, or typed in below.
+  const REF = window.FS_REF;
+  const [ref, setRef] = React.useState(() => (REF ? REF.get() : null));
+  const [codeInput, setCodeInput] = React.useState('');
+  const [codeErr, setCodeErr] = React.useState(false);
+  const discount = ref && subtotal > 0 ? Math.round(subtotal * ref.percent) / 100 : 0;
+  const total = subtotal - discount + shipping;
+  const applyCode = () => {
+    const hit = REF && REF.apply(codeInput);
+    if (!hit) return setCodeErr(true);
+    setRef(hit); setCodeInput(''); setCodeErr(false);
+  };
+  const removeCode = () => { if (REF) REF.clear(); setRef(null); setCodeErr(false); };
   const ACKS = ['ackLawful', 'ackResearcher', 'ackNoHuman', 'ackLiability', 'ackFinal', 'ackAuthorized', 'ackChargeback', 'ackRecord'];
   const [step, setStep] = React.useState(1);
   const [checks, setChecks] = React.useState({});
@@ -90,6 +114,9 @@ function CheckoutScreen({ cart, onNav }) {
         phone: fields.phone.trim(),
         paymentMethod: payMethod,
         total: '$' + total.toFixed(2),
+        referralCode: ref ? ref.code : '',
+        referredBy: ref ? ref.affiliate : '',
+        discount: discount ? '-$' + discount.toFixed(2) + ' (' + ref.percent + '%)' : '',
         policyVersion: POLICY_VERSION,
         acks: ACKS.filter((k) => checks[k]),
         notes: cart.map((x) => x.name + ' (' + x.size + ') x' + x.qty).join('; ') + ' | Ship to: ' + [fields.institution.trim(), fields.street.trim(), fields.city.trim(), fields.state.trim(), fields.zip.trim()].filter(Boolean).join(', '),
@@ -340,12 +367,42 @@ function CheckoutScreen({ cart, onNav }) {
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13.5, fontWeight: 600, color: 'var(--ink-900)' }}>${(it.price * it.qty).toFixed(2)}</div>
               </div>
             ))}
-            <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: 8, paddingTop: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {[[t('co.subtotal'), subtotal], [t('co.shipping'), shipping]].map(([k, v]) => (
-                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--text-body)' }}>
-                  <span>{k}</span><span style={{ fontFamily: 'var(--font-mono)' }}>${v.toFixed(2)}</span>
+            {/* referral / promo code */}
+            <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: 8, paddingTop: 14 }}>
+              {ref ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 9, background: 'var(--teal-50)', border: '1px solid var(--teal-200, #bfe3e0)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal-600)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ flex: 'none' }}><path d="M20 6 9 17l-5-5"/></svg>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--ink-900)' }}>{ref.code}</div>
+                    <div style={{ fontSize: 11.5, color: 'var(--teal-700, #0f6b66)' }}>{t('co.codeApplied', { p: ref.percent })}</div>
+                  </div>
+                  <button onClick={removeCode} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', padding: 0 }}>{t('co.codeRemove')}</button>
                 </div>
-              ))}
+              ) : (
+                <div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <input value={codeInput} onChange={(e) => { setCodeInput(e.target.value); setCodeErr(false); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter') applyCode(); }}
+                      placeholder={t('co.codePlaceholder')} aria-label={t('co.codeLabel')}
+                      style={{ flex: 1, minWidth: 0, height: 40, padding: '0 12px', borderRadius: 'var(--radius-md)', background: 'var(--white)', fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-900)', outline: 'none', border: '1.5px solid ' + (codeErr ? 'var(--danger-500, #c0392b)' : 'var(--border-strong)') }} />
+                    <Button variant="outline" size="sm" onClick={applyCode} disabled={!codeInput.trim()}>{t('co.codeApply')}</Button>
+                  </div>
+                  {codeErr && <div style={{ fontSize: 12, color: 'var(--danger-500, #c0392b)', marginTop: 6 }}>{t('co.codeInvalid')}</div>}
+                </div>
+              )}
+            </div>
+            <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: 14, paddingTop: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--text-body)' }}>
+                <span>{t('co.subtotal')}</span><span style={{ fontFamily: 'var(--font-mono)' }}>${subtotal.toFixed(2)}</span>
+              </div>
+              {discount > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 600, color: 'var(--teal-700, #0f6b66)' }}>
+                  <span>{t('co.discount', { c: ref.code })}</span><span style={{ fontFamily: 'var(--font-mono)' }}>-${discount.toFixed(2)}</span>
+                </div>
+              )}
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, color: 'var(--text-body)' }}>
+                <span>{t('co.shipping')}</span><span style={{ fontFamily: 'var(--font-mono)' }}>${shipping.toFixed(2)}</span>
+              </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 6, paddingTop: 12, borderTop: '1px solid var(--border-subtle)' }}>
                 <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink-900)' }}>{t('co.total')}</span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: 'var(--ink-900)' }}>${total.toFixed(2)}</span>

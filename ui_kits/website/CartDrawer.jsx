@@ -5,6 +5,9 @@ function CartDrawer({ open, items, onClose, onQty, onRemove, onCheckout }) {
   const t = window.t;
   const subtotal = items.reduce((s, it) => s + it.price * it.qty, 0);
   const count = items.reduce((s, it) => s + it.qty, 0);
+  // Mirror the referral discount here so the drawer agrees with checkout.
+  const ref = window.FS_REF ? window.FS_REF.get() : null;
+  const discount = ref && subtotal > 0 ? Math.round(subtotal * ref.percent) / 100 : 0;
 
   return (
     <>
@@ -61,9 +64,15 @@ function CartDrawer({ open, items, onClose, onQty, onRemove, onCheckout }) {
         {items.length > 0 && (
           <div style={{ padding: '18px 22px 22px', borderTop: '1px solid var(--border-subtle)' }}>
             <DisclaimerBanner variant="strip" text={t('ruo')} style={{ borderRadius: 'var(--radius-sm)', marginBottom: 16 }} />
+            {discount > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8, fontSize: 13, fontWeight: 600, color: 'var(--teal-700, #0f6b66)' }}>
+                <span>{t('co.discount', { c: ref.code })}</span>
+                <span style={{ fontFamily: 'var(--font-mono)' }}>-${discount.toFixed(2)}</span>
+              </div>
+            )}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}>
               <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-body)' }}>{t('cart.subtotal')}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: 'var(--ink-900)' }}>${subtotal.toFixed(2)}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: 'var(--ink-900)' }}>${(subtotal - discount).toFixed(2)}</span>
             </div>
             <Button variant="primary" size="lg" fullWidth onClick={onCheckout}>{t('cart.checkout')}</Button>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', marginTop: 10 }}>{t('cart.shipNote')}</div>

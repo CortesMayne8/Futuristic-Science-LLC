@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"a4b5b46e9be7","ui_kits/website/CheckoutScreen.jsx":"1b2f4a285c4c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"4f4c51d2d1b1","ui_kits/website/i18n.js":"f1212d4826aa","ui_kits/website/vial-fx.js":"f79e4daa1464"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":3,"namespace":"FuturisticScienceDesignSystem_2ca7b0","components":[{"name":"COASearch","sourcePath":"components/commerce/COASearch.jsx"},{"name":"DisclaimerBanner","sourcePath":"components/commerce/DisclaimerBanner.jsx"},{"name":"ProductCard","sourcePath":"components/commerce/ProductCard.jsx"},{"name":"QuantityStepper","sourcePath":"components/commerce/QuantityStepper.jsx"},{"name":"TrustBadges","sourcePath":"components/commerce/TrustBadges.jsx"},{"name":"Badge","sourcePath":"components/core/Badge.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Input","sourcePath":"components/core/Input.jsx"},{"name":"Select","sourcePath":"components/core/Select.jsx"}],"sourceHashes":{"components/commerce/COASearch.jsx":"f62d9096a6bd","components/commerce/DisclaimerBanner.jsx":"a2771ce5e3a3","components/commerce/ProductCard.jsx":"cdef41be6e51","components/commerce/QuantityStepper.jsx":"03c8b1742cd5","components/commerce/TrustBadges.jsx":"f4c255904ee9","components/core/Badge.jsx":"83bed9631ea5","components/core/Button.jsx":"94166cc1a662","components/core/Input.jsx":"e59d5ed4fa14","components/core/Select.jsx":"5343d792d6a8","ui_kits/website/AgeGate.jsx":"99e97dfcec19","ui_kits/website/AuthGate.jsx":"5c7ff1420e2c","ui_kits/website/COAScreen.jsx":"486ef14022ca","ui_kits/website/CartDrawer.jsx":"844cde233d67","ui_kits/website/CheckoutScreen.jsx":"11b84c89711c","ui_kits/website/Footer.jsx":"f26708fd4a17","ui_kits/website/Header.jsx":"a7c2c392c62b","ui_kits/website/HomeScreen.jsx":"97bee034e1d3","ui_kits/website/LangSwitcher.jsx":"413c420ef0b3","ui_kits/website/ProductScreen.jsx":"5cb37b9e4fea","ui_kits/website/ShopScreen.jsx":"01d0a4c80ff0","ui_kits/website/SimplePage.jsx":"08e4cbc15e54","ui_kits/website/TrackOrderScreen.jsx":"557431a7de7b","ui_kits/website/data.js":"4f4c51d2d1b1","ui_kits/website/i18n.js":"f6208123e8e4","ui_kits/website/vial-fx.js":"f79e4daa1464","ui_kits/website/referrals.js":"dc9769953ce4"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -2208,6 +2208,9 @@ function CartDrawer({
   const t = window.t;
   const subtotal = items.reduce((s, it) => s + it.price * it.qty, 0);
   const count = items.reduce((s, it) => s + it.qty, 0);
+  // Mirror the referral discount here so the drawer agrees with checkout.
+  const ref = window.FS_REF ? window.FS_REF.get() : null;
+  const discount = ref && subtotal > 0 ? Math.round(subtotal * ref.percent) / 100 : 0;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     onClick: onClose,
     style: {
@@ -2387,7 +2390,23 @@ function CartDrawer({
       borderRadius: 'var(--radius-sm)',
       marginBottom: 16
     }
-  }), /*#__PURE__*/React.createElement("div", {
+  }), discount > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'baseline',
+      marginBottom: 8,
+      fontSize: 13,
+      fontWeight: 600,
+      color: 'var(--teal-700, #0f6b66)'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, t('co.discount', {
+    c: ref.code
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)'
+    }
+  }, "-$", discount.toFixed(2))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -2407,7 +2426,7 @@ function CartDrawer({
       fontWeight: 600,
       color: 'var(--ink-900)'
     }
-  }, "$", subtotal.toFixed(2))), /*#__PURE__*/React.createElement(Button, {
+  }, "$", (subtotal - discount).toFixed(2))), /*#__PURE__*/React.createElement(Button, {
     variant: "primary",
     size: "lg",
     fullWidth: true,
@@ -2450,7 +2469,13 @@ Object.assign(window.FS_DICT.en, {
   'co.secure': 'Secure checkout',
   'co.reviewContact': 'Contact',
   'co.reviewShip': 'Ship to',
-  'co.reviewPay': 'Payment'
+  'co.reviewPay': 'Payment',
+  'co.codeLabel': 'Referral or discount code',
+  'co.codePlaceholder': 'Referral code',
+  'co.codeApply': 'Apply',
+  'co.codeRemove': 'Remove',
+  'co.codeApplied': '{p}% off applied to your order',
+  'co.codeInvalid': 'That code is not valid or has expired.'
 });
 Object.assign(window.FS_DICT.es, {
   'co.optional': '(opcional)',
@@ -2472,7 +2497,13 @@ Object.assign(window.FS_DICT.es, {
   'co.secure': 'Pago seguro',
   'co.reviewContact': 'Contacto',
   'co.reviewShip': 'Enviar a',
-  'co.reviewPay': 'Pago'
+  'co.reviewPay': 'Pago',
+  'co.codeLabel': 'Código de referido o descuento',
+  'co.codePlaceholder': 'Código de referido',
+  'co.codeApply': 'Aplicar',
+  'co.codeRemove': 'Quitar',
+  'co.codeApplied': '{p}% de descuento aplicado a tu pedido',
+  'co.codeInvalid': 'Ese código no es válido o ha caducado.'
 });
 function CheckoutScreen({
   cart,
@@ -2489,7 +2520,25 @@ function CheckoutScreen({
   const t = window.t;
   const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
   const shipping = subtotal > 0 ? 12 : 0;
-  const total = subtotal + shipping;
+  // Referral code: captured from an affiliate link on arrival, or typed in below.
+  const REF = window.FS_REF;
+  const [ref, setRef] = React.useState(() => REF ? REF.get() : null);
+  const [codeInput, setCodeInput] = React.useState('');
+  const [codeErr, setCodeErr] = React.useState(false);
+  const discount = ref && subtotal > 0 ? Math.round(subtotal * ref.percent) / 100 : 0;
+  const total = subtotal - discount + shipping;
+  const applyCode = () => {
+    const hit = REF && REF.apply(codeInput);
+    if (!hit) return setCodeErr(true);
+    setRef(hit);
+    setCodeInput('');
+    setCodeErr(false);
+  };
+  const removeCode = () => {
+    if (REF) REF.clear();
+    setRef(null);
+    setCodeErr(false);
+  };
   const ACKS = ['ackLawful', 'ackResearcher', 'ackNoHuman', 'ackLiability', 'ackFinal', 'ackAuthorized', 'ackChargeback', 'ackRecord'];
   const [step, setStep] = React.useState(1);
   const [checks, setChecks] = React.useState({});
@@ -2546,6 +2595,9 @@ function CheckoutScreen({
         phone: fields.phone.trim(),
         paymentMethod: payMethod,
         total: '$' + total.toFixed(2),
+        referralCode: ref ? ref.code : '',
+        referredBy: ref ? ref.affiliate : '',
+        discount: discount ? '-$' + discount.toFixed(2) + ' (' + ref.percent + '%)' : '',
         policyVersion: POLICY_VERSION,
         acks: ACKS.filter(k => checks[k]),
         notes: cart.map(x => x.name + ' (' + x.size + ') x' + x.qty).join('; ') + ' | Ship to: ' + [fields.institution.trim(), fields.street.trim(), fields.city.trim(), fields.state.trim(), fields.zip.trim()].filter(Boolean).join(', ')
@@ -3324,24 +3376,149 @@ function CheckoutScreen({
     style: {
       borderTop: '1px solid var(--border-subtle)',
       marginTop: 8,
+      paddingTop: 14
+    }
+  }, ref ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 9,
+      background: 'var(--teal-50)',
+      border: '1px solid var(--teal-200, #bfe3e0)',
+      borderRadius: 'var(--radius-md)',
+      padding: '10px 12px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "15",
+    height: "15",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "var(--teal-600)",
+    strokeWidth: "2.4",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    style: {
+      flex: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M20 6 9 17l-5-5"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 13,
+      fontWeight: 600,
+      color: 'var(--ink-900)'
+    }
+  }, ref.code), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: 'var(--teal-700, #0f6b66)'
+    }
+  }, t('co.codeApplied', {
+    p: ref.percent
+  }))), /*#__PURE__*/React.createElement("button", {
+    onClick: removeCode,
+    style: {
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-body)',
+      fontSize: 12,
+      fontWeight: 600,
+      color: 'var(--text-muted)',
+      padding: 0
+    }
+  }, t('co.codeRemove'))) : /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: codeInput,
+    onChange: e => {
+      setCodeInput(e.target.value);
+      setCodeErr(false);
+    },
+    onKeyDown: e => {
+      if (e.key === 'Enter') applyCode();
+    },
+    placeholder: t('co.codePlaceholder'),
+    "aria-label": t('co.codeLabel'),
+    style: {
+      flex: 1,
+      minWidth: 0,
+      height: 40,
+      padding: '0 12px',
+      borderRadius: 'var(--radius-md)',
+      background: 'var(--white)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: 13,
+      color: 'var(--ink-900)',
+      outline: 'none',
+      border: '1.5px solid ' + (codeErr ? 'var(--danger-500, #c0392b)' : 'var(--border-strong)')
+    }
+  }), /*#__PURE__*/React.createElement(Button, {
+    variant: "outline",
+    size: "sm",
+    onClick: applyCode,
+    disabled: !codeInput.trim()
+  }, t('co.codeApply'))), codeErr && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: 'var(--danger-500, #c0392b)',
+      marginTop: 6
+    }
+  }, t('co.codeInvalid')))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderTop: '1px solid var(--border-subtle)',
+      marginTop: 14,
       paddingTop: 14,
       display: 'flex',
       flexDirection: 'column',
       gap: 8
     }
-  }, [[t('co.subtotal'), subtotal], [t('co.shipping'), shipping]].map(([k, v]) => /*#__PURE__*/React.createElement("div", {
-    key: k,
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
       fontSize: 14,
       color: 'var(--text-body)'
     }
-  }, /*#__PURE__*/React.createElement("span", null, k), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, t('co.subtotal')), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)'
     }
-  }, "$", v.toFixed(2)))), /*#__PURE__*/React.createElement("div", {
+  }, "$", subtotal.toFixed(2))), discount > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      fontSize: 14,
+      fontWeight: 600,
+      color: 'var(--teal-700, #0f6b66)'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, t('co.discount', {
+    c: ref.code
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)'
+    }
+  }, "-$", discount.toFixed(2))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      fontSize: 14,
+      color: 'var(--text-body)'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, t('co.shipping')), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)'
+    }
+  }, "$", shipping.toFixed(2))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -8066,6 +8243,136 @@ try { (() => {
 })();
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/website/data.js", error: String((e && e.message) || e) }); }
 
+// ui_kits/website/referrals.js
+try { (() => {
+/* ============================================================
+   Referral / affiliate codes.
+
+   One registry below is the source of truth. A visitor who arrives on
+   ...?ref=MICHELLE15 has the code captured, stored for 30 days, and applied
+   automatically at checkout; the same code can be typed in by hand at
+   checkout. The code and the affiliate's name ride along on the order record
+   that checkout already posts, so each sale is attributable.
+
+   Adding an affiliate = one line in CODES. Set active:false to switch a code
+   off without losing the record of it.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var CODES = {
+    MICHELLE15: {
+      affiliate: 'Michelle',
+      percent: 15,
+      active: true
+    }
+  };
+  var STORAGE_KEY = 'fs_ref';
+  var TTL_MS = 30 * 24 * 60 * 60 * 1000; // a captured link stays good for 30 days
+
+  function normalize(raw) {
+    return String(raw == null ? '' : raw).trim().toUpperCase().replace(/\s+/g, '');
+  }
+
+  // A code is only usable if it is in the registry and still switched on.
+  function lookup(raw) {
+    var key = normalize(raw);
+    var entry = Object.prototype.hasOwnProperty.call(CODES, key) ? CODES[key] : null;
+    if (!entry || !entry.active) return null;
+    return {
+      code: key,
+      affiliate: entry.affiliate,
+      percent: entry.percent
+    };
+  }
+
+  // Storage can throw (private mode, blocked cookies) — never let that break the page.
+  function read() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      var saved = JSON.parse(raw);
+      if (!saved || !saved.code) return null;
+      if (saved.at && Date.now() - saved.at > TTL_MS) {
+        clear();
+        return null;
+      }
+      return lookup(saved.code); // re-validate: the registry may have changed since
+    } catch (err) {
+      return null;
+    }
+  }
+  function write(code) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        code: code,
+        at: Date.now()
+      }));
+    } catch (err) {/* non-fatal: the code still applies for this page view */}
+  }
+  function clear() {
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch (err) {/* no-op */}
+    current = null;
+  }
+  var current = null;
+  function apply(raw) {
+    var hit = lookup(raw);
+    if (!hit) return null;
+    current = hit;
+    write(hit.code);
+    return hit;
+  }
+  function get() {
+    if (current) return current;
+    current = read();
+    return current;
+  }
+
+  // Discount applies to the goods subtotal only, never to shipping.
+  function discountOn(subtotal) {
+    var ref = get();
+    if (!ref || !(subtotal > 0)) return 0;
+    return Math.round(subtotal * ref.percent) / 100;
+  }
+
+  // The shareable link for an affiliate, built off whatever origin the site runs on.
+  function link(raw) {
+    var hit = lookup(raw);
+    if (!hit) return '';
+    var base = window.location.origin + window.location.pathname;
+    return base + '?ref=' + encodeURIComponent(hit.code);
+  }
+
+  // Capture ?ref= (or ?code=) on arrival, then drop it from the address bar so
+  // the visitor can share a clean URL without passing on someone else's credit.
+  function captureFromUrl() {
+    var found = null;
+    try {
+      var params = new URLSearchParams(window.location.search);
+      found = apply(params.get('ref') || params.get('code') || '');
+      if (params.has('ref') || params.has('code')) {
+        params.delete('ref');
+        params.delete('code');
+        var qs = params.toString();
+        window.history.replaceState({}, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+      }
+    } catch (err) {/* older browsers: the typed-in code still works */}
+    return found;
+  }
+  window.FS_REF = {
+    lookup: lookup,
+    apply: apply,
+    get: get,
+    clear: clear,
+    discountOn: discountOn,
+    link: link,
+    arrivedByLink: !!captureFromUrl()
+  };
+})();
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/website/referrals.js", error: String((e && e.message) || e) }); }
+
 // ui_kits/website/i18n.js
 try { (() => {
 /* ============================================================
@@ -8400,6 +8707,9 @@ Handle in accordance with institutional safety guidelines and standard laborator
       'co.subtotal': 'Subtotal',
       'co.shipping': 'Shipping',
       'co.total': 'Total',
+      'co.discount': 'Discount ({c})',
+      'ref.banner': '{p}% off applied with code {c}',
+      'ref.dismiss': 'Dismiss',
       'co.placeOrder': 'Place Order',
       'co.emptyTitle': 'Your cart is empty',
       'co.agreePre': 'I confirm I am a qualified researcher and agree to the ',
@@ -8893,6 +9203,9 @@ Manipular conforme a las pautas de seguridad institucionales y la práctica est�
       'co.subtotal': 'Subtotal',
       'co.shipping': 'Envío',
       'co.total': 'Total',
+      'co.discount': 'Descuento ({c})',
+      'ref.banner': '{p}% de descuento aplicado con el código {c}',
+      'ref.dismiss': 'Cerrar',
       'co.placeOrder': 'Realizar pedido',
       'co.emptyTitle': 'Tu carrito está vacío',
       'co.agreePre': 'Confirmo que soy un investigador calificado y acepto los ',

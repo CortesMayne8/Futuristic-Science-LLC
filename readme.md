@@ -75,6 +75,26 @@ npm run build:csv      # refresh exports/woocommerce-import-ready.csv
 
 `npm run check:bundle` reports whether the bundle has drifted from the sources without writing.
 
+## Affiliate / referral codes
+
+`ui_kits/website/referrals.js` holds the registry. Adding an affiliate is one line:
+
+```js
+var CODES = {
+  MICHELLE15: { affiliate: 'Michelle', percent: 15, active: true },
+};
+```
+
+Each code gets a shareable link — `…/index.html?ref=MICHELLE15`. Arriving on it stores
+the code for 30 days and strips the parameter from the address bar; the discount then
+applies at checkout whether or not the visitor comes back by the same link. Customers can
+also type the code in at checkout. The discount comes off the goods subtotal, never
+shipping, and the code plus the affiliate's name are posted with the order record, so each
+sale is attributable.
+
+Set `active: false` to switch a code off without deleting it — stored copies stop working
+the next time they are checked.
+
 ## Where to go next
 - **Building the site?** Start in `ui_kits/website/` — `README.md` there maps every screen.
 - **Brand rules, color/type/motion, voice & compliance?** See `DESIGN-SYSTEM.md`.

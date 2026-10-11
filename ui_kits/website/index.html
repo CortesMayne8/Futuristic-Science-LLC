@@ -89,6 +89,7 @@
 <div id="app"><div id="root"></div></div>
 
 <script src="data.js"></script>
+<script src="referrals.js"></script>
 <script src="i18n.js"></script>
 <script type="text/babel" src="LangSwitcher.jsx"></script>
 <script type="text/babel" src="Header.jsx"></script>
@@ -114,6 +115,9 @@
     const [productId, setProductId] = useState('ghk-cu');
     const [cart, setCart] = useState([]);
     const [cartOpen, setCartOpen] = useState(false);
+    // Confirm the affiliate link worked, so a referred visitor sees their discount up front.
+    const referral = window.FS_REF ? window.FS_REF.get() : null;
+    const [refBar, setRefBar] = useState(!!referral);
 
     const scrollTop = () => { const el = document.getElementById('kit-scroll'); if (el) el.scrollTop = 0; };
     const nav = (p) => { setPage(p); setCartOpen(false); scrollTop(); };
@@ -143,6 +147,13 @@
     return (
       <React.Fragment>
         <div id="kit-scroll">
+          {refBar && referral && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '9px 16px', background: 'var(--ink-900)', color: '#fff', fontFamily: 'var(--font-body)', fontSize: 13 }}>
+              <span>{window.t('ref.banner', { p: referral.percent, c: referral.code })}</span>
+              <button onClick={() => setRefBar(false)} aria-label={window.t('ref.dismiss')}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,.6)', fontSize: 16, lineHeight: 1, padding: 0 }}>&times;</button>
+            </div>
+          )}
           <Header current={['product'].includes(page) ? 'shop' : page} onNav={nav} cartCount={cartCount} onCart={() => setCartOpen(true)} />
           {screen}
           <Footer onNav={nav} />

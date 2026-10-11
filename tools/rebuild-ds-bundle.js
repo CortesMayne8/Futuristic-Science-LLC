@@ -6,8 +6,11 @@
    rewritten onto the shared __ds_scope, and their export registered there.
 
    Usage:  node tools/rebuild-ds-bundle.js [--check] [--only <path>[,<path>…]]
+                                           [--add <path> --before <path>]
              --check  report which sections would change; write nothing
              --only   rebuild just these source paths (default: all)
+             --add    add a source the bundle does not carry yet, inserting its
+                      section before --before (a path the bundle already has)
 */
 'use strict';
 const fs = require('fs');
@@ -22,6 +25,10 @@ const argv = process.argv.slice(2);
 const CHECK = argv.includes('--check');
 const onlyIdx = argv.indexOf('--only');
 const ONLY = onlyIdx >= 0 && argv[onlyIdx + 1] ? argv[onlyIdx + 1].split(',') : null;
+const addIdx = argv.indexOf('--add');
+const ADD = addIdx >= 0 ? argv[addIdx + 1] : null;
+const beforeIdx = argv.indexOf('--before');
+const BEFORE = beforeIdx >= 0 ? argv[beforeIdx + 1] : null;
 
 const sha12 = (s) => crypto.createHash('sha256').update(s).digest('hex').slice(0, 12);
 
@@ -66,6 +73,22 @@ for (let i = 0; i < lines.length; i++) {
 
 const header = JSON.parse(lines[0].match(/^\/\* @ds-bundle: (.*) \*\/$/)[1]);
 const changed = [];
+
+// Splice in a source the bundle has never carried, wrapped exactly like the rest.
+if (ADD) {
+  if (!BEFORE) { console.error('--add requires --before <existing path>'); process.exit(1); }
+  if (sections.some((s) => s.srcPath === ADD)) { console.error(`${ADD} is already in the bundle`); process.exit(1); }
+  const anchor = sections.find((s) => s.srcPath === BEFORE);
+  if (!anchor) { console.error(`--before ${BEFORE} is not in the bundle`); process.exit(1); }
+  const source = fs.readFileSync(path.join(ROOT, ADD), 'utf8');
+  const block = ['// ' + ADD, 'try { (() => {', ...compile(ADD, source).split('\n'),
+    `})(); } catch (e) { __ds_ns.__errors.push({ path: ${JSON.stringify(ADD)}, error: String((e && e.message) || e) }); }`, ''];
+  const at = anchor.from - 2; // the marker line above the anchor's wrapper
+  lines.splice(at, 0, ...block);
+  sections.forEach((s) => { if (s.from >= at) { s.from += block.length; s.to += block.length; } });
+  header.sourceHashes[ADD] = sha12(source);
+  changed.push(ADD + ' (added)');
+}
 // Rebuild back-to-front so earlier line offsets stay valid.
 for (const s of [...sections].reverse()) {
   if (ONLY && !ONLY.includes(s.srcPath)) continue;
